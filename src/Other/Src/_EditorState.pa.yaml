@@ -9,3 +9,7 @@
 EditorState:
   ScreensOrder:
     - Cursos_Screen
+    - CursosConfig_Screen
+    - Grupos_Screen
+    - Sesiones_Screen
+    - Registros_Screen
