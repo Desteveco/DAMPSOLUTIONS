@@ -1,0 +1,44 @@
+{
+  "c3e8f300-f578-4142-bc84-67670bd16adb": {
+    "connectionRef": {
+      "displayName": "SharePoint",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1809/1.0.1809.4723/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+    },
+    "datasets": {
+      "https://dampsolut.sharepoint.com/sites/DAMPSOLUTIONS": {
+        "dataSources": {
+          "CursosFormativos": {
+            "tableName": "ec9cba2b-b26e-46ba-b35c-6b73ae075245"
+          },
+          "CursosFormativos_Plan": {
+            "tableName": "d223ecdd-ea83-4d8e-8911-2e98cee01db4"
+          },
+          "CursosPorPuesto": {
+            "tableName": "24ac78cd-9d31-455b-b87a-946877462a16"
+          },
+          "Desplegables Formación": {
+            "tableName": "d1a9728d-f819-4eab-8b3d-d152880315a0"
+          },
+          "Personal": {
+            "tableName": "d4bb378a-2e04-4c2e-b309-3529e677a2ae"
+          },
+          "PuestosTrabajo": {
+            "tableName": "799e753f-aee3-4052-87a4-4eae212a1170"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Personal",
+      "Desplegables Formación",
+      "CursosFormativos",
+      "PuestosTrabajo",
+      "CursosPorPuesto",
+      "CursosFormativos_Plan"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "c3e8f300-f578-4142-bc84-67670bd16adb"
+  }
+}

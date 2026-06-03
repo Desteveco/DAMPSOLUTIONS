@@ -1,0 +1,1154 @@
+Registros_Screen As screen:
+
+    Label1_3 As label:
+        Fill: =Colors.Primary1
+        Height: =48
+        Text: =
+        Width: =1920
+        ZIndex: =2
+
+    "gal_Asistentes As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        '#CopilotOverlayLabel': ="Filtrada"
+        Default: ={}
+        Height: =926
+        Items: |-
+            =Filter(
+                'Registros de Formación',
+                ID_Curso = varFormItemSelected.ID,
+                ID_Grupo = varGroupSelected.ID
+            )
+        Layout: =Layout.Vertical
+        OnSelect: |-
+            =Set(varEmpSelected, ThisItem);
+            ViewForm(Form1_2)
+        TemplatePadding: =10
+        TemplateSize: =202
+        Width: =1138
+        WrapCount: =4
+        X: =241
+        Y: =154
+        ZIndex: =3
+
+        TextInput2_5 As text:
+            BorderThickness: =3
+            Default: =""
+            DisabledBorderColor: =Colors.Primary1
+            DisabledColor: =RGBA(0,0,0,0)
+            DisabledFill: |-
+                =If(
+                    ThisItem.IsSelected,
+                    ColorFade(Colors.Primary1, 80%),
+                    RGBA(0,0,0,0)
+                )
+            DisplayMode: =DisplayMode.Disabled
+            Height: =192
+            OnSelect: =Select(Parent)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =266
+            ZIndex: =1
+
+        Label4_2 As label:
+            Height: =192
+            OnSelect: =Select(Parent)
+            Text: =
+            Width: =266
+            ZIndex: =2
+
+        Label3_19 As label:
+            AutoHeight: =true
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =Select(Parent)
+            Size: =15
+            Text: =ThisItem.Title
+            Width: =237
+            X: =15
+            Y: =40
+            ZIndex: =3
+
+        Label3_20 As label:
+            AutoHeight: =true
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =Select(Parent)
+            Text: |-
+                ="Nombre: " & ThisItem.Nom_Empleado
+            Width: =251
+            X: =15
+            Y: =Label3_18.Height + Label3_18.Y
+            ZIndex: =4
+
+        Label3_18 As label:
+            AutoHeight: =true
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            Height: =50
+            OnSelect: =Select(Parent)
+            Text: ="Nº " & ThisItem.Num_Empleado
+            Width: =145
+            X: =15
+            Y: =7
+            ZIndex: =5
+
+        Label3_21 As label:
+            AutoHeight: =true
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =Select(Parent)
+            Text: |-
+                ="Porcentaje asist: " &
+                With(
+                    {
+                        MisRegistros: Filter(
+                            'Asistencia por sesion',
+                            ID_Grupo = Value(ThisItem.ID_Grupo) &&
+                            N_Empleado = Value(ThisItem.Num_Empleado)
+                        )
+                    },
+                
+                    With(
+                        {
+                            TotalSesiones: CountRows(MisRegistros),
+                            
+                            SesionesAsistidas: CountRows(
+                                Filter(MisRegistros, Asistencia = true) 
+                            )
+                        },
+                
+                    
+                        If(
+                            TotalSesiones = 0,
+                            "0 %",
+                            Round((SesionesAsistidas / TotalSesiones) * 100, 2) & " %"
+                        )
+                    )
+                )
+            Visible: =false
+            Width: =251
+            X: =15
+            Y: =Label3_20.Height + Label3_20.Y
+            ZIndex: =6
+
+        Label3_32 As label:
+            AutoHeight: =true
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            Height: =50
+            OnSelect: =Select(Parent)
+            Text: =If(ThisItem.Formador, "FORMADOR","")
+            Width: =145
+            X: =15
+            Y: =Label3_21.Y + Label3_21.Height
+            ZIndex: =7
+
+        Circle1_2 As circle:
+            Fill: |-
+                =If(ThisItem.Subido_Milena,
+                Color.DarkGreen,
+                Color.DarkRed)
+            Height: =40
+            OnSelect: =Select(Parent)
+            Visible: =false
+            Width: =40
+            X: =195
+            Y: =131
+            ZIndex: =8
+
+    Image2_4 As image:
+        Height: =48
+        Image: ='BorgWarner_Logo_Final_Rv.White'
+        Width: =279
+        ZIndex: =4
+
+    Label3_16 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Bold
+        Height: =65
+        OnSelect: =
+        Size: =18
+        Text: |-
+            ="Asistentes a Curso: " & varFormItemSelected.Title & " -- Grupo: "  & gal_Grupos.Selected.Nombre 
+        Width: =1023
+        X: =399
+        Y: =68
+        ZIndex: =16
+
+    Group5_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =18
+
+        dd_Curs_Plan_2 As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =varFormItemSelected.Plan_Form
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            DisplayMode: =DisplayMode.View
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.Arial
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+                =ForAll(Distinct('Cursos Formativos',Plan_Form), {Result: ThisRecord.Value})
+            OnChange: =
+            OnSelect: =
+            PaddingRight: =13.34
+            PaddingTop: =13.34
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Width: =192
+            X: =30
+            Y: =143
+            ZIndex: =5
+
+        dd_Curs_Denom_2 As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =varFormItemSelected.Denominacion_Plan
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            DisplayMode: =DisplayMode.View
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.Arial
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+                =ForAll(Distinct(
+                    Filter(
+                        'Cursos Formativos',
+                        Plan_Form = dd_Curs_Plan_2.Selected.Result
+                    ),
+                    Denominacion_Plan
+                ), {Result: ThisRecord.Value})
+            OnChange: =
+            OnSelect: =
+            PaddingRight: =13.34
+            PaddingTop: =13.34
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Width: =192
+            X: =30
+            Y: =237
+            ZIndex: =6
+
+        dd_Curs_Area_2 As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =varFormItemSelected.Area_Form
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            DisplayMode: =DisplayMode.View
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.Arial
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+                =ForAll(Distinct(
+                    Filter(
+                        'Cursos Formativos',
+                        Denominacion_Plan = dd_Curs_Denom_2.Selected.Result
+                    ),
+                    Area_Form
+                ), {Result: ThisRecord.Value})
+            OnChange: =
+            OnSelect: =
+            PaddingRight: =13.34
+            PaddingTop: =13.34
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Width: =192
+            X: =30
+            Y: =332
+            ZIndex: =7
+
+        Label3_17 As label:
+            Align: =Align.Center
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Size: =12
+            Text: |
+                ="Plan Formativo"
+            X: =51
+            Y: =103
+            ZIndex: =8
+
+        Label3_23 As label:
+            Align: =Align.Center
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Size: =12
+            Text: |
+                ="Denominación Plan"
+            Width: =192
+            X: =30
+            Y: =197
+            ZIndex: =9
+
+        Label3_24 As label:
+            Align: =Align.Center
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Size: =12
+            Text: |
+                ="Area Formativa"
+            Width: =192
+            X: =30
+            Y: =292
+            ZIndex: =10
+
+    Group4_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =19
+
+        TextInput2_4 As text:
+            BorderThickness: =3
+            Default: =""
+            DisabledBorderColor: =Colors.Primary1
+            DisabledColor: =RGBA(0,0,0,0)
+            DisabledFill: |
+                =
+                    RGBA(0,0,0,0)
+            DisplayMode: =DisplayMode.Disabled
+            Height: =926
+            OnSelect: =
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =533
+            X: =1387
+            Y: =154
+            ZIndex: =1
+
+        Icon1_4 As icon.Add:
+            Color: =Colors.Primary1
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Reset(gal_Asistentes);
+                
+                NewForm(Form1_2)
+            X: =1600
+            Y: =182
+            ZIndex: =11
+
+        Icon2_4 As icon.Save:
+            Color: =Colors.Primary1
+            DisplayMode: |-
+                =If(
+                    Form1_2.DisplayMode=DisplayMode.Edit,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Icon: =Icon.Save
+            OnSelect: =SubmitForm(Form1_2)
+            X: =1753
+            Y: =182
+            ZIndex: =12
+
+        Icon1_5 As icon.Add:
+            Color: =Colors.Primary1
+            Icon: =Icon.Edit
+            OnSelect: =EditForm(Form1_2)
+            X: =1676
+            Y: =182
+            ZIndex: =13
+
+        Icon2_5 As icon.Save:
+            Color: =Colors.Primary1
+            DisplayMode: |-
+                =If(
+                    Form1_2.DisplayMode=DisplayMode.Edit,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Icon: =Icon.Trash
+            OnSelect: =Remove('Registros de Formación',gal_Asistentes.Selected)
+            X: =1830
+            Y: =182
+            ZIndex: =14
+
+        Form1_2 As form:
+            BorderColor: =Colors.Primary1
+            DataSource: ='Registros de Formación'
+            DefaultMode: =FormMode.View
+            Height: =813
+            Item: =gal_Asistentes.Selected
+            NumberOfColumns: =1
+            OnSuccess: |-
+                =
+                UpdateContext({varUltimoAlumno: Form1_2.LastSubmit});
+                
+                ForAll(
+                    Filter('Sesiones Formación', ID_Curso = varFormItemSelected.ID) As SesionActual,
+                    
+                    Patch(
+                        'Asistencia por sesion',
+                        Defaults('Asistencia por sesion'),
+                        {
+                            Título: "Asist-" & varUltimoAlumno.Num_Empleado & "-S" & SesionActual.ID,
+                            
+                            ID_Curso: varFormItemSelected.ID,
+                            ID_Sesion: SesionActual.ID, 
+                            ID_Grupo: gal_Grupos.Selected.ID,
+                            N_Empleado: varUltimoAlumno.Num_Empleado,
+                            Nombre: varUltimoAlumno.Nom_Empleado,
+                            Asistencia: false 
+                        }
+                    )
+                );
+                
+                If(
+                    !IsEmpty(Errors('Asistencia por sesion')),
+                    Notify("Error en SharePoint. Comprueba si hay columnas obligatorias vacías.", NotificationType.Error),
+                    Notify("Alumno matriculado y listas de asistencia generadas correctamente", NotificationType.Success)
+                );
+            Width: =532
+            X: =1388
+            Y: =264
+            ZIndex: =15
+
+            Num_Empleado_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Num_Empleado"
+                Default: =ThisItem.Num_Empleado
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Num_Empleado)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =
+                Required: =false
+                Update: =DataCardValue11.Text
+                Width: =532
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+                DataCardKey9 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: ="Número Empleado"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue11 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Parent.Default
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey9.Y + DataCardKey9.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage11 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue11.Y + DataCardValue11.Height
+                    ZIndex: =3
+
+                StarVisible11 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey9.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey9.Y
+                    ZIndex: =4
+
+            Nom_Empleado_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Nom_Empleado"
+                Default: =ThisItem.Nom_Empleado
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Nom_Empleado)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, Nom_Empleado)
+                Required: =false
+                Update: =DataCardValue14.Text
+                Width: =532
+                X: =0
+                Y: =1
+                ZIndex: =1
+
+                DataCardKey14 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: ="Nombre Empleado"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue14 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =LookUp(Personal, Title = DataCardValue11.Text).Nombre_Completo
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey14.Y + DataCardKey14.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage14 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue14.Y + DataCardValue14.Height
+                    ZIndex: =3
+
+                StarVisible14 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey14.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey14.Y
+                    ZIndex: =4
+
+            ID_Curso_DataCard2 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="ID_Curso"
+                Default: =ThisItem.ID_Curso
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Curso)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue17.Text)
+                Width: =532
+                X: =0
+                Y: =2
+                ZIndex: =1
+
+                DataCardKey17 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue17 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =gal_Cursos.Selected.ID
+                    DelayOutput: =true
+                    DisplayMode: =DisplayMode.View
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey17.Y + DataCardKey17.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage17 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue17.Y + DataCardValue17.Height
+                    ZIndex: =3
+
+                StarVisible17 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey17.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey17.Y
+                    ZIndex: =4
+
+            ID_Grupo_DataCard1 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="ID_Grupo"
+                Default: =ThisItem.ID_Grupo
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Grupo)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue18.Text)
+                Width: =532
+                X: =0
+                Y: =3
+                ZIndex: =1
+
+                DataCardKey18 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue18 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =gal_Grupos.Selected.ID
+                    DelayOutput: =true
+                    DisplayMode: =DisplayMode.View
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey18.Y + DataCardKey18.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage18 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue18.Y + DataCardValue18.Height
+                    ZIndex: =3
+
+                StarVisible18 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey18.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey18.Y
+                    ZIndex: =4
+
+            Attachments_DataCard1 As typedDataCard.attachmentsEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="{Attachments}"
+                Default: =ThisItem.'Datos adjuntos'
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,'Datos adjuntos')
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =
+                Width: =532
+                X: =0
+                Y: =4
+                ZIndex: =1
+
+                DataCardKey19 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: ="Firma"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                ErrorMessage19 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    ZIndex: =3
+
+                StarVisible19 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey19.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey19.Y
+                    ZIndex: =4
+
+                Image2 As image:
+                    Height: =173
+                    Image: =First(ThisItem.'Datos adjuntos').Value
+                    Width: =380
+                    X: =76
+                    Y: =44
+                    ZIndex: =5
+
+    Icon5_1 As icon.ArrowLeft:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =48
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Back()
+        Width: =55
+        X: =279
+        ZIndex: =20
+
+    Label3_26 As label:
+        Align: =Align.Center
+        Color: =Colors.White
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Bold
+        Height: =48
+        OnSelect: =
+        Size: =20
+        Text: |
+            ="Gestión de Formaciones - ASISTENTES"
+        Width: =592
+        X: =594
+        ZIndex: =21
+
+    Label3_22 As label:
+        Align: =Align.Center
+        BorderColor: =Colors.Primary1
+        BorderThickness: =3
+        Color: =Colors.Primary1
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Bold
+        Height: =55
+        OnSelect: =
+        Size: =15
+        Text: |-
+            ="Fecha Inicio: "  & gal_Grupos.Selected.F_Ini_grupo
+        Width: =194
+        X: =1460
+        Y: =99
+        ZIndex: =22
+
+    Label3_27 As label:
+        Align: =Align.Center
+        BorderColor: =Colors.Primary1
+        BorderThickness: =3
+        Color: =Colors.Primary1
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Bold
+        Height: =55
+        OnSelect: =
+        Size: =15
+        Text: |-
+            ="Fecha Fin: "  & gal_Grupos.Selected.F_Fin_grupo
+        Width: =194
+        X: =1654
+        Y: =99
+        ZIndex: =23
+
+    Button2 As button:
+        Fill: =Colors.Primary1
+        OnSelect: |-
+            =/*Copy("46" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
+            "1547" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
+            "1698" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
+            "1867" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) )*/
+            
+            
+            
+            Copy(
+                Concat(
+                    Filter(gal_Asistentes.AllItems, !Formador, !Subido_Milena), 
+                    Num_Empleado & Char(9) & Nom_Empleado &  Char(9) & "A" & Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "" & Char(9) & "" & Char(9) & gal_Grupos.Selected.F_Ini_grupo & Char(9) & gal_Grupos.Selected.F_Fin_grupo & Char(13)
+                )
+            );
+            
+            Notify("Asistentes copiados en el portapapeles.", NotificationType.Success, 1200)
+        Size: =13
+        Text: ="Exportar asistentes"
+        Width: =190
+        X: =1451
+        Y: =53
+        ZIndex: =24
+
+    Button2_2 As button:
+        Fill: =Colors.Primary1
+        OnSelect: |-
+            =ForAll(
+                Filter(gal_Asistentes.AllItems, Formador = false),
+                Patch(
+                    'Registros de Formación',
+                    ThisRecord,
+                    {
+                        Subido_Milena: true
+                    }
+                )
+            )
+        Size: =13
+        Text: ="Confirmar Guardado"
+        Width: =190
+        X: =1666
+        Y: =53
+        ZIndex: =25
+
+    Button2_4 As button:
+        Fill: =Colors.Primary1
+        Height: =50
+        OnSelect: |-
+            =UpdateContext({varSowClipboardImport: true})
+        Size: =13
+        Text: ="Importar asistentes"
+        Width: =151
+        X: =251
+        Y: =76
+        ZIndex: =26
+
+    Label7_12 As label:
+        FontWeight: =FontWeight.Bold
+        OnSelect: =
+        Text: ="Tipo"
+        Visible: =varSowClipboardImport
+        X: =678
+        Y: =554
+        ZIndex: =42
+
+    Group8 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =42
+
+        Label2_1 As label:
+            Fill: =RGBA(149, 149, 149, 0.4)
+            Height: =1080
+            OnSelect: =
+            Text: =""
+            Visible: =varSowClipboardImport
+            Width: =1920
+            ZIndex: =27
+
+        TextInput1_1 As text:
+            BorderColor: =Colors.Primary1
+            Default: =""
+            DisplayMode: =DisplayMode.View
+            Height: =937
+            RadiusBottomLeft: =50
+            RadiusBottomRight: =50
+            RadiusTopLeft: =50
+            RadiusTopRight: =50
+            Visible: =varSowClipboardImport
+            Width: =1625
+            X: =148
+            Y: =86
+            ZIndex: =28
+
+        TextInput4 As text:
+            Default: =
+            Height: =363
+            Mode: =TextMode.MultiLine
+            OnChange: |-
+                =ClearCollect(
+                    col_Importados,
+                    ForAll(
+                        Split(TextInput4.Text, Char(10)),  
+                        {
+                            Num_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),1)).Value,
+                            Nom_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),2)).Value,
+                            A: Last(FirstN(Split(ThisRecord.Value, Char(9)),3)).Value,
+                            Diez: Last(FirstN(Split(ThisRecord.Value, Char(9)),4)).Value,
+                            F: Last(FirstN(Split(ThisRecord.Value, Char(9)),6)).Value,
+                            F_Ini_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),9)).Value,"dd/mm/yyyy"),
+                            F_Fin_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),10)).Value, "dd/mm/yyyy")
+                        }
+                    )
+                )
+            Visible: =varSowClipboardImport
+            Width: =1329
+            X: =283
+            Y: =177
+            ZIndex: =29
+
+        Gallery1 As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =349
+            Items: =col_Importados
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =49
+            Visible: =varSowClipboardImport
+            Width: =1329
+            X: =283
+            Y: =580
+            ZIndex: =34
+
+            Label7 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.F_Ini_grupo
+                X: =995
+                Y: =1
+                ZIndex: =1
+
+            Label7_1 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.F_Fin_grupo
+                X: =1145
+                Y: =1
+                ZIndex: =2
+
+            Label7_2 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.Num_Empleado
+                X: =28
+                Y: =1
+                ZIndex: =3
+
+            Label7_3 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.Nom_Empleado
+                Width: =343
+                X: =178
+                Y: =1
+                ZIndex: =4
+
+            Label7_4 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.A
+                X: =521
+                Y: =1
+                ZIndex: =5
+
+            Label7_5 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.Diez
+                X: =586
+                Y: =1
+                ZIndex: =6
+
+            Label7_6 As label:
+                OnSelect: =Select(Parent)
+                Text: =ThisItem.F
+                X: =671
+                Y: =1
+                ZIndex: =7
+
+        Label7_7 As label:
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: ="Número"
+            Visible: =varSowClipboardImport
+            X: =304
+            Y: =554
+            ZIndex: =35
+
+        Label7_8 As label:
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: ="Nombre Completo"
+            Visible: =varSowClipboardImport
+            Width: =258
+            X: =469
+            Y: =556
+            ZIndex: =36
+
+        Label7_9 As label:
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: ="F. Inicio"
+            Visible: =varSowClipboardImport
+            Width: =141
+            X: =1284
+            Y: =554
+            ZIndex: =37
+
+        Label7_10 As label:
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: ="F. Fin"
+            Visible: =varSowClipboardImport
+            Width: =141
+            X: =1436
+            Y: =554
+            ZIndex: =38
+
+        Icon8 As icon.CancelBadge:
+            Color: =Colors.Primary1
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({varSowClipboardImport: false})
+            Visible: =varSowClipboardImport
+            X: =1676
+            Y: =113
+            ZIndex: =39
+
+        Label7_11 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Size: =22
+            Text: ="VOLCADO DE PARTICIPANTES A POWERAPPS"
+            Visible: =varSowClipboardImport
+            Width: =726
+            X: =597
+            Y: =125
+            ZIndex: =40
+
+        Button2_5 As button:
+            Fill: =Colors.Primary1
+            Height: =50
+            OnSelect: |-
+                =ForAll(
+                    col_Importados,
+                    If(
+                        !IsBlank(ThisRecord.Num_Empleado),
+                        Patch(
+                            'Registros de Formación',
+                            Defaults('Registros de Formación'),
+                            {
+                                Num_Empleado: Value(ThisRecord.Num_Empleado),
+                                Nom_Empleado: ThisRecord.Nom_Empleado,
+                                ID_Curso: gal_Cursos.Selected.ID,
+                                ID_Grupo: gal_Grupos.Selected.ID
+                            }
+                        )
+                    )
+                );
+                
+                UpdateContext({varSowClipboardImport: false});
+                Refresh('Registros de Formación');
+                Reset(TextInput4); Clear(col_Importados)
+            RadiusBottomLeft: =16
+            RadiusBottomRight: =16
+            RadiusTopLeft: =16
+            RadiusTopRight: =16
+            Size: =16
+            Text: ="Guardar"
+            Visible: =varSowClipboardImport
+            Width: =151
+            X: =885
+            Y: =929
+            ZIndex: =41
+
+    Label7_13 As label:
+        FontWeight: =FontWeight.Bold
+        OnSelect: =
+        Text: ="Entidad"
+        Visible: =varSowClipboardImport
+        X: =788
+        Y: =556
+        ZIndex: =43
+
+    Label7_14 As label:
+        FontWeight: =FontWeight.Bold
+        OnSelect: =
+        Text: |-
+            ="Situación
+            "
+        Visible: =varSowClipboardImport
+        X: =958
+        Y: =554
+        ZIndex: =44
+
