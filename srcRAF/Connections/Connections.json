@@ -1,9 +1,16 @@
 {
-  "c3e8f300-f578-4142-bc84-67670bd16adb": {
+  "830c5317-5489-4362-ad90-7fe5e907b399": {
+    "appActions": [
+      "providers/PowerPlatform.Governance/Operations/Read",
+      "providers/PowerPlatform.Governance/Operations/Write"
+    ],
     "connectionRef": {
+      "apiTier": "Standard",
       "displayName": "SharePoint",
-      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1809/1.0.1809.4723/sharepointonline/icon.png",
-      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1813/1.0.1813.4743/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
     },
     "datasets": {
       "https://dampsolut.sharepoint.com/sites/DAMPSOLUTIONS": {
@@ -20,25 +27,72 @@
           "Desplegables Formación": {
             "tableName": "d1a9728d-f819-4eab-8b3d-d152880315a0"
           },
+          "GruposFormacion": {
+            "tableName": "2f495845-e3f9-4c6e-9b16-51d2247d05b1"
+          },
           "Personal": {
             "tableName": "d4bb378a-2e04-4c2e-b309-3529e677a2ae"
           },
           "PuestosTrabajo": {
             "tableName": "799e753f-aee3-4052-87a4-4eae212a1170"
+          },
+          "RegistrosFormacion": {
+            "tableName": "e4aa6cfb-b0a6-45e9-b2a5-6d0d3d8259a1"
           }
         }
       }
     },
     "dataSources": [
+      "Incidentes de Calidad",
+      "RegistrosFormacion",
+      "PuestosTrabajo",
       "Personal",
       "Desplegables Formación",
-      "CursosFormativos",
-      "PuestosTrabajo",
       "CursosPorPuesto",
-      "CursosFormativos_Plan"
+      "CursosFormativos_Plan",
+      "CursosFormativos",
+      "GruposFormacion"
     ],
     "dependencies": {},
+    "dependents": [
+      "c46c04ff-1d46-417c-bb67-d3dd4bf3e664"
+    ],
+    "id": "830c5317-5489-4362-ad90-7fe5e907b399"
+  },
+  "c46c04ff-1d46-417c-bb67-d3dd4bf3e664": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Flujos lógicos",
+      "iconUri": "https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1766/1.0.1766.4330/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "830c5317-5489-4362-ad90-7fe5e907b399": {
+          "value": "shared_sharepointonline"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "cd29ef91-a385-4e30-bb18-4d8cd0f25e32"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_sharepointonline": {
+          "value": "830c5317-5489-4362-ad90-7fe5e907b399"
+        },
+        "workflowEntityId": {},
+        "workflowName": {
+          "value": "cd29ef91-a385-4e30-bb18-4d8cd0f25e32"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "Guardar_Imagenes_Examen"
+    ],
+    "dependencies": {
+      "shared_sharepointonline": "830c5317-5489-4362-ad90-7fe5e907b399"
+    },
     "dependents": [],
-    "id": "c3e8f300-f578-4142-bc84-67670bd16adb"
+    "id": "c46c04ff-1d46-417c-bb67-d3dd4bf3e664"
   }
 }

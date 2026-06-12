@@ -1,5 +1,5 @@
 {
-  "FormatVersion": "0.24",
+  "FormatVersion": "0.30",
   "Header": {
     "AnalysisOptions": {
       "DataflowAnalysisEnabled": true,
@@ -11,7 +11,7 @@
   },
   "Properties": {
     "AppCreationSource": "AppFromScratch",
-    "AppDescription": "Simplify HR processes and ensure employee success with Gestor de Cursos RRHH. Manage and filter training courses, edit course information, and track employee attendance in specific groups. Empower your business with easy HR course management.",
+    "AppDescription": "0.2",
     "AppPreviewFlagsMap": {
       "adaptivepaging": false,
       "aibuilderserviceenrollment": false,
@@ -100,7 +100,7 @@
       "zeroalltabindexes": false
     },
     "Author": "",
-    "BindingErrorCount": 661,
+    "BindingErrorCount": 4,
     "ConnectionString": "",
     "ContainsThirdPartyPcfControls": false,
     "DefaultConnectedDataSourceMaxGetRowsCount": 500,
@@ -114,12 +114,12 @@
     "DocumentType": "App",
     "EnableInstrumentation": false,
     "FileID": "a3b1bd8b-1433-4ec1-a504-ed186b98c9e6",
-    "Id": "73b4bc8a-9930-4fa7-bb20-f786989c1571",
+    "Id": "df7b11a3-4d79-4c06-a709-b3ac6e574f97",
     "LocalDatabaseReferences": "",
     "ManualOfflineProfileId": "",
     "Name": "R2VzdG9yIGRlIEN1cnNvcyBSUkhI.msapp",
     "OriginatingVersion": "1.330",
-    "ParserErrorCount": 1,
+    "ParserErrorCount": 0,
     "ShowStatusBar": false
   },
   "PublishInfo": {
@@ -137,7 +137,10 @@
     "Cursos_Screen",
     "CursosConfig_Screen",
     "Grupos_Screen",
-    "Sesiones_Screen",
-    "Registros_Screen"
+    "Registros_Screen",
+    "Intro_Screen",
+    "O_MOD_Por_Operario",
+    "Formed_Screen",
+    "O_MOD_Por_Curso"
   ]
 }

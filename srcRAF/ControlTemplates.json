@@ -13,20 +13,6 @@
     "OverridableProperties": {},
     "Version": "1.0"
   },
-  "arrow": {
-    "CustomGroupControlTemplateName": "",
-    "FirstParty": true,
-    "Id": "http://microsoft.com/appmagic/shapes/arrow",
-    "IsComponentTemplate": false,
-    "IsCustomGroupControlTemplate": false,
-    "IsPcfControl": false,
-    "IsPremiumPcfControl": false,
-    "IsWidgetTemplate": true,
-    "LastModifiedTimestamp": "0",
-    "Name": "arrow",
-    "OverridableProperties": {},
-    "Version": "2.3.0"
-  },
   "attachments": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": true,
@@ -69,20 +55,6 @@
     "OverridableProperties": {},
     "Version": "2.1.0"
   },
-  "circle": {
-    "CustomGroupControlTemplateName": "",
-    "FirstParty": true,
-    "Id": "http://microsoft.com/appmagic/shapes/circle",
-    "IsComponentTemplate": false,
-    "IsCustomGroupControlTemplate": false,
-    "IsPcfControl": false,
-    "IsPremiumPcfControl": false,
-    "IsWidgetTemplate": true,
-    "LastModifiedTimestamp": "0",
-    "Name": "circle",
-    "OverridableProperties": {},
-    "Version": "2.3.0"
-  },
   "combobox": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": true,
@@ -96,6 +68,20 @@
     "Name": "combobox",
     "OverridableProperties": {},
     "Version": "2.4.0"
+  },
+  "dataCard": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/card",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "dataCard",
+    "OverridableProperties": {},
+    "Version": "1.0.2"
   },
   "datepicker": {
     "CustomGroupControlTemplateName": "",
@@ -124,6 +110,20 @@
     "Name": "dropdown",
     "OverridableProperties": {},
     "Version": "2.3.1"
+  },
+  "fluidGrid": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/fluidGrid",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "fluidGrid",
+    "OverridableProperties": {},
+    "Version": "2.3.0"
   },
   "form": {
     "CustomGroupControlTemplateName": "",
@@ -248,6 +248,20 @@
     "OverridableProperties": {},
     "Version": "2.2.3"
   },
+  "inkControl": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/inkControl",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "inkControl",
+    "OverridableProperties": {},
+    "Version": "2.3.0"
+  },
   "label": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": true,
@@ -275,20 +289,6 @@
     "Name": "rectangle",
     "OverridableProperties": {},
     "Version": "2.3.0"
-  },
-  "richTextEditor": {
-    "CustomGroupControlTemplateName": "",
-    "FirstParty": true,
-    "Id": "http://microsoft.com/appmagic/richTextEditorControl",
-    "IsComponentTemplate": false,
-    "IsCustomGroupControlTemplate": false,
-    "IsPcfControl": false,
-    "IsPremiumPcfControl": false,
-    "IsWidgetTemplate": true,
-    "LastModifiedTimestamp": "0",
-    "Name": "richTextEditor",
-    "OverridableProperties": {},
-    "Version": "2.7.0"
   },
   "screen": {
     "CustomGroupControlTemplateName": "",

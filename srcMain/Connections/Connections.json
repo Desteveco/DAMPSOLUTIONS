@@ -1,9 +1,17 @@
 {
   "c3e8f300-f578-4142-bc84-67670bd16adb": {
+    "appActions": [
+      "providers/PowerPlatform.Governance/Operations/Read",
+      "providers/PowerPlatform.Governance/Operations/Write",
+      "providers/PowerPlatform.Governance/Operations/Delete"
+    ],
     "connectionRef": {
+      "apiTier": "Standard",
       "displayName": "SharePoint",
-      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1809/1.0.1809.4723/sharepointonline/icon.png",
-      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline"
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1813/1.0.1813.4743/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
     },
     "datasets": {
       "https://dampsolut.sharepoint.com/sites/DAMPSOLUTIONS": {
@@ -20,11 +28,17 @@
           "Desplegables Formación": {
             "tableName": "d1a9728d-f819-4eab-8b3d-d152880315a0"
           },
+          "GruposFormacion": {
+            "tableName": "2f495845-e3f9-4c6e-9b16-51d2247d05b1"
+          },
           "Personal": {
             "tableName": "d4bb378a-2e04-4c2e-b309-3529e677a2ae"
           },
           "PuestosTrabajo": {
             "tableName": "799e753f-aee3-4052-87a4-4eae212a1170"
+          },
+          "RegistrosFormacion": {
+            "tableName": "e4aa6cfb-b0a6-45e9-b2a5-6d0d3d8259a1"
           }
         }
       }
@@ -35,7 +49,9 @@
       "CursosFormativos",
       "PuestosTrabajo",
       "CursosPorPuesto",
-      "CursosFormativos_Plan"
+      "CursosFormativos_Plan",
+      "GruposFormacion",
+      "RegistrosFormacion"
     ],
     "dependencies": {},
     "dependents": [],

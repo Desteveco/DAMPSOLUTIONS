@@ -69,20 +69,6 @@
     "OverridableProperties": {},
     "Version": "2.1.0"
   },
-  "circle": {
-    "CustomGroupControlTemplateName": "",
-    "FirstParty": true,
-    "Id": "http://microsoft.com/appmagic/shapes/circle",
-    "IsComponentTemplate": false,
-    "IsCustomGroupControlTemplate": false,
-    "IsPcfControl": false,
-    "IsPremiumPcfControl": false,
-    "IsWidgetTemplate": true,
-    "LastModifiedTimestamp": "0",
-    "Name": "circle",
-    "OverridableProperties": {},
-    "Version": "2.3.0"
-  },
   "combobox": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": true,
@@ -261,6 +247,34 @@
     "Name": "label",
     "OverridableProperties": {},
     "Version": "2.5.1"
+  },
+  "modernButton": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/modernButton",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "modernButton",
+    "OverridableProperties": {},
+    "Version": "1.0.0"
+  },
+  "pdfViewer": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/pdfViewer",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "pdfViewer",
+    "OverridableProperties": {},
+    "Version": "2.5.0"
   },
   "rectangle": {
     "CustomGroupControlTemplateName": "",
