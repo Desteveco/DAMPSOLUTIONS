@@ -1,0 +1,66 @@
+Header_3 As CanvasComponent:
+    Fill: =RGBA(0, 0, 0, 0)
+    Height: |
+        =70
+    pageNumber: ="Texto"
+    screenName: ="Texto"
+    varTipoAudit: ="Texto"
+    Width: =Max(App.Width, App.MinScreenWidth)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    TextInput2_5 As text:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        BorderThickness: =0
+        Color: |
+            =RGBA(0, 18, 107, 1)
+        Default: =
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: |
+            =RGBA(58, 100, 183, 1)
+        DisabledFill: |-
+            =//RGBA(70; 90; 150; 1)
+            RGBA(60, 102, 140, 1)
+        DisplayMode: =DisplayMode.Disabled
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderThickness: =4
+        Height: =90
+        HoverBorderColor: =RGBA(0, 18, 107, 1)
+        HoverColor: =RGBA(0, 0, 0, 1)
+        HoverFill: =RGBA(186, 202, 226, 1)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =13
+        Width: =768
+        Y: =-20
+        ZIndex: =1
+
+    labelPage_1 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Font: =Font.Arial
+        Height: =69
+        Size: =20
+        Text: =Header_3.pageNumber
+        Width: =57
+        X: =674
+        ZIndex: =3
+
+    labelTitle_4 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Font: =Font.Arial
+        Height: =69
+        Size: =18
+        Text: =Header_3.screenName
+        Width: =539
+        X: =115
+        ZIndex: =4
+

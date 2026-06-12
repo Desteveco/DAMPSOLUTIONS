@@ -1,0 +1,49 @@
+Header_Title As CanvasComponent:
+    ChildTabPriority: =true
+    ContentLanguage: =""
+    EnableChildFocus: =true
+    Fill: =
+    Height: =70
+    ScreenName: ="Texto"
+    Visible: =true
+    Width: =Max(App.Width, App.MinScreenWidth)
+    X: =0
+    Y: =0
+
+    TextInput1_1 As text:
+        BorderColor: =
+        BorderThickness: =0
+        Color: =RGBA(39, 67, 125, 1)
+        Default: =""
+        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+        DisabledColor: =RGBA(39, 67, 125, 1)
+        DisabledFill: =RGBA(4, 57, 107, 1)
+        DisplayMode: =DisplayMode.Disabled
+        Height: =70
+        HintText: =""
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Width: =1920
+        ZIndex: =1
+
+    Label2_1 As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =RGBA(39, 67, 125, 1)
+        Font: =Font.Arial
+        Height: =70
+        Size: =24
+        Text: =Header_Title.ScreenName
+        Width: =689
+        X: =698
+        ZIndex: =2
+
+    Image1 As image:
+        Height: =70
+        Image: =LOGO2
+        Width: =250
+        X: =1670
+        ZIndex: =3
+
