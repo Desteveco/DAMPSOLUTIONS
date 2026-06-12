@@ -1,5 +1,5 @@
 Grupos_Screen As screen:
-    OnVisible: =Refresh(Grupos_Formacion);Refresh('Sesiones Formación');
+    OnVisible: =Refresh(GruposFormacion);
 
     Label1_1 As label:
         Fill: =Colors.Primary1
@@ -11,14 +11,14 @@ Grupos_Screen As screen:
     "gal_Grupos As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
         '#CopilotOverlayLabel': ="Filtrada"
         Default: ={}
-        Height: =957
+        Height: =700
         Items: |-
             =If(
                 Checkbox1.Value,
                 Sort(
                     Filter(
-                        Grupos_Formacion,
-                        ID_Curso = varFormItemSelected.ID
+                        GruposFormacion,
+                        ID_Curso = varCursoActual.ID
             
                     ),
                     Title,
@@ -26,8 +26,8 @@ Grupos_Screen As screen:
                 ),
                 Sort(
                     Filter(
-                        Grupos_Formacion,
-                        ID_Curso = varFormItemSelected.ID
+                        GruposFormacion,
+                        ID_Curso = varCursoActual.ID
                     ),
                     Title,
                     SortOrder.Ascending
@@ -38,8 +38,8 @@ Grupos_Screen As screen:
             =Set(varGroupSelected, ThisItem);
             ViewForm(Form1_1)
         TemplatePadding: =10
-        TemplateSize: =380
-        Width: =1140
+        TemplateSize: =264
+        Width: =1138
         WrapCount: =4
         X: =228
         Y: =123
@@ -57,7 +57,7 @@ Grupos_Screen As screen:
                     RGBA(0,0,0,0)
                 )
             DisplayMode: =DisplayMode.Disabled
-            Height: =380
+            Height: =264
             OnSelect: =Select(Parent)
             RadiusBottomLeft: =20
             RadiusBottomRight: =20
@@ -67,7 +67,7 @@ Grupos_Screen As screen:
             ZIndex: =1
 
         Label4_1 As label:
-            Height: =314
+            Height: =232
             OnSelect: =Select(Parent)
             Text: =
             Width: =266
@@ -92,8 +92,9 @@ Grupos_Screen As screen:
             Font: =Font.Arial
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
+            Size: =15
             Text: |-
-                ="Curso: " & varFormItemSelected.Title
+                ="Curso: " & varCursoActual.Title
             Width: =237
             X: =15
             Y: =Label3_9.Y + Label3_9.Height
@@ -145,23 +146,11 @@ Grupos_Screen As screen:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
             Text: |-
-                ="Nº Participantes: " & CountRows(Filter('Registros de Formación', ID_Grupo = ThisItem.ID, Formador = false))
+                ="Nº Participantes: " & CountRows(Filter(RegistrosFormacion, ID_Grupo = ThisItem.ID, Formador = false))
             Width: =237
             X: =15
             Y: =Label3_15.Height + Label3_15.Y
             ZIndex: =8
-
-        Circle1 As circle:
-            Fill: |-
-                =If(ThisItem.Subido_A_Milena,
-                Color.DarkGreen,
-                Color.DarkRed)
-            Height: =28
-            OnSelect: =Select(Parent)
-            Width: =28
-            X: =155
-            Y: =Label3_34.Y
-            ZIndex: =9
 
         Label3_34 As label:
             Align: =Align.Center
@@ -176,74 +165,13 @@ Grupos_Screen As screen:
             Width: =124
             X: =15
             Y: =Label3_29.Y + Label3_29.Height
-            ZIndex: =10
-
-        Circle1_1 As circle:
-            Fill: |-
-                =If(ThisItem.Subido_A_Milena,
-                Color.DarkGreen,
-                Color.DarkRed)
-            Height: =40
-            OnSelect: =Select(Parent)
-            Visible: =false
-            Width: =40
-            X: =212
-            Y: =241
-            ZIndex: =11
-
-        Label3_37 As label:
-            Align: =Align.Center
-            AutoHeight: =true
-            Color: =Colors.Primary1
-            Font: =Font.Arial
-            FontWeight: =FontWeight.Bold
-            OnSelect: =Select(Parent)
-            Size: =11
-            Text: |-
-                ="Participantes Cargados: "
-            Width: =180
-            X: =15
-            Y: =Label3_34.Y + Label3_34.Height + 5
-            ZIndex: =13
-
-        Circle1_3 As circle:
-            Fill: |-
-                =If(
-                    With(
-                    {
-                        wFilter: Filter('Registros de Formación', ID_Grupo = ThisItem.ID, Formador = false)
-                    },
-                    CountRows(wFilter) = CountRows(Filter(wFilter, Subido_Milena)) && CountRows(wFilter) <> 0
-                ),
-                Color.DarkGreen,
-                Color.DarkRed
-                )
-            Height: =28
-            OnSelect: =Select(Parent)
-            Width: =28
-            X: =195
-            Y: =Label3_37.Y
-            ZIndex: =14
-
-        Label3_38 As label:
-            AutoHeight: =true
-            Color: =Colors.Primary1
-            Font: =Font.Arial
-            FontWeight: =FontWeight.Semibold
-            Height: =70
-            OnSelect: =Select(Parent)
-            Size: =12
-            Text: |-
-                ="Comentarios: " & ThisItem.Comentarios
-            Width: =237
-            X: =15
-            Y: =Label3_37.Y + Label3_37.Height
-            ZIndex: =15
+            ZIndex: =9
 
     Image2_2 As image:
         Height: =48
-        Image: ='BorgWarner_Logo_Final_Rv.White'
+        Image: =LOGO2
         Width: =279
+        X: =72
         ZIndex: =4
 
     Label3_14 As label:
@@ -256,7 +184,7 @@ Grupos_Screen As screen:
         OnSelect: =
         Size: =18
         Text: |
-            ="Grupos de: " & varFormItemSelected.Title & Char(10)
+            ="Grupos de: " & varCursoActual.Nombre & Char(10)
         Width: =957
         X: =338
         Y: =55
@@ -280,7 +208,7 @@ Grupos_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Plan_Form
+            Default: =varCursoActual.Plan_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -291,7 +219,7 @@ Grupos_Screen As screen:
             HoverColor: =Colors.White
             HoverFill: =Colors.Primary3
             Items: |-
-                =ForAll(Distinct('Cursos Formativos',Plan_Form), {Result: ThisRecord.Value})
+                =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
             OnChange: =
             OnSelect: =
             PaddingRight: =13.34
@@ -316,7 +244,7 @@ Grupos_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Denominacion_Plan
+            Default: =varCursoActual.Denominacion_Plan
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -329,7 +257,7 @@ Grupos_Screen As screen:
             Items: |-
                 =ForAll(Distinct(
                     Filter(
-                        'Cursos Formativos',
+                        CursosFormativos_Plan,
                         Plan_Form = dd_Curs_Plan_1.Selected.Result
                     ),
                     Denominacion_Plan
@@ -358,7 +286,7 @@ Grupos_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Area_Form
+            Default: =varCursoActual.Area_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -371,7 +299,7 @@ Grupos_Screen As screen:
             Items: |-
                 =ForAll(Distinct(
                     Filter(
-                        'Cursos Formativos',
+                        CursosFormativos_Plan,
                         Denominacion_Plan = dd_Curs_Denom_1.Selected.Result
                     ),
                     Area_Form
@@ -481,7 +409,7 @@ Grupos_Screen As screen:
             Icon: =Icon.Save
             OnSelect: |-
                 =SubmitForm(Form1_1);
-                Refresh(Grupos_Formacion)
+                Refresh(GruposFormacion)
             X: =1752
             Y: =152
             ZIndex: =12
@@ -512,7 +440,7 @@ Grupos_Screen As screen:
 
         Form1_1 As form:
             BorderColor: =Colors.Primary1
-            DataSource: =Grupos_Formacion
+            DataSource: =GruposFormacion
             DefaultMode: =FormMode.New
             Height: =826
             Item: =gal_Grupos.Selected
@@ -528,7 +456,7 @@ Grupos_Screen As screen:
                 DataField: ="F_ini_grupo"
                 Default: =ThisItem.F_Ini_grupo
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,F_Ini_grupo)
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Ini_grupo)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -594,7 +522,7 @@ Grupos_Screen As screen:
                 DataField: ="F_Fin_grupo"
                 Default: =ThisItem.F_Fin_grupo
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,F_Fin_grupo)
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Fin_grupo)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -658,12 +586,12 @@ Grupos_Screen As screen:
             Nom_Curso_DataCard1 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
                 DataField: ="Nom_Curso"
-                Default: =varFormItemSelected.Curso
+                Default: =varCursoActual.Title
                 DisplayMode: =DisplayMode.View
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,Nom_Curso)
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Nom_Curso)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo([@Grupos_Formacion], DataSourceInfo.MaxLength, Nom_Curso)
+                MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Nom_Curso)
                 Required: =false
                 Update: =DataCardValue7.Text
                 Width: =532
@@ -726,9 +654,9 @@ Grupos_Screen As screen:
             ID_Curso_DataCard1 As typedDataCard.numberEditCard:
                 BorderStyle: =BorderStyle.Solid
                 DataField: ="ID_Curso"
-                Default: =varFormItemSelected.ID
+                Default: =varCursoActual.ID
                 DisplayMode: =DisplayMode.View
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,ID_Curso)
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,ID_Curso)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -800,7 +728,7 @@ Grupos_Screen As screen:
                         Parent.DisplayMode,
                         DisplayMode.View
                     )
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,'Datos adjuntos')
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,'Datos adjuntos')
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =300
                 Required: =false
@@ -867,10 +795,10 @@ Grupos_Screen As screen:
                 DataField: ="Title"
                 Default: =ThisItem.Title
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,Title)
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Title)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo([@Grupos_Formacion], DataSourceInfo.MaxLength, Title)
+                MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Title)
                 Required: =true
                 Update: =DataCardValue12.Text
                 Width: =532
@@ -891,58 +819,15 @@ Grupos_Screen As screen:
                 DataCardValue12 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     Default: |-
-                        =//If(
-                        //    Form1_1.Mode = FormMode.New;
-                        //    "G" & 
-                        //    If(
-                        //        (Last(
-                        //        Split(
-                        //            First(
-                        //                SortByColumns(
-                        //                    Filter(
-                        //                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID
-                        //                        );
-                        //                    "Title";SortOrder.Descending
-                        //                )
-                        //            ).Title;
-                        //            "G"
-                        //        )).Value + 1) < 10;
-                        //        "0" & Last(
-                        //        Split(
-                        //            First(
-                        //                SortByColumns(
-                        //                    Filter(
-                        //                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID
-                        //                        );
-                        //                    "Title";SortOrder.Descending
-                        //                )
-                        //            ).Title;
-                        //            "G"
-                        //        )).Value + 1;
-                        //        Last(
-                        //        Split(
-                        //            First(
-                        //                SortByColumns(
-                        //                    Filter(
-                        //                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID
-                        //                        );
-                        //                    "Title";SortOrder.Descending
-                        //                )
-                        //            ).Title;
-                        //            "G"
-                        //        )).Value + 1
-                        //    );
-                        //    Parent.Default
-                        //)
+                        =
                         
                         If(
                             Form1_1.Mode = FormMode.New,
                             With(
                                 {
-                                    // 1. Buscamos el último grupo en la BD UNA SOLA VEZ
                                     ultimoRegistro: First(
                                         SortByColumns(
-                                            Filter(Grupos_Formacion, ID_Curso = varFormItemSelected.ID),
+                                            Filter(GruposFormacion, ID_Curso = varCursoActual.ID),
                                             "Title", 
                                             SortOrder.Descending
                                         )
@@ -950,8 +835,6 @@ Grupos_Screen As screen:
                                 },
                                 With(
                                     {
-                                        // 2. Extraemos el número y le sumamos 1. 
-                                        // Si es el primer grupo de la historia (IsBlank), empezamos por 1.
                                         siguienteNum: If(
                                             IsBlank(ultimoRegistro),
                                             1,
@@ -959,12 +842,10 @@ Grupos_Screen As screen:
                                         )
                                     },
                                     
-                                    // 3. Montamos el texto final usando Text() para los ceros (Magia pura)
                                     "G" & Text(siguienteNum, "00")
                                 )
                             ),
                             
-                            // Si no es un formulario nuevo, mantiene el que tenía
                             Parent.Default
                         )
                     DelayOutput: =true
@@ -1010,9 +891,9 @@ Grupos_Screen As screen:
         Color: =RGBA(255, 255, 255, 1)
         Height: =48
         Icon: =Icon.ArrowLeft
-        OnSelect: =Back()
+        OnSelect: =Navigate(Cursos_Screen)
         Width: =55
-        X: =279
+        X: =17
         ZIndex: =20
 
     Icon3 As icon.View:
@@ -1043,28 +924,6 @@ Grupos_Screen As screen:
         X: =629
         ZIndex: =22
 
-    Button2_1 As button:
-        Fill: =Colors.Primary1
-        OnSelect: |-
-            =/*Copy("46" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1547" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1698" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1867" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) )*/
-            
-            
-            
-            Copy(
-                Concat(
-                    Filter(gal_Grupos.AllItems, !Subido_A_Milena), 
-                    Last(Split(Title,"G")).Value & Char(9) & Title &  Char(9) & "R" & Char(9) & Text(F_Ini_grupo,"dd/mm/yyyy") & Char(9) & Text(F_Fin_grupo, "dd/mm/yyyy") & Char(9) & "" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(13)
-                )
-            )
-        Text: ="Exportar grupos"
-        Width: =217
-        X: =1414
-        Y: =54
-        ZIndex: =23
-
     Checkbox1 As checkbox:
         Text: ="Ver solo NO Subidos"
         Visible: =false
@@ -1072,25 +931,4 @@ Grupos_Screen As screen:
         X: =1179
         Y: =48
         ZIndex: =24
-
-    Button2_3 As button:
-        Fill: =Colors.Primary1
-        OnSelect: |-
-            =ForAll(
-                Filter(gal_Grupos.AllItems, Subido_A_Milena = false),
-                Patch(
-                    Grupos_Formacion,
-                    ThisRecord,
-                    {
-                        Subido_A_Milena: true
-                    }
-                )
-            );
-            
-            Refresh(Grupos_Formacion)
-        Text: ="Confirmar Guardado"
-        Width: =217
-        X: =1675
-        Y: =54
-        ZIndex: =25
 

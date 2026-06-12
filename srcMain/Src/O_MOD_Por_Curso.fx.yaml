@@ -1,0 +1,628 @@
+O_MOD_Por_Curso As screen:
+    ContentLanguage: =""
+    Fill: =Color.White
+    LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+
+    Header_Title_1 As Header_Title:
+        ScreenName: ="CONSULTA FORMACIÓN RECIBIDA"
+        ZIndex: =1
+
+    IconBack_3 As icon:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =70
+        Icon: =Icon.ArrowLeft
+        OnSelect: |-
+            =Navigate(Intro_Screen, ScreenTransition.CoverRight);
+            Reset(Fecha_Formaciones);
+            Reset(Plan_Formativo_1);
+            Reset(Area_Formativa_1);
+            Reset(Curso_Formativo_1);
+            Reset(Toggle1)
+        Width: =50
+        X: =13
+        ZIndex: =2
+
+    Label6_12 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Plan formativo:"
+        Width: =183
+        X: =484
+        Y: =545
+        ZIndex: =3
+
+    Area_Formativa_1 As combobox:
+        BorderColor: =Colors.Primary1
+        ChevronBackground: =Colors.Primary1
+        ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+        Default: |-
+            =//{Result: ThisItem.COD}
+        DefaultSelectedItems: |-
+            ={Result: ""}
+        DisplayFields: =["Value"]
+        Height: =35
+        HoverFill: =
+        InputTextPlaceholder: ="Seleccionar área"
+        IsSearchable: =false
+        Items: |-
+            =Distinct(
+                Filter(
+                    CursosFormativos_Plan,
+                    Plan_Form = Plan_Formativo_1.Selected.Value
+                ),
+                Area_Form
+            )
+        OnChange: =Reset(Curso_Formativo_1)
+        OnSelect: =
+        PressedBorderColor: =Self.Fill
+        SearchFields: =["Value"]
+        SearchItems: =Search(Distinct(Filter(CursosFormativos_Plan,Plan_Form=Plan_Formativo_1.Selected.Value),Area_Form),Area_Formativa_1.SearchText,Value)
+        SelectionFill: =Colors.Primary1
+        SelectMultiple: =false
+        Size: =12
+        Width: =183
+        X: =484
+        Y: =680
+        ZIndex: =4
+
+    Label6_13 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Área:"
+        Width: =183
+        X: =484
+        Y: =650
+        ZIndex: =5
+
+    Curso_Formativo_1 As combobox:
+        BorderColor: =Colors.Primary1
+        ChevronBackground: =Colors.Primary1
+        ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+        Default: |-
+            =//{Result: ThisItem.COD}
+        DefaultSelectedItems: |-
+            ={Result: ""}
+        DisplayFields: =["Value"]
+        DisplayMode: |-
+            =If(
+                Area_Formativa_1.Selected.Value = Blank(),
+                DisplayMode.Disabled,
+                DisplayMode.Edit
+            )
+        Height: =35
+        HoverFill: =
+        InputTextPlaceholder: |-
+            ="Seleccionar curso
+            "
+        IsSearchable: =false
+        Items: |-
+            =Distinct(
+                Filter(
+                    CursosFormativos_Plan,
+                    Plan_Form = Plan_Formativo_1.Selected.Value,
+                    Area_Form = Area_Formativa_1.Selected.Value
+                ),
+                Title
+            )
+        OnChange: =
+        OnSelect: =
+        PressedBorderColor: =Self.Fill
+        SearchFields: =["Value"]
+        SearchItems: =Search(Distinct(Filter(CursosFormativos_Plan,Plan_Form=Plan_Formativo_1.Selected.Value,Area_Form=Area_Formativa_1.Selected.Value),Title),Curso_Formativo_1.SearchText,Value)
+        SelectionFill: =Colors.Primary1
+        SelectMultiple: =false
+        Size: =12
+        Width: =400
+        X: =376
+        Y: =790
+        ZIndex: =6
+
+    Label6_14 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Curso:"
+        Width: =400
+        X: =376
+        Y: =760
+        ZIndex: =7
+
+    Plan_Formativo_1 As dropdown:
+        BorderColor: =Colors.Primary1
+        BorderThickness: =1
+        ChevronBackground: =Colors.Primary1
+        ChevronDisabledBackground: =Colors.Gray
+        ChevronDisabledFill: =Colors.LightGray
+        ChevronFill: =Colors.White
+        ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+        ChevronHoverFill: =Colors.White
+        Color: =Input.Color
+        Default: =Year(Today())
+        DisabledBorderColor: =Colors.Gray
+        DisabledColor: =Colors.Gray
+        DisabledFill: =Colors.LightGray
+        Fill: =Colors.White
+        FocusedBorderThickness: =Input.FocusedBorderThickness
+        Font: =Font.Arial
+        Height: =35
+        HoverColor: =Colors.White
+        HoverFill: =Colors.Primary3
+        Items: =Distinct(CursosFormativos_Plan, Plan_Form)
+        OnChange: =Reset(Area_Formativa_1)
+        OnSelect: =
+        PaddingRight: =13.34
+        PaddingTop: =13.34
+        PressedColor: =Colors.White
+        PressedFill: =Self.Fill
+        SelectionColor: =Colors.White
+        SelectionFill: =Colors.Primary1
+        Width: =183
+        X: =484
+        Y: =575
+        ZIndex: =8
+
+    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+        '#CopilotOverlayLabel': ="Filtrada"
+        BorderColor: =Colors.Primary1
+        BorderThickness: =1
+        DelayItemLoading: =true
+        Height: =919
+        Items: |-
+            =
+            With(
+                {
+                    varCursoID: Value(
+                        LookUp(
+                            CursosFormativos_Plan, 
+                            Title = Curso_Formativo_1.Selected.Value && Plan_Form = Plan_Formativo_1.Selected.Value
+                        ).ID_CURSO_UNICO
+                    )
+                },
+                
+                With(
+                    {
+                        RegistrosDelCurso: Filter(
+                            RegistrosFormacion,
+                            Formador = false,
+                            ID_Curso = varCursoID 
+                        )
+                    },
+                    
+                    Sort(
+                        RegistrosDelCurso,
+                        Creado,
+                        SortOrder.Descending
+                    )
+                )
+            )
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplateFill: |-
+            =With(
+                {
+                    varIDMaestro: LookUp(
+                        CursosFormativos_Plan, 
+                        Title = Curso_Formativo_1.Selected.Value && 
+                        Plan_Form = Plan_Formativo_1.Selected.Value
+                    ).ID_CURSO_UNICO
+                },
+                
+                With(
+                    {
+                        CursoMaestro: LookUp(
+                            CursosFormativos, 
+                            Title = varIDMaestro
+                        )
+                    },
+                    
+                    If(
+                        CursoMaestro.EVALUACIÓN = false || IsBlank(CursoMaestro.EVALUACIÓN),
+                        If(
+                            ThisItem.'Tiene datos adjuntos' = true, 
+                            ColorFade(Color.Green, 70%), 
+                            ColorFade(Color.Red, 70%)
+                        ),
+            
+                        CursoMaestro.EVALUACIÓN = true && CursoMaestro.METODO_EVAL.Value = "EXAMEN",
+                        If(
+                            ThisItem.Apto = true, 
+                            ColorFade(Color.Green, 70%), 
+                            ColorFade(Color.Red, 70%)
+                        ),
+            
+                        CursoMaestro.EVALUACIÓN = true && CursoMaestro.METODO_EVAL.Value = "ILUO",
+                        If(
+                            !IsBlank(ThisItem.ILUO), 
+                            ColorFade(Color.Green, 70%), 
+                            ColorFade(Color.Red, 70%)
+                        ),
+            
+                        ColorFade(Color.Gray, 70%)
+                    )
+                )
+            )
+        TemplatePadding: =0
+        TemplateSize: =50
+        Width: =568
+        X: =1214
+        Y: =161
+        ZIndex: =9
+
+        Icon_PDF_1 As icon:
+            Color: =Colors.Primary1
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =50
+            Icon: =Icon.View
+            OnSelect: |-
+                =Select(Parent);
+                Set(varPDF, true);
+                Set(varID_Grupo, First(Filter(RegistrosFormacion, Num_Empleado = Value(Num_Empleado_Por_Curso.Text), First(Filter(CursosFormativos_Plan, Title = Curso_Formativo_1.Selected.Value, Plan_Form = Plan_Formativo_1.Selected.Value)).ID_CURSO_UNICO = ID_Curso)).ID_Grupo);
+                Set(varDesdeCursos, true);
+                Navigate(Formed_Screen,ScreenTransition.Cover)
+            Width: =50
+            X: =500
+            ZIndex: =1
+
+        Num_Empleado_Por_Curso As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            Height: =Gallery1.TemplateHeight
+            Text: =ThisItem.Num_Empleado
+            Width: =95
+            ZIndex: =2
+
+        Label6_15 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            Height: =Gallery1.TemplateHeight
+            Text: =ThisItem.Nom_Empleado
+            Width: =290
+            X: =95
+            ZIndex: =3
+
+        Label6_16 As label:
+            Align: =Align.Center
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            Height: =Gallery1.TemplateHeight
+            Text: =Text(DateTimeValue(ThisItem.Creado),DateTimeFormat.ShortDate,"ca-ES")
+            Width: =110
+            X: =385
+            ZIndex: =4
+
+    Label3_38 As label:
+        Align: =Align.Center
+        BorderColor: =Colors.Primary1
+        BorderThickness: =2
+        Color: =Colors.Primary1
+        Fill: =RGBA(227, 234, 243, 1)
+        FontWeight: =FontWeight.Bold
+        Text: ="Nº empl."
+        Width: =95
+        X: =1214
+        Y: =126
+        ZIndex: =10
+
+    Label3_42 As label:
+        Align: =Align.Center
+        BorderColor: =Colors.Primary1
+        BorderThickness: =2
+        Color: =Colors.Primary1
+        Fill: =RGBA(227, 234, 243, 1)
+        FontWeight: =FontWeight.Bold
+        Text: ="Nombre"
+        Width: =290
+        X: =1309
+        Y: =126
+        ZIndex: =11
+
+    Label3_46 As label:
+        Align: =Align.Center
+        BorderColor: =Colors.Primary1
+        BorderThickness: =2
+        Color: =Colors.Primary1
+        Fill: =RGBA(227, 234, 243, 1)
+        FontWeight: =FontWeight.Bold
+        Text: ="Fecha"
+        Width: =110
+        X: =1599
+        Y: =126
+        ZIndex: =12
+
+    Fecha_Formaciones As datepicker:
+        BorderColor: =Colors.Primary1
+        BorderThickness: =1
+        CalendarHeaderFill: =App.Theme.Colors.Primary
+        DisplayMode: |-
+            =If(
+                varFecha = true,
+                DisplayMode.Edit,
+                DisplayMode.Disabled
+            )
+        Font: =Font.Arial
+        Format: ="dd/mm/yyyy"
+        Height: =35
+        HoverDateFill: =App.Theme.Colors.Lighter70
+        IconBackground: =Colors.Primary1
+        OnChange: =
+        OnSelect: =
+        SelectedDateFill: =App.Theme.Colors.Primary
+        Size: =13
+        StartOfWeek: =StartOfWeek.Monday
+        Width: =183
+        X: =484
+        Y: =477
+        ZIndex: =13
+
+    Label6_18 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Fecha:"
+        Width: =183
+        X: =484
+        Y: =447
+        ZIndex: =14
+
+    Toggle1 As toggleSwitch:
+        FalseText: ="Activar fecha"
+        Height: =40
+        OnCheck: |-
+            =UpdateContext({varFecha:true})
+        OnUncheck: |-
+            =UpdateContext({varFecha:false})
+        Size: =12
+        TrueFill: =Colors.Primary1
+        TrueText: ="Desactivar fecha"
+        Width: =180
+        X: =688
+        Y: =472
+        ZIndex: =15
+
+    Num_Desde As text:
+        Align: =Align.Center
+        BorderColor: |-
+            =If(
+                Num_Hasta.Text <> "" && Num_Desde.Text = "",
+                Colors.Red,
+                Colors.Primary1
+            )
+        BorderThickness: =1
+        Default: =
+        Height: =32
+        HintText: ="Nº Desde"
+        OnChange: =
+        OnSelect: =
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Reset: =true
+        Size: =12
+        VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+        Width: =130
+        X: =414
+        Y: =385
+        ZIndex: =16
+
+    Num_Hasta As text:
+        Align: =Align.Center
+        BorderColor: |-
+            =If(
+                Num_Desde.Text <> "" && Num_Hasta.Text = "",
+                Colors.Red,
+                Colors.Primary1
+            )
+        BorderThickness: =1
+        Default: =
+        Height: =32
+        HintText: |-
+            ="Nº 
+            Hasta"
+        OnChange: =
+        OnSelect: =
+        RadiusBottomLeft: =0
+        RadiusBottomRight: =0
+        RadiusTopLeft: =0
+        RadiusTopRight: =0
+        Reset: =true
+        Size: =12
+        VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+        Width: =130
+        X: =608
+        Y: =385
+        ZIndex: =17
+
+    Label6_19 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Buscar por números de empleados:"
+        Width: =324
+        X: =414
+        Y: =355
+        ZIndex: =18
+
+    Icon5_2 As icon:
+        Color: =Colors.Primary1
+        Height: =32
+        Icon: =Icon.ArrowRight
+        X: =544
+        Y: =385
+        ZIndex: =19
+
+    Label6_20 As label:
+        Color: =RGBA(168, 0, 0, 1)
+        Height: =29
+        Text: ="*Selección de números incorrecto"
+        Visible: |-
+            =If(
+                Value(Num_Hasta.Text) < Value(Num_Desde.Text),
+                true,
+                false
+            )
+        Width: =324
+        X: =414
+        Y: =326
+        ZIndex: =20
+
+    Label6_21 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =637
+        Text: ="Se muestran los operaros que sí han realizado el curso seleccionado."
+        Width: =138
+        X: =1781
+        Y: =271
+        ZIndex: =21
+
+    Label10 As label:
+        Align: =Align.Center
+        Fill: =RGBA(237, 237, 237, 0.35)
+        FontWeight: =FontWeight.Semibold
+        Height: =911
+        Size: =20
+        Text: ="Sin resultados..."
+        Visible: |-
+            =If(
+                Gallery1.AllItemsCount = 0,
+                true,
+                false
+            )
+        Width: =516
+        X: =1265
+        Y: =166
+        ZIndex: =22
+
+    Label6_22 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Número de operarios formados:"
+        Width: =324
+        X: =284
+        Y: =271
+        ZIndex: =23
+
+    Label6_23 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: |-
+            ="Número de horas formativas:"
+        Width: =324
+        X: =284
+        Y: =307
+        ZIndex: =24
+
+    Label6_24 As label:
+        AutoHeight: =true
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Text: =CountRows(Gallery1.AllItems)
+        Width: =144
+        X: =594
+        Y: =271
+        ZIndex: =25
+
+    Label6_25 As label:
+        AutoHeight: =true
+        Color: |-
+            =If(
+                Self.Text = "El curso no está correctamente configurado", 
+                Color.Red, 
+                Colors.Primary1 // 👈 Cambia este RGBA por tu color de texto normal si es distinto
+            )
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        Size: |-
+            =If(
+                Self.Text = "El curso no está correctamente configurado", 
+                10, // 👈 Tamaño pequeño para el aviso
+                13  // 👈 Tamaño normal para el número de horas
+            )
+        Text: |-
+            =/*With(
+                {
+                    // FASE 1: Contamos operarios y localizamos el curso seleccionado
+                    NumeroOperarios: CountRows(Gallery1.AllItems);
+                    CursoAnual: LookUp(
+                        'Cursos Formativos'; 
+                        Title = Curso_Formativo_1.Selected.Value && Plan_Form = Plan_Formativo_1.Selected.Value
+                    )
+                };
+                
+                With(
+                    {
+                        HorasDelCurso: Value(
+                            LookUp(
+                                CursosFormativosUnicos; 
+                                ID = CursoAnual.ID_CURSO_UNICO 
+                            ).HORAS
+                        )
+                    };
+                    
+                    // FASE 3: Cálculo final
+                    NumeroOperarios * HorasDelCurso
+                )
+            )*/
+            
+            With(
+                {
+                    // FASE 1: Buscamos el curso y contamos operarios
+                    NumeroOperarios: CountRows(Gallery1.AllItems),
+                    CursoAnual: LookUp(
+                        CursosFormativos_Plan, 
+                        Title = Curso_Formativo_1.Selected.Value && Plan_Form = Plan_Formativo_1.Selected.Value
+                    )
+                },
+                
+                With(
+                    {
+                        // FASE 2: PURIFICACIÓN
+                        IdPuro: Value(CursoAnual.ID_CURSO_UNICO) 
+                    },
+                    
+                    With(
+                        {
+                            // FASE 3: Búsqueda delegable
+                            HorasDelCurso: Value(
+                                LookUp(
+                                    CursosFormativos, 
+                                    Title = Text(IdPuro) 
+                                ).HORAS
+                            )
+                        },
+                        
+                        If(
+                            IsBlank(HorasDelCurso),
+                            "El curso no está correctamente configurado",
+                            NumeroOperarios * HorasDelCurso
+                        )
+                    )
+                )
+            )
+        Width: =284
+        X: =584
+        Y: =307
+        ZIndex: =26
+

@@ -1,0 +1,239 @@
+Intro_Screen As screen:
+    BackgroundImage: =
+    Fill: =Colors.Primary3
+
+    Header_Title_3 As Header_Title:
+        ScreenName: ="CONSULTA FORMACIÓN REGISTRADA"
+
+    Button1_1 As button:
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =758
+        RadiusBottomLeft: =40
+        RadiusBottomRight: =40
+        RadiusTopLeft: =40
+        RadiusTopRight: =40
+        Text: =""
+        Width: =1423
+        X: =278
+        Y: =159
+        ZIndex: =1
+
+    Button3_1 As button:
+        Fill: =Colors.Primary1
+        Height: =175
+        HoverColor: =Colors.White
+        HoverFill: =ColorFade(Colors.Primary1, -20%)
+        OnSelect: |-
+            =Refresh(RegistrosFormacion);
+            
+            ClearCollect(
+                colTodosCursos,
+                Sort(Filter(CursosFormativos, ID <> 18), Title, SortOrder.Ascending)
+            );
+            
+            
+            
+            
+            Concurrent(
+                ClearCollect(
+                    colPrimeros, 
+                    Sort(Personal, ID, SortOrder.Ascending)
+                ),
+                ClearCollect(
+                    colUltimos, 
+                    Sort(Personal, ID, SortOrder.Descending)
+                )
+            );
+            
+            
+            ClearCollect(
+                colTodaLaProgramacion,
+                colPrimeros,
+                colUltimos
+            );
+            
+            ClearCollect(
+                colTodosLosOperarios,
+                Sort(
+                    Distinct(colTodaLaProgramacion, Numero_Empresa),
+                    Value,
+                    SortOrder.Ascending
+                )
+            );
+            
+            Clear(colRegistros);
+            Clear(colMatrizFormacion);
+            
+            
+            
+            
+            Navigate(O_MOD_Por_Operario, ScreenTransition.Cover)
+        PaddingBottom: =20
+        PressedColor: =Colors.White
+        PressedFill: =ColorFade(Colors.Primary1, -20%)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =22
+        Text: ="Consulta formación por OPERARIO"
+        VerticalAlign: =VerticalAlign.Bottom
+        Width: =511
+        X: =459
+        Y: =451
+        ZIndex: =2
+
+    Image2_3 As image:
+        Height: =106
+        Image: =LOGO1
+        Width: =690
+        X: =647
+        Y: =244
+        ZIndex: =3
+
+    Icon12_26 As icon:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =52
+        Icon: =Icon.Home
+        OnSelect: |-
+            =Launch("https://apps.powerapps.com/play/e/default-9f904e8a-2bf7-4b81-ac8a-a560eae844b3/a/8fa4ffd7-96cd-49c0-b772-2332fafb22cb?tenantId=9f904e8a-2bf7-4b81-ac8a-a560eae844b3&sourcetime=2023-08-08%2014%3A18%3A06Z")
+        Width: =47
+        X: =12
+        Y: =10
+        ZIndex: =4
+
+    Icon4_1 As icon:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =67
+        Icon: =Icon.People
+        OnSelect: |-
+            =Refresh(RegistrosFormacion);
+            
+            ClearCollect(
+                colTodosCursos,
+                Sort(Filter(CursosFormativos, ID <> 18), Title, SortOrder.Ascending)
+            );
+            
+            
+            
+            
+            Concurrent(
+                ClearCollect(
+                    colPrimeros, 
+                    Sort(Personal, ID, SortOrder.Ascending)
+                ),
+                ClearCollect(
+                    colUltimos, 
+                    Sort(Personal, ID, SortOrder.Descending)
+                )
+            );
+            
+            
+            ClearCollect(
+                colTodaLaProgramacion,
+                colPrimeros,
+                colUltimos
+            );
+            
+            ClearCollect(
+                colTodosLosOperarios,
+                Sort(
+                    Distinct(colTodaLaProgramacion, Numero_Empresa),
+                    Value,
+                    SortOrder.Ascending
+                )
+            );
+            
+            Clear(colRegistros);
+            Clear(colMatrizFormacion);
+            
+            
+            
+            
+            Navigate(O_MOD_Por_Operario, ScreenTransition.Cover)
+        Width: =62
+        X: =685
+        Y: =475
+        ZIndex: =5
+
+    Label5 As label:
+        Align: =Align.Center
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Semibold
+        Height: =88
+        Size: =35
+        Text: ="Consulta de la formación registrada"
+        Width: =1062
+        X: =459
+        Y: =344
+        ZIndex: =6
+
+    Button3_4 As button:
+        Fill: =Colors.Primary1
+        Height: =175
+        HoverColor: =Colors.White
+        HoverFill: =ColorFade(Colors.Primary1, -20%)
+        OnSelect: |-
+            =Refresh(RegistrosFormacion);
+            Navigate(O_MOD_Por_Curso,ScreenTransition.Cover)
+        PaddingBottom: =20
+        PressedColor: =Colors.White
+        PressedFill: =ColorFade(Colors.Primary1, -20%)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =22
+        Text: ="Consulta formación por CURSO"
+        VerticalAlign: =VerticalAlign.Bottom
+        Width: =511
+        X: =1016
+        Y: =451
+        ZIndex: =7
+
+    Icon4_3 As icon:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =67
+        Icon: =Icon.People
+        OnSelect: |-
+            =Refresh(RegistrosFormacion);
+            Navigate(O_MOD_Por_Curso,ScreenTransition.Cover)
+        Width: =62
+        X: =1242
+        Y: =475
+        ZIndex: =8
+
+    Button3_2 As button:
+        Fill: =Colors.Primary1
+        Height: =175
+        HoverColor: =Colors.White
+        HoverFill: =ColorFade(Colors.Primary1, -20%)
+        OnSelect: |-
+            =
+            Navigate(Cursos_Screen, ScreenTransition.Cover)
+        PaddingBottom: =20
+        PressedColor: =Colors.White
+        PressedFill: =ColorFade(Colors.Primary1, -20%)
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =22
+        Text: ="Registro Cursos"
+        VerticalAlign: =VerticalAlign.Bottom
+        Width: =511
+        X: =734
+        Y: =671
+        ZIndex: =9
+
+    Icon8 As icon.Tray:
+        Color: =Color.White
+        Icon: =Icon.Tray
+        OnSelect: |-
+            =
+            Navigate(Cursos_Screen, ScreenTransition.Cover)
+        X: =960
+        Y: =701
+        ZIndex: =10
+

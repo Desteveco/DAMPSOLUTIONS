@@ -53,15 +53,15 @@ Cursos_Screen As screen:
             SortByColumns(
                 Filter(
                     CursosFormativos_Plan,
-                    Plan_Form = dd_Curs_Plan.Selected. || dd_Curs_Plan.Selected.Título = Blank(),
-                    Area_Form = dd_Curs_Area.Selected.Título || dd_Curs_Area.Selected.Título = Blank()
+                    Plan_Form = dd_Curs_Plan.Selected.Title || dd_Curs_Plan.Selected.Title = Blank(),
+                    Area_Form = dd_Curs_Area.Selected.Title || dd_Curs_Area.Selected.Title = Blank()
                 ),
-                "Curso",
+                "{Name}",
                 SortOrder.Ascending
             )
         Layout: =Layout.Vertical
         OnSelect: |-
-            =Set(varFormItemSelected, ThisItem);
+            =
             ViewForm(Form1)
         TemplatePadding: =10
         TemplateSize: =314
@@ -109,7 +109,7 @@ Cursos_Screen As screen:
             Text: |-
                 =LookUp(
                     CursosFormativos, 
-                    ID = Value(ThisItem.ID_CURSO_UNICO)
+                    Title = ThisItem.ID_CURSO_UNICO
                 ).TITULO
             Width: =237
             X: =15
@@ -127,7 +127,7 @@ Cursos_Screen As screen:
                 ="Curso: " & ThisItem.Curso
             Width: =237
             X: =15
-            Y: =113
+            Y: =168
             ZIndex: =4
 
         Label3_5 As label:
@@ -151,24 +151,15 @@ Cursos_Screen As screen:
                 ="Area Form: " & ThisItem.Area_Form
             Width: =237
             X: =15
-            Y: =142
+            Y: =197
             ZIndex: =6
 
     Image2_1 As image:
         Height: =48
-        Image: ='BorgWarner_Logo_Final_Rv.White'
+        Image: =LOGO2
         Width: =279
         X: =77
         ZIndex: =5
-
-    Icon4_1 As icon.Hamburger:
-        Color: =RGBA(255, 255, 255, 1)
-        Height: =35
-        Icon: =Icon.Hamburger
-        Width: =36
-        X: =41
-        Y: =5
-        ZIndex: =15
 
     Label3_28 As label:
         Align: =Align.Center
@@ -346,7 +337,7 @@ Cursos_Screen As screen:
 
         Form1 As form:
             BorderColor: =Colors.Primary1
-            DataSource: =CursosFormativos
+            DataSource: =CursosFormativos_Plan
             DefaultMode: =FormMode.New
             Height: =883
             Item: =gal_Cursos.Selected
@@ -356,78 +347,31 @@ Cursos_Screen As screen:
                 Set(varCursoActual, Self.LastSubmit);
                 
                 
-                Notify("✅ Curso creado: " & varCursoActual.Title, NotificationType.Success);
-                If(
-                    
-                    Value(dd_Curs_Plan_3.Selected.Value) = 1,
-                    
-                    UpdateContext({ 
-                        varNuevaSesion: Patch(
-                            'Sesiones Formación',
-                            Defaults('Sesiones Formación'),
-                            {
-                                ID_Curso: Self.LastSubmit.ID,
-                                Nombre: "Sesión única de " & varCursoActual.Title,
-                                Objetivos: Self.LastSubmit.Objetivo, 
-                                Contenidos: Self.LastSubmit.Contenidos
-                            }
-                        )
-                    });
-                
-                    Refresh('Sesiones Formación');
-                    UpdateContext({ varFilaEnEdicion: varNuevaSesion.ID });
-                    ,
-                
-                   
-                   
-                   
-                    Value(dd_Curs_Plan_3.Selected.Value) > 1,
-                    
-                    ForAll(
-                        Sequence(Value(dd_Curs_Plan_3.Selected.Value)) As BucleSesion,
-                        Patch(
-                            'Sesiones Formación',
-                            Defaults('Sesiones Formación'),
-                            {
-                                ID_Curso: Self.LastSubmit.ID,
-                                Nombre: "Sesión " & BucleSesion.Value & " de " & varFormItemSelected.Title,
-                                // Hereda los valores igual que en el Caso 1
-                                Objetivos: Self.LastSubmit.Objetivo,
-                                Contenidos: Self.LastSubmit.Contenidos
-                            }
-                        )
-                    );
-                    
-                    Refresh('Sesiones Formación');
-                    
-                )
+                Notify(" Curso creado: " & varCursoActual.Title, NotificationType.Success);
             Width: =565
             X: =1348
             Y: =192
             ZIndex: =10
 
             Plan_Form_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="Plan_Form"
+                DataField: ="field_0"
                 Default: =ThisItem.Plan_Form
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([CursosFormativos],DataSourceInfo.DisplayName,Plan_Form)
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Plan_Form)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo([@CursosFormativos], DataSourceInfo.MaxLength, Plan_Form)
-                Required: =true
-                Update: =Dropdown_Plan.Selected.Título
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Plan_Form)
+                Required: =false
+                Update: =Dropdown_Plan.Selected.Title
                 Width: =282
                 X: =0
                 Y: =0
                 ZIndex: =1
 
-                DataCardKey8 As label:
+                DataCardKey10 As label:
                     AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
                     Height: =34
-                    Size: =12
                     Text: ="Plan Formativo"
                     Width: =Parent.Width - 60
                     Wrap: =false
@@ -452,12 +396,12 @@ Cursos_Screen As screen:
 
                 StarVisible8 As label:
                     Align: =Align.Center
-                    Height: =DataCardKey8.Height
+                    Height: =DataCardKey10.Height
                     Text: ="*"
                     Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                     Width: =30
                     Wrap: =false
-                    Y: =DataCardKey8.Y
+                    Y: =DataCardKey10.Y
                     ZIndex: =4
 
                 Dropdown_Plan As dropdown:
@@ -469,135 +413,41 @@ Cursos_Screen As screen:
                             DisplayMode.Edit, 
                             DisplayMode.View
                         )
-                    Items: =Filter('Desplegables Formaciones',Tipo.Value = "Plan Formativo")
+                    Items: =Filter('Desplegables Formación',Tipo.Value = "Plan Formativo")
                     Width: =Parent.Width - 60
                     X: =30
                     Y: =47
-                    ZIndex: =5
+                    ZIndex: =12
 
             Area_Form_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="Area_Form"
+                DataField: ="field_5"
                 Default: =ThisItem.Area_Form
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Area_Form)
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Area_Form)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo(CursosFormativos, DataSourceInfo.MaxLength, Area_Form)
-                Required: =true
-                Update: =Dropdown_Area.Selected.Título
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Area_Form)
+                Required: =false
+                Update: =DataCardValue4.Selected.Title
                 Width: =282
                 X: =1
                 Y: =0
                 ZIndex: =1
 
-                DataCardKey1 As label:
+                DataCardKey3 As label:
                     AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
                     Height: =34
-                    Size: =12
-                    Text: ="Área Formativa"
+                    Text: |-
+                        ="Area Formativa
+                        "
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
                     Y: =10
                     ZIndex: =1
 
-                ErrorMessage1 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =Dropdown_Area.Y + Dropdown_Area.Height
-                    ZIndex: =3
-
-                StarVisible1 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey1.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey1.Y
-                    ZIndex: =4
-
-                Dropdown_Area As dropdown:
-                    AllowEmptySelection: =true
-                    Default: =Parent.Default
-                    DisplayMode: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            DisplayMode.Edit, 
-                            DisplayMode.View
-                        )
-                    Items: =Filter('Desplegables Formaciones',Tipo.Value = "Area Formativa")
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =47
-                    ZIndex: =5
-
-            Denominacion_Plan_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Denominacion_Plan"
-                Default: =ThisItem.Denominacion_Plan
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Denominacion_Plan)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Denominacion_Plan)
-                Required: =true
-                Update: =DataCardValue4.Text
-                Width: =282
-                X: =0
-                Y: =1
-                ZIndex: =1
-
-                DataCardKey4 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: ="Denominación del Plan"
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue4 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =LookUp('Desplegables Formaciones', Título = Dropdown_Plan.Selected.Título,Denominacion_Plan)
-                    DelayOutput: =true
-                    DisplayMode: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            DisplayMode.Edit, 
-                            DisplayMode.View
-                        )
-                    HoverBorderColor: =Parent.BorderColor
-                    MaxLength: =Parent.MaxLength
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Size: =12
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey4.Y + DataCardKey4.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage4 As label:
+                ErrorMessage3 As label:
                     AutoHeight: =true
                     Height: =10
                     Live: =Live.Assertive
@@ -612,140 +462,6 @@ Cursos_Screen As screen:
                     Y: =DataCardValue4.Y + DataCardValue4.Height
                     ZIndex: =3
 
-                StarVisible4 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey4.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey4.Y
-                    ZIndex: =4
-
-            Curso_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Curso"
-                Default: =ThisItem.Curso
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Curso)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Curso)
-                Required: =true
-                Update: =DataCardValue3.Text
-                Width: =282
-                X: =1
-                Y: =1
-                ZIndex: =1
-
-                DataCardKey3 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue3 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: |-
-                        =/*Text(
-                            Right(    
-                            First(
-                                SortByColumns(
-                                    Filter(
-                                        'Cursos Formativos'; Area_Form = DataCardValue1.Text
-                                        );
-                                    "Curso";SortOrder.Descending
-                                )
-                            ).Curso;
-                            2
-                        ); TextFormat.Number) + 1*/
-                        IfError(
-                        If(
-                            Form1.Mode = FormMode.New,
-                            Dropdown_Area.Selected.Título & 
-                            If(
-                                (Last(
-                                Split(
-                                    First(
-                                        SortByColumns(
-                                            Filter(
-                                                CursosFormativos, Area_Form = Dropdown_Area.Selected.Título,
-                                                Plan_Form = Dropdown_Plan.Selected.Título
-                                                ),
-                                            "Curso",SortOrder.Descending
-                                        )
-                                    ).Curso,
-                                    Dropdown_Area.Selected.Título
-                                )).Value + 1) < 10,
-                                "0" & Last(
-                                Split(
-                                    First(
-                                        SortByColumns(
-                                            Filter(
-                                                CursosFormativos, Area_Form = Dropdown_Area.Selected.Título,
-                                                Plan_Form = Dropdown_Plan.Selected.Título
-                                                ),
-                                            "Curso",SortOrder.Descending
-                                        )
-                                    ).Curso,
-                                    Dropdown_Area.Selected.Título
-                                )).Value + 1,
-                                Last(
-                                Split(
-                                    First(
-                                        SortByColumns(
-                                            Filter(
-                                                CursosFormativos, Area_Form = Dropdown_Area.Selected.Título,
-                                                Plan_Form = Dropdown_Plan.Selected.Título
-                                                ),
-                                            "Curso",SortOrder.Descending
-                                        )
-                                    ).Curso,
-                                    Dropdown_Area.Selected.Título
-                                )).Value + 1
-                            ),
-                            Parent.Default
-                        ),
-                        Dropdown_Area.Selected.Título & "01"
-                        )
-                    DelayOutput: =true
-                    DisplayMode: =DisplayMode.View
-                    HoverBorderColor: =Parent.BorderColor
-                    MaxLength: =Parent.MaxLength
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Size: =12
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey3.Y + DataCardKey3.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage3 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardValue3.Y + DataCardValue3.Height
-                    ZIndex: =3
-
                 StarVisible3 As label:
                     Align: =Align.Center
                     Height: =DataCardKey3.Height
@@ -756,129 +472,57 @@ Cursos_Screen As screen:
                     Y: =DataCardKey3.Y
                     ZIndex: =4
 
-            Title_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Colors.Primary1
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Title"
-                Default: =ThisItem.Title
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Title)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Title)
-                Required: =true
-                Update: =cb_CursoMaestro.Selected.TITULO
-                Width: =564
-                X: =0
-                Y: =2
-                ZIndex: =1
-
-                DataCardKey11 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: ="Nombre del curso"
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                ErrorMessage10 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =cb_CursoMaestro.Y + cb_CursoMaestro.Height
-                    ZIndex: =3
-
-                StarVisible10 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey11.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey11.Y
-                    ZIndex: =4
-
-                cb_CursoMaestro As combobox:
-                    DefaultSelectedItems: |-
-                        =Filter(
-                            CursosFormativosUnicos, 
-                            ID_CURSO = gal_Cursos.Selected.ID_CURSO_UNICO
-                        )
-                    DisplayFields: =["TITULO"]
+                DataCardValue4 As dropdown:
                     DisplayMode: |-
                         =If(
                             Form1.Mode = FormMode.New, 
                             DisplayMode.Edit, 
                             DisplayMode.View
                         )
-                    Height: =39
-                    Items: =Filter(CursosFormativosUnicos, AREA_FORMATIVA = Dropdown_Area.Selected.Título)
-                    SearchFields: =["AREA_FORMATIVA"]
-                    SearchItems: =Search(Filter(CursosFormativosUnicos,AREA_FORMATIVA=Dropdown_Area.Selected.Título),cb_CursoMaestro.SearchText,AREA_FORMATIVA)
-                    SelectMultiple: =false
-                    Width: =504
-                    X: =30
-                    Y: =41
-                    ZIndex: =5
+                    Items: =Filter('Desplegables Formación',Tipo.Value = "Area Formativa").Title
+                    OnChange: =Reset(cb_CursoMaestro)
+                    Width: =252
+                    X: =15
+                    Y: =44
+                    ZIndex: =6
 
-            Entidad_Doc_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
+            Denominacion_Plan_DataCard1 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="Entidad_Doc"
-                Default: =ThisItem.Entidad_Doc
+                DataField: ="field_1"
+                Default: =ThisItem.Denominacion_Plan
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Entidad_Doc)
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Denominacion_Plan)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Entidad_Doc)
-                Required: =true
-                Update: =DataCardValue5.Text
-                Width: =564
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Denominacion_Plan)
+                Required: =false
+                Update: =DataCardValue6.Text
+                Width: =282
                 X: =0
-                Y: =3
+                Y: =1
                 ZIndex: =1
 
                 DataCardKey5 As label:
                     AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
                     Height: =34
-                    Size: =12
-                    Text: ="Entidad Docente"
+                    Text: ="Denominacion Plan"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
+                    Y: =10
                     ZIndex: =1
 
-                DataCardValue5 As text:
+                DataCardValue6 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.ENTIDAD_DOCENTE, 
-                            Parent.Default
-                        )
+                    Default: =LookUp('Desplegables Formación', Title = Dropdown_Plan.Selected.Title,Denominacion_Plan)
                     DelayOutput: =true
                     DisplayMode: =DisplayMode.View
-                    HoverBorderColor: =Parent.BorderColor
                     MaxLength: =Parent.MaxLength
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
                     RadiusBottomRight: =0
                     RadiusTopLeft: =0
                     RadiusTopRight: =0
-                    Size: =12
                     Tooltip: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     X: =30
@@ -897,7 +541,7 @@ Cursos_Screen As screen:
                     Visible: =Parent.DisplayMode=DisplayMode.Edit
                     Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardValue5.Y + DataCardValue5.Height
+                    Y: =DataCardValue6.Y + DataCardValue6.Height
                     ZIndex: =3
 
                 StarVisible5 As label:
@@ -910,59 +554,132 @@ Cursos_Screen As screen:
                     Y: =DataCardKey5.Y
                     ZIndex: =4
 
-            Tipo_Entidad_DataCard1 As typedDataCard.comboBoxEditCard:
-                BorderColor: =Parent.BorderColor
+            Curso_DataCard1 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="Tipo_Entidad"
-                Default: =ThisItem.Tipo_Entidad
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Tipo_Entidad)
+                DataField: ="field_2"
+                Default: =ThisItem.Curso
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Curso)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Curso)
                 Required: =false
-                Update: =DataCardValue10.Selected
-                Width: =564
-                X: =0
-                Y: =4
+                Update: =DataCardValue5.Text
+                Width: =282
+                X: =1
+                Y: =1
                 ZIndex: =1
 
-                DataCardKey10 As label:
+                DataCardKey4 As label:
                     AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
                     Height: =34
-                    Size: =12
-                    Text: ="Tipo de Entidad"
+                    Text: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
                     Y: =10
                     ZIndex: =1
 
-                DataCardValue10 As combobox:
+                DataCardValue5 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    ChevronBackground: =Parent.BorderColor
-                    ChevronHoverBackground: =ColorFade(Parent.BorderColor, -20%)
-                    DefaultSelectedItems: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.TIPO_ENTIDAD, 
-                            Parent.Default
+                    Default: |-
+                        =IfError(
+                            If(
+                                Form1.Mode = FormMode.New,
+                                With(
+                                    {
+                                        PrefijoArea: DataCardValue4.Selected.Title,
+                                        
+                                        UltimoCurso: First(
+                                            Sort(
+                                                Filter(
+                                                    CursosFormativos_Plan, 
+                                                    Area_Form = DataCardValue4.Selected.Title && 
+                                                    Plan_Form = Dropdown_Plan.Selected.Title
+                                                ),
+                                                Curso, 
+                                                SortOrder.Descending
+                                            )
+                                        )
+                                    },
+                                    
+                                    With(
+                                        {
+                                            NumeroCalculado: Value(Last(Split(UltimoCurso.Curso, PrefijoArea)).Value) + 1
+                                        },
+                                        
+                                        PrefijoArea & If(NumeroCalculado < 10, "0" & NumeroCalculado, Text(NumeroCalculado))
+                                    )
+                                ),
+                                Parent.Default
+                            ),
+                            
+                            DataCardValue4.Selected.Title & "01"
                         )
-                    DisplayFields: =["Value"]
-                    DisplayMode: =DisplayMode.View
-                    IsSearchable: =false
-                    Items: =Choices([@'Cursos Formativos'].Tipo_Entidad)
-                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                    PressedFill: =Parent.BorderColor
-                    SearchFields: =["Value"]
-                    SearchItems: =[]
-                    SelectMultiple: =false
-                    Size: =12
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Tooltip: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                    Y: =DataCardKey4.Y + DataCardKey4.Height + 5
                     ZIndex: =2
+
+                ErrorMessage4 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue5.Y + DataCardValue5.Height
+                    ZIndex: =3
+
+                StarVisible4 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey4.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey4.Y
+                    ZIndex: =4
+
+            Title_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Title"
+                Default: =ThisItem.Title
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Title)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Title)
+                Required: =false
+                Update: =cb_CursoMaestro.Selected.TITULO
+                Width: =564
+                X: =0
+                Y: =2
+                ZIndex: =1
+
+                DataCardKey11 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: ="Nombre Curso"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
 
                 ErrorMessage9 As label:
                     AutoHeight: =true
@@ -976,62 +693,92 @@ Cursos_Screen As screen:
                     Visible: =Parent.DisplayMode=DisplayMode.Edit
                     Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardValue10.Y + DataCardValue10.Height
+                    Y: =cb_CursoMaestro.Y + cb_CursoMaestro.Height
                     ZIndex: =3
 
                 StarVisible9 As label:
                     Align: =Align.Center
-                    Height: =DataCardKey10.Height
+                    Height: =DataCardKey11.Height
                     Text: ="*"
                     Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                     Width: =30
                     Wrap: =false
-                    Y: =DataCardKey10.Y
+                    Y: =DataCardKey11.Y
                     ZIndex: =4
 
-            Evaluacion_DataCard1 As typedDataCard.toggleEditCard:
+                cb_CursoMaestro As combobox:
+                    DefaultSelectedItems: |-
+                        =Filter(
+                            CursosFormativos, 
+                            Title = gal_Cursos.Selected.ID_CURSO_UNICO
+                        )
+                    DisplayFields: =["field_1"]
+                    DisplayMode: |-
+                        =If(
+                            Form1.Mode = FormMode.New, 
+                            DisplayMode.Edit, 
+                            DisplayMode.View
+                        )
+                    Height: =39
+                    InputTextPlaceholder: ="Buscar elementos"
+                    Items: =Filter(CursosFormativos, AREA_FORMATIVA = DataCardValue4.Selected.Title)
+                    SearchFields: =["field_1"]
+                    SearchItems: =Search(Filter(CursosFormativos,AREA_FORMATIVA=DataCardValue4.Selected.Title),cb_CursoMaestro.SearchText,field_1)
+                    SelectMultiple: =false
+                    Width: =504
+                    X: =30
+                    Y: =41
+                    ZIndex: =11
+
+            Entidad_Doc_DataCard1 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="Evaluacion"
-                Default: =ThisItem.Evaluacion
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Evaluacion)
+                DataField: ="field_7"
+                Default: =ThisItem.Entidad_Doc
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,Entidad_Doc)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, Entidad_Doc)
                 Required: =false
-                Update: =DataCardValue8.Value
+                Update: =DataCardValue8.Text
                 Width: =282
                 X: =0
-                Y: =5
+                Y: =3
                 ZIndex: =1
 
-                DataCardKey23 As label:
+                DataCardKey6 As label:
                     AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
                     Height: =34
-                    Text: ="Necesario Evaluación"
+                    Text: ="Entidad Docente"
                     Width: =Parent.Width - 60
                     Wrap: =false
                     X: =30
                     Y: =10
                     ZIndex: =1
 
-                DataCardValue8 As toggleSwitch:
+                DataCardValue8 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     Default: |-
                         =If(
                             Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.EVALUACIÓN, 
+                            cb_CursoMaestro.Selected.ENTIDAD_DOCENTE, 
                             Parent.Default
                         )
-                    DisplayMode: =DisplayMode.View
-                    FalseText: ="No"
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
                     Tooltip: =Parent.DisplayName
-                    TrueText: ="Sí"
+                    Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardKey23.Y + DataCardKey23.Height + 5
+                    Y: =DataCardKey6.Y + DataCardKey6.Height + 5
                     ZIndex: =2
 
-                ErrorMessage22 As label:
+                ErrorMessage6 As label:
                     AutoHeight: =true
                     Height: =10
                     Live: =Live.Assertive
@@ -1046,33 +793,34 @@ Cursos_Screen As screen:
                     Y: =DataCardValue8.Y + DataCardValue8.Height
                     ZIndex: =3
 
-                StarVisible22 As label:
+                StarVisible6 As label:
                     Align: =Align.Center
-                    Height: =DataCardKey23.Height
+                    Height: =DataCardKey6.Height
                     Text: ="*"
                     Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                     Width: =30
                     Wrap: =false
-                    Y: =DataCardKey23.Y
+                    Y: =DataCardKey6.Y
                     ZIndex: =4
 
-            "'Metodo Eval_DataCard1' As typedDataCard.comboBoxEditCard":
+            ID_CURSO_UNICO_DataCard2 As typedDataCard.textualEditCard:
                 BorderStyle: =BorderStyle.Solid
-                DataField: ="MetodoEval"
-                Default: =ThisItem.'Metodo Eval'
+                DataField: ="field_4"
+                Default: =ThisItem.ID_CURSO_UNICO
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,'Metodo Eval')
+                DisplayName: =DataSourceInfo([@CursosFormativos_Plan],DataSourceInfo.DisplayName,ID_CURSO_UNICO)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                Required: =If(DataCardValue8.Value = true, true,false)
-                Update: =DataCardValue22.Selected
-                Visible: =If(DataCardValue8.Value = true, true,false)
+                MaxLength: =DataSourceInfo([@CursosFormativos_Plan], DataSourceInfo.MaxLength, ID_CURSO_UNICO)
+                Required: =false
+                Update: =DataCardValue23.Text
+                Visible: =false
                 Width: =282
                 X: =1
-                Y: =5
+                Y: =3
                 ZIndex: =1
 
-                DataCardKey28 As label:
+                DataCardKey23 As label:
                     AutoHeight: =true
                     Height: =34
                     Text: =Parent.DisplayName
@@ -1082,100 +830,12 @@ Cursos_Screen As screen:
                     Y: =10
                     ZIndex: =1
 
-                DataCardValue22 As combobox:
+                DataCardValue23 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.METODO_EVAL, 
-                            Parent.Default
-                        )
-                    DefaultSelectedItems: |-
-                        =[
-                            Switch(
-                                Dropdown_Area.Selected.Nombre, 
-                                "MTTO", "ILUO",
-                                ""
-                            )
-                        ]
-                    DisplayFields: =["Value"]
-                    DisplayMode: |-
-                        =
-                            DisplayMode.View
-                    InputTextPlaceholder: ="Buscar Metodo"
-                    IsSearchable: =false
-                    Items: =Choices([@'Cursos Formativos'].'Metodo Eval')
-                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                    SearchFields: =["Value"]
-                    SearchItems: =[]
-                    SelectMultiple: =false
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey28.Y + DataCardKey28.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage27 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardValue22.Y + DataCardValue22.Height
-                    ZIndex: =3
-
-                StarVisible27 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey28.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey28.Y
-                    ZIndex: =4
-
-            Meses_Validez_DataCard1 As typedDataCard.numberEditCard:
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Meses_Validez"
-                Default: =ThisItem.Meses_Validez
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Meses_Validez)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                Required: =false
-                Update: =Value(DataCardValue6.Text)
-                Width: =282
-                X: =0
-                Y: =6
-                ZIndex: =1
-
-                DataCardKey20 As label:
-                    AutoHeight: =true
-                    Height: =34
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue6 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.MESES_VALIDEZ, 
-                            Parent.Default
-                        )
+                    Default: =cb_CursoMaestro.Selected.Title
                     DelayOutput: =true
-                    DisplayMode: =DisplayMode.View
-                    Format: =TextFormat.Number
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
                     PaddingLeft: =5
                     RadiusBottomLeft: =0
                     RadiusBottomRight: =0
@@ -1184,7 +844,7 @@ Cursos_Screen As screen:
                     Tooltip: =Parent.DisplayName
                     Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardKey20.Y + DataCardKey20.Height + 5
+                    Y: =DataCardKey23.Y + DataCardKey23.Height + 5
                     ZIndex: =2
 
                 ErrorMessage20 As label:
@@ -1199,459 +859,17 @@ Cursos_Screen As screen:
                     Visible: =Parent.DisplayMode=DisplayMode.Edit
                     Width: =Parent.Width - 60
                     X: =30
-                    Y: =DataCardValue6.Y + DataCardValue6.Height
+                    Y: =DataCardValue23.Y + DataCardValue23.Height
                     ZIndex: =3
 
                 StarVisible20 As label:
                     Align: =Align.Center
-                    Height: =DataCardKey20.Height
+                    Height: =DataCardKey23.Height
                     Text: ="*"
                     Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
                     Width: =30
                     Wrap: =false
-                    Y: =DataCardKey20.Y
-                    ZIndex: =4
-
-            PorcentajeAsistencia_DataCard1 As typedDataCard.numberEditCard:
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="PorcentajeAsistencia"
-                Default: =ThisItem.PorcentajeAsistencia
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,PorcentajeAsistencia)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                Required: =false
-                Update: =Value(DataCardValue21.Text)
-                Visible: =DataCardValue22.Selected.Value = "Asistencia" && If(DataCardValue8.Value = true, true,false)
-                Width: =282
-                X: =1
-                Y: =6
-                ZIndex: =1
-
-                DataCardKey27 As label:
-                    AutoHeight: =true
-                    Height: =34
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue21 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.PORC_ASISTENCIA, 
-                            Parent.Default
-                        )
-                    DelayOutput: =true
-                    DisplayMode: =If(Form1.Mode = FormMode.New, DisplayMode.View, Parent.DisplayMode)
-                    Format: =TextFormat.Number
-                    MaxLength: =3
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey27.Y + DataCardKey27.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage26 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: |-
-                        =If(
-                            Value(DataCardValue21.Text) < 0 || Value(DataCardValue21.Text) > 100,
-                            "El porcentaje debe estar entre 0 y 100",
-                            Parent.Error
-                        )
-                    Visible: |-
-                        =If(
-                            Value(DataCardValue21.Text) < 0 || Value(DataCardValue21.Text) > 100,
-                            true,
-                            Parent.DisplayMode = DisplayMode.Edit && !IsBlank(Parent.Error)
-                        )
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardValue21.Y + DataCardValue21.Height
-                    ZIndex: =3
-
-                StarVisible26 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey27.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey27.Y
-                    ZIndex: =4
-
-            Num_Sesiones_DataCard1 As typedDataCard.numberEditCard:
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Num_Sesiones"
-                Default: =ThisItem.Num_Sesiones
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Num_Sesiones)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                Required: =false
-                Update: =Value(dd_Curs_Plan_3.Selected.Value)
-                Width: =282
-                X: =0
-                Y: =7
-                ZIndex: =1
-
-                DataCardKey26 As label:
-                    AutoHeight: =true
-                    Height: =34
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                ErrorMessage25 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =dd_Curs_Plan_3.Y + dd_Curs_Plan_3.Height
-                    ZIndex: =3
-
-                StarVisible25 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey26.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey26.Y
-                    ZIndex: =4
-
-                dd_Curs_Plan_3 As dropdown:
-                    AllowEmptySelection: =true
-                    BorderColor: =Input.BorderColor
-                    BorderThickness: =1
-                    ChevronBackground: =Colors.Primary1
-                    ChevronDisabledBackground: =Colors.Gray
-                    ChevronDisabledFill: =Colors.LightGray
-                    ChevronFill: =Colors.White
-                    ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
-                    ChevronHoverFill: =Colors.White
-                    Color: =Input.Color
-                    Default: |
-                        =1
-                    DisabledBorderColor: =Colors.Gray
-                    DisabledColor: =Colors.Gray
-                    DisabledFill: =Colors.LightGray
-                    DisplayMode: =    DisplayMode.View
-                    Fill: =Colors.White
-                    FocusedBorderThickness: =Input.FocusedBorderThickness
-                    Font: =Font.Arial
-                    HoverColor: =Colors.White
-                    HoverFill: =Colors.Primary3
-                    Items: =Sequence(20)
-                    OnChange: =
-                    OnSelect: =
-                    PaddingRight: =13.34
-                    PaddingTop: =13.34
-                    PressedColor: =Colors.Black
-                    PressedFill: =Self.Fill
-                    SelectionColor: =Colors.White
-                    SelectionFill: =Colors.Primary1
-                    Size: =14
-                    Width: =192
-                    X: =30
-                    Y: =46
-                    ZIndex: =11
-
-            Mat_Entregado_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Mat_Entregado"
-                Default: =ThisItem.Mat_Entregado
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Mat_Entregado)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =238
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Mat_Entregado)
-                Required: =false
-                Update: =RichTextEditor3.HtmlText
-                Width: =564
-                X: =0
-                Y: =8
-                ZIndex: =1
-
-                DataCardKey6 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: ="Material Entregado"
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                ErrorMessage6 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =RichTextEditor3.Y + RichTextEditor3.Height
-                    ZIndex: =3
-
-                StarVisible6 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey6.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey6.Y
-                    ZIndex: =4
-
-                RichTextEditor3 As htmlViewer:
-                    AutoHeight: =true
-                    Height: =158
-                    HtmlText: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.MATERIAL_ENTREGADO, 
-                            Parent.Default
-                        )
-                    Width: =515
-                    X: =24
-                    Y: =43
-                    ZIndex: =6
-
-            Objetivo_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Objetivo"
-                Default: =ThisItem.Objetivo
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Objetivo)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =255
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Objetivo)
-                Required: =false
-                Update: =RichTextEditor2.Text
-                Width: =564
-                X: =0
-                Y: =9
-                ZIndex: =1
-
-                RichTextEditor2 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                ErrorMessage7 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =RichTextEditor2.Y + RichTextEditor2.Height
-                    ZIndex: =3
-
-                StarVisible7 As label:
-                    Align: =Align.Center
-                    Height: =RichTextEditor2.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =RichTextEditor2.Y
-                    ZIndex: =4
-
-                HtmlText2 As htmlViewer:
-                    AutoHeight: =true
-                    HtmlText: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.OBJETIVO, 
-                            Parent.Default
-                        )
-                    Width: =534
-                    X: =30
-                    Y: =40
-                    ZIndex: =5
-
-            Contenidos_DataCard1 As typedDataCard.textualEditCard:
-                BorderColor: =Parent.BorderColor
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="Contenidos"
-                Default: =ThisItem.Contenidos
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,Contenidos)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =324
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, Contenidos)
-                Required: =false
-                Update: =RichTextEditor1.HtmlText
-                Width: =564
-                X: =0
-                Y: =10
-                ZIndex: =1
-
-                DataCardKey2 As label:
-                    AutoHeight: =true
-                    FontWeight: =FontWeight.Bold
-                    Height: =34
-                    Size: =12
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                ErrorMessage2 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =60
-                    Y: =RichTextEditor1.Y + RichTextEditor1.Height
-                    ZIndex: =3
-
-                StarVisible2 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey2.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey2.Y
-                    ZIndex: =4
-
-                HtmlText3 As htmlViewer:
-                    AutoHeight: =true
-                    HtmlText: |-
-                        =If(
-                            Form1.Mode = FormMode.New, 
-                            cb_CursoMaestro.Selected.CONTENIDO, 
-                            Parent.Default
-                        )
-                    Width: =508
-                    X: =40
-                    Y: =40
-                    ZIndex: =5
-
-            ID_CURSO_UNICO_DataCard1 As typedDataCard.textualEditCard:
-                BorderStyle: =BorderStyle.Solid
-                DataField: ="ID_CURSO_UNICO"
-                Default: =ThisItem.ID_CURSO_UNICO
-                DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Cursos Formativos'],DataSourceInfo.DisplayName,ID_CURSO_UNICO)
-                Fill: =RGBA(0, 0, 0, 0)
-                Height: =50
-                MaxLength: =DataSourceInfo([@'Cursos Formativos'], DataSourceInfo.MaxLength, ID_CURSO_UNICO)
-                Required: =false
-                Update: =DataCardValue2.Text
-                Visible: =false
-                Width: =282
-                X: =1
-                Y: =10
-                ZIndex: =1
-
-                DataCardKey21 As label:
-                    AutoHeight: =true
-                    Height: =34
-                    Text: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    Wrap: =false
-                    X: =30
-                    Y: =10
-                    ZIndex: =1
-
-                DataCardValue2 As text:
-                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =cb_CursoMaestro.Selected.ID_CURSO
-                    DelayOutput: =true
-                    DisplayMode: =Parent.DisplayMode
-                    MaxLength: =Parent.MaxLength
-                    PaddingLeft: =5
-                    RadiusBottomLeft: =0
-                    RadiusBottomRight: =0
-                    RadiusTopLeft: =0
-                    RadiusTopRight: =0
-                    Tooltip: =Parent.DisplayName
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardKey21.Y + DataCardKey21.Height + 5
-                    ZIndex: =2
-
-                ErrorMessage23 As label:
-                    AutoHeight: =true
-                    Height: =10
-                    Live: =Live.Assertive
-                    PaddingBottom: =0
-                    PaddingLeft: =0
-                    PaddingRight: =0
-                    PaddingTop: =0
-                    Text: =Parent.Error
-                    Visible: =Parent.DisplayMode=DisplayMode.Edit
-                    Width: =Parent.Width - 60
-                    X: =30
-                    Y: =DataCardValue2.Y + DataCardValue2.Height
-                    ZIndex: =3
-
-                StarVisible23 As label:
-                    Align: =Align.Center
-                    Height: =DataCardKey21.Height
-                    Text: ="*"
-                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                    Width: =30
-                    Wrap: =false
-                    Y: =DataCardKey21.Y
+                    Y: =DataCardKey23.Y
                     ZIndex: =4
 
         Icon1 As icon.Add:
@@ -1702,7 +920,7 @@ Cursos_Screen As screen:
                     DisplayMode.Disabled
                 )
             Icon: =Icon.Trash
-            OnSelect: =Remove(CursosFormativos, gal_Cursos.Selected)
+            OnSelect: =Remove(CursosFormativos_Plan, gal_Cursos.Selected)
             X: =1830
             Y: =104
             ZIndex: =13
@@ -1717,77 +935,13 @@ Cursos_Screen As screen:
             Fill: =Colors.Primary1
             Height: =68
             HoverFill: =ColorFade(Colors.Primary1, -20%)
-            OnSelect: |-
-                =Reset(gal_Sesiones);
-                Reset(dd_Curs_Area_3);
-                Reset(dd_Curs_Denom_3);
+            OnSelect: |
+                =
                 Set(varCursoActual, gal_Cursos.Selected);
                 
-                With(
-                    {
-                        varCursoMaestro: LookUp(
-                            CursosFormativosUnicos, 
-                            ID_CURSO = gal_Cursos.Selected.ID_CURSO_UNICO
-                        ),
-                        
-                        SesionesExistentes: LookUp(
-                            'Sesiones Formación',
-                            ID_Curso = Text(varCursoActual.ID)
-                        )
-                    },
-                
-                    If(
-                        !IsBlank(SesionesExistentes),
-                        Notify("ℹ️ Las sesiones para este curso ya estaban generadas de antes.", NotificationType.Warning,2000),
-                
-                        true,
-                        Notify("✅ Curso creado: " & varCursoActual.Title, NotificationType.Success,2000);
-                        
-                        If(
-                            Value(dd_Curs_Plan_3.Selected.Value) = 1,
-                            
-                            UpdateContext({ 
-                                varNuevaSesion: Patch(
-                                    'Sesiones Formación',
-                                    Defaults('Sesiones Formación'),
-                                    {
-                                        ID_Curso: varCursoActual.ID,
-                                        Nombre: "Sesión única de " & varCursoActual.Title,
-                                        Objetivos: varCursoMaestro.OBJETIVO, 
-                                        Contenidos: varCursoMaestro.CONTENIDO
-                                    }
-                                )
-                            });
-                
-                            Refresh('Sesiones Formación');
-                            UpdateContext({ varFilaEnEdicion: varNuevaSesion.ID });
-                            
-                            ,
-                
-                            Value(dd_Curs_Plan_3.Selected.Value) > 1,
-                            
-                            ForAll(
-                                Sequence(Value(dd_Curs_Plan_3.Selected.Value)) As BucleSesion,
-                                Patch(
-                                    'Sesiones Formación',
-                                    Defaults('Sesiones Formación'),
-                                    {
-                                        ID_Curso: varCursoActual.ID,
-                                        Nombre: "Sesión " & BucleSesion.Value & " de " & varCursoActual.Title,
-                                        Objetivos: varCursoMaestro.OBJETIVO,
-                                        Contenidos: varCursoMaestro.CONTENIDO
-                                    }
-                                )
-                            );
-                            
-                            Refresh('Sesiones Formación')
-                        )
-                    )
-                );
-                
-                Navigate(Sesiones_Screen, ScreenTransition.UnCover)
+                Navigate(Grupos_Screen)
             Size: =14
-            Text: ="Sesiones y Grupos"
+            Text: ="Grupos"
             Width: =156
             X: =1384
             Y: =96
@@ -1810,16 +964,16 @@ Cursos_Screen As screen:
                         {
                             
                             YaExiste: LookUp(
-                                CursosFormativos,
-                                ID_CURSO_UNICO = cb_CursoMaestro.Selected.ID_CURSO && 
-                                Plan_Form = Dropdown_Plan.Selected.Título 
+                                CursosFormativos_Plan,
+                                ID_CURSO_UNICO = cb_CursoMaestro.Selected.Nombre && 
+                                Plan_Form = Dropdown_Plan.Selected.Title 
                             )
                         },
                         
                         If(
                             !IsBlank(YaExiste),
                             
-                            Notify("⛔ Bloqueo de seguridad: Este curso ya está planificado para ese año.", NotificationType.Error),
+                            Notify(" Bloqueo de seguridad: Este curso ya está planificado para ese año.", NotificationType.Error),
                             
                             SubmitForm(Form1)
                         )
@@ -1841,7 +995,7 @@ Cursos_Screen As screen:
         Color: =RGBA(255, 255, 255, 1)
         Height: =48
         Icon: =Icon.Sync
-        OnSelect: =Refresh(CursosFormativos; Grupos_Formacion; 'Registros de Formación'; Personal)
+        OnSelect: =Refresh(CursosFormativos; GruposFormacion; RegistrosFormacion ; Personal)
         Width: =43
         X: =1821
         ZIndex: =31
@@ -1855,6 +1009,19 @@ Cursos_Screen As screen:
         X: =30
         Y: =147
         ZIndex: =34
+
+    Icon11 As icon.Home:
+        BorderColor: =RGBA(255, 255, 255, 1)
+        Color: =Color.White
+        DisabledBorderColor: =Color.White
+        DisabledColor: =Color.White
+        FocusedBorderColor: =Color.White
+        Height: =48
+        Icon: =Icon.Home
+        OnSelect: =Navigate(Intro_Screen)
+        Width: =47
+        X: =30
+        ZIndex: =35
 
     group_Config_dropdown As group:
         Height: =5

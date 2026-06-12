@@ -11,5 +11,10 @@ EditorState:
     - Cursos_Screen
     - CursosConfig_Screen
     - Grupos_Screen
-    - Sesiones_Screen
     - Registros_Screen
+    - Intro_Screen
+    - O_MOD_Por_Operario
+    - Formed_Screen
+    - O_MOD_Por_Curso
+  ComponentDefinitionsOrder:
+    - Header_Title

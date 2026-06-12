@@ -55,8 +55,8 @@ Screens:
             Height: =926
             Items: |-
               =Filter(
-                  'Registros de Formación',
-                  ID_Curso = varFormItemSelected.ID,
+                  RegistrosFormacion,
+                  ID_Curso = varCursoActual.ID,
                   ID_Grupo = varGroupSelected.ID
               )
             LoadingSpinner: =LoadingSpinner.None
@@ -114,7 +114,7 @@ Screens:
                   FontWeight: =FontWeight.Bold
                   OnSelect: =Select(Parent)
                   Size: =15
-                  Text: =ThisItem.Title
+                  Text: =ThisItem.Título
                   Width: =237
                   X: =15
                   Y: =40
@@ -155,7 +155,8 @@ Screens:
                   Font: =Font.Arial
                   FontWeight: =FontWeight.Bold
                   OnSelect: =Select(Parent)
-                  Text: "=\"Porcentaje asist: \" &\r\nWith(\r\n    {\r\n        MisRegistros: Filter(\r\n            'Asistencia por sesion',\r\n            ID_Grupo = Value(ThisItem.ID_Grupo) &&\r\n            N_Empleado = Value(ThisItem.Num_Empleado)\r\n        )\r\n    },\r\n\r\n    With(\r\n        {\r\n            TotalSesiones: CountRows(MisRegistros),\r\n            \r\n            SesionesAsistidas: CountRows(\r\n                Filter(MisRegistros, Asistencia = true) \r\n            )\r\n        },\r\n\r\n    \r\n        If(\r\n            TotalSesiones = 0,\r\n            \"0 %\",\r\n            Round((SesionesAsistidas / TotalSesiones) * 100, 2) & \" %\"\r\n        )\r\n    )\r\n)"
+                  Text: |-
+                    ="Puesto: " & LookUp(Personal, ID = ThisItem.ID).Tipo_Empleo
                   Visible: =false
                   Width: =251
                   X: =15
@@ -174,27 +175,14 @@ Screens:
                   Width: =145
                   X: =15
                   Y: =Label3_21.Y + Label3_21.Height
-            - Circle1_2:
-                Control: Circle@2.3.0
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Fill: |-
-                    =If(ThisItem.Subido_Milena,
-                    Color.DarkGreen,
-                    Color.DarkRed)
-                  Height: =40
-                  OnSelect: =Select(Parent)
-                  Visible: =false
-                  Width: =40
-                  X: =195
-                  Y: =131
       - Image2_4:
           Control: Image@2.2.3
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Height: =48
-            Image: ='BorgWarner_Logo_Final_Rv.White'
+            Image: =LOGO2
             Width: =279
+            X: =102
       - dd_Curs_Plan_2:
           Control: Classic/DropDown@2.3.1
           Group: Group5_1
@@ -209,7 +197,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Plan_Form
+            Default: =varCursoActual.Plan_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -220,7 +208,7 @@ Screens:
             HoverColor: =Colors.White
             HoverFill: =Colors.Primary3
             Items: |-
-              =ForAll(Distinct('Cursos Formativos',Plan_Form), {Result: ThisRecord.Value})
+              =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
             Items.Value: =Result
             OnChange: =
             OnSelect: =
@@ -247,7 +235,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Denominacion_Plan
+            Default: =varCursoActual.Denominacion_Plan
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -260,7 +248,7 @@ Screens:
             Items: |-
               =ForAll(Distinct(
                   Filter(
-                      'Cursos Formativos',
+                      CursosFormativos_Plan,
                       Plan_Form = dd_Curs_Plan_2.Selected.Result
                   ),
                   Denominacion_Plan
@@ -291,7 +279,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Area_Form
+            Default: =varCursoActual.Area_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -304,7 +292,7 @@ Screens:
             Items: |-
               =ForAll(Distinct(
                   Filter(
-                      'Cursos Formativos',
+                      CursosFormativos_Plan,
                       Denominacion_Plan = dd_Curs_Denom_2.Selected.Result
                   ),
                   Area_Form
@@ -420,7 +408,7 @@ Screens:
                   DisplayMode.Disabled
               )
             Icon: =Icon.Trash
-            OnSelect: =Remove('Registros de Formación',gal_Asistentes.Selected)
+            OnSelect: =Remove(RegistrosFormacion,gal_Asistentes.Selected)
             X: =1830
             Y: =182
       - Form1_2:
@@ -430,12 +418,14 @@ Screens:
           Group: Group4_1
           Properties:
             BorderColor: =Colors.Primary1
-            DataSource: ='Registros de Formación'
+            DataSource: =RegistrosFormacion
             DefaultMode: =FormMode.View
             Height: =813
             Item: =gal_Asistentes.Selected
             NumberOfColumns: =1
-            OnSuccess: "=\r\nUpdateContext({varUltimoAlumno: Form1_2.LastSubmit});\r\n\r\nForAll(\r\n    Filter('Sesiones Formación', ID_Curso = varFormItemSelected.ID) As SesionActual,\r\n    \r\n    Patch(\r\n        'Asistencia por sesion',\r\n        Defaults('Asistencia por sesion'),\r\n        {\r\n            Título: \"Asist-\" & varUltimoAlumno.Num_Empleado & \"-S\" & SesionActual.ID,\r\n            \r\n            ID_Curso: varFormItemSelected.ID,\r\n            ID_Sesion: SesionActual.ID, \r\n            ID_Grupo: gal_Grupos.Selected.ID,\r\n            N_Empleado: varUltimoAlumno.Num_Empleado,\r\n            Nombre: varUltimoAlumno.Nom_Empleado,\r\n            Asistencia: false \r\n        }\r\n    )\r\n);\r\n\r\nIf(\r\n    !IsEmpty(Errors('Asistencia por sesion')),\r\n    Notify(\"Error en SharePoint. Comprueba si hay columnas obligatorias vacías.\", NotificationType.Error),\r\n    Notify(\"Alumno matriculado y listas de asistencia generadas correctamente\", NotificationType.Success)\r\n);"
+            OnSuccess: |-
+              =
+              UpdateContext({varUltimoAlumno: Form1_2.LastSubmit});
             Width: =532
             X: =1388
             Y: =264
@@ -447,8 +437,8 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="Num_Empleado"
                   Default: =ThisItem.Num_Empleado
-                  DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Num_Empleado)
-                  Required: =false
+                  DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,Num_Empleado)
+                  Required: =true
                   Update: =DataCardValue11.Text
                   Width: =532
                   X: =0
@@ -531,9 +521,9 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="Nom_Empleado"
                   Default: =ThisItem.Nom_Empleado
-                  DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Nom_Empleado)
-                  MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, Nom_Empleado)
-                  Required: =false
+                  DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,Nom_Empleado)
+                  MaxLength: =DataSourceInfo([@RegistrosFormacion], DataSourceInfo.MaxLength, Nom_Empleado)
+                  Required: =true
                   Update: =DataCardValue14.Text
                   Width: =532
                   X: =0
@@ -558,7 +548,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        Default: =LookUp(Personal, Title = DataCardValue11.Text).Nombre_Completo
+                        Default: =LookUp(Personal, Título = DataCardValue11.Text).Nombre_Completo
                         DelayOutput: =true
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
@@ -616,7 +606,7 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="ID_Curso"
                   Default: =ThisItem.ID_Curso
-                  DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Curso)
+                  DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,ID_Curso)
                   Required: =false
                   Update: =Value(DataCardValue17.Text)
                   Width: =532
@@ -700,7 +690,7 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="ID_Grupo"
                   Default: =ThisItem.ID_Grupo
-                  DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Grupo)
+                  DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,ID_Grupo)
                   Required: =false
                   Update: =Value(DataCardValue18.Text)
                   Width: =532
@@ -784,7 +774,7 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="{Attachments}"
                   Default: =ThisItem.'Datos adjuntos'
-                  DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,'Datos adjuntos')
+                  DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,'Datos adjuntos')
                   Required: =false
                   Width: =532
                   X: =0
@@ -858,7 +848,7 @@ Screens:
             Height: =65
             OnSelect: =
             Size: =18
-            Text: "=\"Asistentes a Curso: \" & varFormItemSelected.Title & \" -- Grupo: \"  & gal_Grupos.Selected.Nombre "
+            Text: "=\"Asistentes a Curso: \" & varCursoActual.Title & \" -- Grupo: \"  & gal_Grupos.Selected.Nombre "
             Width: =1023
             X: =399
             Y: =68
@@ -869,9 +859,9 @@ Screens:
             Color: =RGBA(255, 255, 255, 1)
             Height: =48
             Icon: =Icon.ArrowLeft
-            OnSelect: =Back()
+            OnSelect: =Navigate(Grupos_Screen)
             Width: =55
-            X: =279
+            X: =30
       - Label3_26:
           Control: Label@2.5.1
           Properties:
@@ -933,16 +923,11 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
             OnSelect: |-
-              =/*Copy("46" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1547" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1698" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1867" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) )*/
-
-
+              =
 
               Copy(
                   Concat(
-                      Filter(gal_Asistentes.AllItems, !Formador, !Subido_Milena), 
+                      Filter(gal_Asistentes.AllItems, !Formador), 
                       Num_Empleado & Char(9) & Nom_Empleado &  Char(9) & "A" & Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "" & Char(9) & "" & Char(9) & gal_Grupos.Selected.F_Ini_grupo & Char(9) & gal_Grupos.Selected.F_Fin_grupo & Char(13)
                   )
               );
@@ -954,357 +939,5 @@ Screens:
             Size: =13
             Text: ="Exportar asistentes"
             Width: =190
-            X: =1451
+            X: =1654
             Y: =53
-      - Button2_2:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: =ColorFade(Self.Fill, -15%)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            Fill: =Colors.Primary1
-            Font: =Font.'Open Sans'
-            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-            HoverColor: =RGBA(255, 255, 255, 1)
-            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |-
-              =ForAll(
-                  Filter(gal_Asistentes.AllItems, Formador = false),
-                  Patch(
-                      'Registros de Formación',
-                      ThisRecord,
-                      {
-                          Subido_Milena: true
-                      }
-                  )
-              )
-            PressedBorderColor: =Self.Fill
-            PressedColor: =Self.Fill
-            PressedFill: =Self.Color
-            Size: =13
-            Text: ="Confirmar Guardado"
-            Width: =190
-            X: =1666
-            Y: =53
-      - Button2_4:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: =ColorFade(Self.Fill, -15%)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            Fill: =Colors.Primary1
-            Font: =Font.'Open Sans'
-            Height: =50
-            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-            HoverColor: =RGBA(255, 255, 255, 1)
-            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |-
-              =UpdateContext({varSowClipboardImport: true})
-            PressedBorderColor: =Self.Fill
-            PressedColor: =Self.Fill
-            PressedFill: =Self.Color
-            Size: =13
-            Text: ="Importar asistentes"
-            Width: =151
-            X: =251
-            Y: =76
-      - Label2_1:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Fill: =RGBA(149, 149, 149, 0.4)
-            Font: =Font.'Open Sans'
-            Height: =1080
-            OnSelect: =
-            Text: =""
-            Visible: =varSowClipboardImport
-            Width: =1920
-      - TextInput1_1:
-          Control: Classic/TextInput@2.3.2
-          Group: Group8
-          Properties:
-            BorderColor: =Colors.Primary1
-            Default: =""
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Open Sans'
-            Height: =937
-            HoverBorderColor: =RGBA(0, 18, 107, 1)
-            HoverFill: =RGBA(186, 202, 226, 1)
-            RadiusBottomLeft: =50
-            RadiusBottomRight: =50
-            RadiusTopLeft: =50
-            RadiusTopRight: =50
-            Visible: =varSowClipboardImport
-            Width: =1625
-            X: =148
-            Y: =86
-      - TextInput4:
-          Control: Classic/TextInput@2.3.2
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Default: =
-            Font: =Font.'Open Sans'
-            Height: =363
-            HoverBorderColor: =RGBA(0, 18, 107, 1)
-            HoverFill: =RGBA(186, 202, 226, 1)
-            Mode: =TextMode.MultiLine
-            OnChange: |-
-              =ClearCollect(
-                  col_Importados,
-                  ForAll(
-                      Split(TextInput4.Text, Char(10)),  
-                      {
-                          Num_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),1)).Value,
-                          Nom_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),2)).Value,
-                          A: Last(FirstN(Split(ThisRecord.Value, Char(9)),3)).Value,
-                          Diez: Last(FirstN(Split(ThisRecord.Value, Char(9)),4)).Value,
-                          F: Last(FirstN(Split(ThisRecord.Value, Char(9)),6)).Value,
-                          F_Ini_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),9)).Value,"dd/mm/yyyy"),
-                          F_Fin_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),10)).Value, "dd/mm/yyyy")
-                      }
-                  )
-              )
-            Visible: =varSowClipboardImport
-            Width: =1329
-            X: =283
-            Y: =177
-      - Gallery1:
-          Control: Gallery@2.15.0
-          Variant: Vertical
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Height: =349
-            Items: =col_Importados
-            TemplateSize: =49
-            Visible: =varSowClipboardImport
-            Width: =1329
-            X: =283
-            Y: =580
-          Children:
-            - Label7:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.F_Ini_grupo
-                  X: =995
-                  Y: =1
-            - Label7_1:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.F_Fin_grupo
-                  X: =1145
-                  Y: =1
-            - Label7_2:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.Num_Empleado
-                  X: =28
-                  Y: =1
-            - Label7_3:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.Nom_Empleado
-                  Width: =343
-                  X: =178
-                  Y: =1
-            - Label7_4:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.A
-                  X: =521
-                  Y: =1
-            - Label7_5:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.Diez
-                  X: =586
-                  Y: =1
-            - Label7_6:
-                Control: Label@2.5.1
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Font: =Font.'Open Sans'
-                  OnSelect: =Select(Parent)
-                  Text: =ThisItem.F
-                  X: =671
-                  Y: =1
-      - Label7_7:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Número"
-            Visible: =varSowClipboardImport
-            X: =304
-            Y: =554
-      - Label7_8:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Nombre Completo"
-            Visible: =varSowClipboardImport
-            Width: =258
-            X: =469
-            Y: =556
-      - Label7_9:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="F. Inicio"
-            Visible: =varSowClipboardImport
-            Width: =141
-            X: =1284
-            Y: =554
-      - Label7_10:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="F. Fin"
-            Visible: =varSowClipboardImport
-            Width: =141
-            X: =1436
-            Y: =554
-      - Icon8:
-          Control: Classic/Icon@2.5.0
-          Group: Group8
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Color: =Colors.Primary1
-            Icon: =Icon.CancelBadge
-            OnSelect: |-
-              =UpdateContext({varSowClipboardImport: false})
-            Visible: =varSowClipboardImport
-            X: =1676
-            Y: =113
-      - Label7_11:
-          Control: Label@2.5.1
-          Group: Group8
-          Properties:
-            Align: =Align.Center
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Size: =22
-            Text: ="VOLCADO DE PARTICIPANTES A POWERAPPS"
-            Visible: =varSowClipboardImport
-            Width: =726
-            X: =597
-            Y: =125
-      - Button2_5:
-          Control: Classic/Button@2.2.0
-          Group: Group8
-          Properties:
-            BorderColor: =ColorFade(Self.Fill, -15%)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            Fill: =Colors.Primary1
-            Font: =Font.'Open Sans'
-            Height: =50
-            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-            HoverColor: =RGBA(255, 255, 255, 1)
-            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |-
-              =ForAll(
-                  col_Importados,
-                  If(
-                      !IsBlank(ThisRecord.Num_Empleado),
-                      Patch(
-                          'Registros de Formación',
-                          Defaults('Registros de Formación'),
-                          {
-                              Num_Empleado: Value(ThisRecord.Num_Empleado),
-                              Nom_Empleado: ThisRecord.Nom_Empleado,
-                              ID_Curso: gal_Cursos.Selected.ID,
-                              ID_Grupo: gal_Grupos.Selected.ID
-                          }
-                      )
-                  )
-              );
-
-              UpdateContext({varSowClipboardImport: false});
-              Refresh('Registros de Formación');
-              Reset(TextInput4); Clear(col_Importados)
-            PressedBorderColor: =Self.Fill
-            PressedColor: =Self.Fill
-            PressedFill: =Self.Color
-            RadiusBottomLeft: =16
-            RadiusBottomRight: =16
-            RadiusTopLeft: =16
-            RadiusTopRight: =16
-            Size: =16
-            Text: ="Guardar"
-            Visible: =varSowClipboardImport
-            Width: =151
-            X: =885
-            Y: =929
-      - Label7_12:
-          Control: Label@2.5.1
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Tipo"
-            Visible: =varSowClipboardImport
-            X: =678
-            Y: =554
-      - Label7_13:
-          Control: Label@2.5.1
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Entidad"
-            Visible: =varSowClipboardImport
-            X: =788
-            Y: =556
-      - Label7_14:
-          Control: Label@2.5.1
-          Properties:
-            BorderColor: =RGBA(0, 18, 107, 1)
-            Font: =Font.'Open Sans'
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: |-
-              ="Situación
-              "
-            Visible: =varSowClipboardImport
-            X: =958
-            Y: =554

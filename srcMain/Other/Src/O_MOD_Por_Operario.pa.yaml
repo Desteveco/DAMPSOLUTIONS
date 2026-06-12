@@ -1,0 +1,889 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  O_MOD_Por_Operario:
+    Properties:
+      Fill: =
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - Icon1_8:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisplayMode: =DisplayMode.View
+            Height: =35
+            Icon: =Icon.VerticalLine
+            Width: =37
+            X: =891
+            Y: =118
+      - Label3_30:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            Color: =Colors.Primary1
+            Fill: =RGBA(227, 234, 243, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Text: ="Nombre"
+            Width: =140
+            X: =50
+            Y: =170
+      - Label3_35:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            Color: =Colors.Primary1
+            Fill: =RGBA(227, 234, 243, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =39
+            Text: ="ESTADO DE FORMACIÓN RECIBIDA"
+            Width: =1570
+            X: =350
+            Y: =171
+      - ComboBox_Curso:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =Colors.Primary1
+            ChevronBackground: =Colors.Primary1
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Default: |-
+              =//{Result: ThisItem.COD}
+            DefaultSelectedItems: |-
+              ={Result: ""}
+            DisplayFields: =["Value"]
+            Fill: =RGBA(227, 234, 243, 1)
+            Font: =Font.'Open Sans'
+            HoverFill: =
+            InputTextPlaceholder: ="Seleccionar formación"
+            Items: '=Distinct(colCursosFiltrados, Title ) '
+            OnChange: =
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["Value"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =Colors.Primary1
+            Size: =10
+            Width: =160
+            X: =190
+            Y: =170
+      - Header_Title_2:
+          Control: CanvasComponent
+          ComponentName: Header_Title
+          Properties:
+            Fill: =
+            Height: =70
+            ScreenName: ="CONSULTA FORMACIÓN REGISTRADA"
+            Width: =Max(App.Width, App.MinScreenWidth)
+      - IconBack_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =70
+            Icon: =Icon.ArrowLeft
+            OnSelect: |-
+              =Navigate(Intro_Screen, ScreenTransition.CoverRight);
+
+
+              Reset(ComboBox_Curso); Reset(ComboBox_N_Empleado); Reset(ComboBox_Equipo); Reset(ComboBox_Area);Reset(Plan_Formativo)
+            Width: =50
+            X: =13
+      - Rectangle3:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =35
+            Visible: =false
+            Width: =180
+            X: =1383
+            Y: =115
+      - Label6_3:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Text: ="Desde el Nº:"
+            Visible: =false
+            Width: =180
+            X: =731
+            Y: =88
+      - Label6_7:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Text: ="Hasta el Nº:"
+            Visible: =false
+            Width: =180
+            X: =1401
+            Y: =84
+      - Gallery_Por_Curso:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =1
+            Height: =870
+            Items: |-
+              =   
+              colMatrizFormacion
+            TemplateSize: =153
+            Width: =1920
+            Y: =210
+          Children:
+            - Rectangle1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: |-
+                    =/*If(
+                        Gallery_Por_Curso.AllItemsCount <> 0;
+                    If(
+                        CountRows(
+                            Distinct(
+                            Filter(
+                                colRegistros;
+                                Num_Empleado = Value(Label_N_Empleado_1.Text);
+                                ID <> 18;
+                                First(Filter('Cursos Formativos';ID = ID_Curso; Plan_Form = Plan_Formativo.Selected.Value)).Paquete_Formativo = ComboBox_Paquete.Selected.Value || ComboBox_Paquete.Selected.Value  = Blank();
+                                First(Filter('Cursos Formativos';ID = ID_Curso; Plan_Form = Plan_Formativo.Selected.Value)).Area_Form = ComboBox_Area.Selected.Value || ComboBox_Area.Selected.Value  = Blank();
+                                Formador = false;
+                                Year(Created) = Value(Plan_Formativo.Selected.Value)
+                            );
+                            ID_Curso
+                            )
+                        ) /
+                        CountRows(
+                            Filter(
+                            'Cursos Formativos';
+                            Paquete_Formativo = ComboBox_Paquete.Selected.Value || ComboBox_Paquete.Selected.Value  = Blank();
+                            Area_Form = ComboBox_Area.Selected.Value || ComboBox_Area.Selected.Value  = Blank();
+                            ID <> 18;
+                            Plan_Form = Plan_Formativo.Selected.Value
+                            )
+                        ) >= 1;
+                        Color.DarkGreen;
+                        Color.IndianRed
+                    )
+                    )
+                    */
+                    If(ThisItem.TotalCursosPlan > 0 && (ThisItem.CursosCompletados / ThisItem.TotalCursosPlan) >= 1, Color.DarkGreen, Color.IndianRed)
+                  Height: =75
+                  OnSelect: =Select(Parent)
+                  Width: =If(ThisItem.TotalCursosPlan <= 0, 0, Label7.Width * (ThisItem.CursosCompletados / ThisItem.TotalCursosPlan))
+                  X: =50
+                  Y: =75
+            - Label_N_Empleado_1:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Colors.Primary1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =75
+                  OnSelect: =Select(Parent)
+                  Size: =12
+                  Text: =ThisItem.N_Empleado
+                  Width: =50
+            - Label1_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Colors.Primary1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =75
+                  OnSelect: =Select(Parent)
+                  Size: =12
+                  Text: |
+                    =First(Filter(Personal,Numero_Empresa = ThisItem.N_Empleado)).Nombre_Completo
+                  Width: =140
+                  X: =50
+            - Gallery3_1:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Horizontal_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =150
+                  Items: |+
+                    =colCursosFiltrados
+
+                  TemplateSize: =169
+                  Width: =1571
+                  X: =349
+                Children:
+                  - Label5_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: |-
+                          =/*
+                          If(Self.Text = "NO REALIZADO"; Color.IndianRed; Color.LightGreen)*/
+
+                          Switch(
+                              Self.Text,
+                              "NO REALIZADO", Color.IndianRed,       // Rojo
+                              "I", Color.Gold,                 // Amarillo
+                              "L", Color.MediumSeaGreen,       // Verde
+                              "U", Color.LightSkyBlue,         // Azul clarito
+                              "O", Color.Blue,             // Azul oscuro
+                              "REALIZADO", Color.MediumSeaGreen,     // Verde (Para los cursos de otras áreas)
+                              Color.LightGray                        // Gris (Color por defecto si hay algún error o celda vacía)
+                          )
+                        Font: =Font.'Open Sans'
+                        Height: =53
+                        OnSelect: =Select(Parent)
+                        PaddingLeft: =10
+                        Size: =8
+                        Text: "=\r\nWith(\r\n    {\r\n        RegistroEncontrado: LookUp(\r\n            colRegistros,\r\n            Num_Empleado = Value(Label_N_Empleado_1.Text) && \r\n            Value(ID_Curso) = Value(ThisItem.ID_CURSO_UNICO) \r\n        )\r\n    },\r\n    \r\n    If(\r\n        IsBlank(RegistroEncontrado),\r\n        \"NO REALIZADO\",\r\n        \r\n        If(\r\n            ThisItem.Area_Form = \"MTTO\" || ThisItem.Area_Form = \"MTTO\", \r\n            Coalesce(RegistroEncontrado.ILUO.Value, \"Falta letra\"),\r\n            \r\n            If(\r\n                ThisItem.Evaluacion = true,\r\n                If(RegistroEncontrado.Apto = true, \"REALIZADO\", \"NO REALIZADO\"),\r\n                \r\n                If(\r\n                    RegistroEncontrado.'Tiene datos adjuntos' = true, \r\n                    \"REALIZADO\", \r\n                    \"NO REALIZADO\"\r\n                )\r\n            )\r\n        )\r\n    )\r\n)"
+                        Width: =85
+                        Y: =97
+                  - Label4_4:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(255, 255, 255, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(227, 234, 243, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =100
+                        OnSelect: =Select(Parent)
+                        Size: =10
+                        Text: =ThisItem.Nombre
+                        Width: =169
+                  - Label4_5:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(255, 255, 255, 1)
+                        BorderThickness: =2
+                        Fill: =RGBA(241, 244, 249, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =53
+                        OnSelect: =Select(Parent)
+                        Size: =10
+                        Text: |+
+                          =
+                          Text(DateTimeValue(First(
+                                  Filter(
+                                      colRegistros,
+                                      ID_Curso = ThisItem.ID,
+                                      Num_Empleado = Value(Label_N_Empleado_1.Text)
+                                  )
+                              ).Creado), DateTimeFormat.ShortDate,"ca-ES")
+
+                        Visible: =If(Label5_1.Text = "REALIZADO",true, false)
+                        Width: =85
+                        X: =84
+                        Y: =97
+                  - Icon_Editar:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Colors.Primary1
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =30
+                        Icon: =Icon.Edit
+                        OnSelect: |-
+                          =Select(Parent);
+                          Set(varPDF, false);
+                          Set(varID_Grupo, First(Filter(RegistrosFormacion, Num_Empleado = Value(Label_N_Empleado_1.Text), First(Filter(colCursos, Curso = ThisItem.ID)).ID = ID_Curso)).ID_Grupo);
+                          Navigate(Formed_Screen,ScreenTransition.Cover)
+                        Visible: |-
+                          =/*If(
+                              IsBlank(First(Filter(colRegistros;ID_Curso = ThisItem.ID;Num_Empleado = Value(Label_N_Empleado_1.Text))).Num_Empleado);
+                              false;
+                              true
+                          )*/
+                          false
+                        Width: =30
+                        X: =139
+                        Y: =70
+                  - Icon_PDF:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =Colors.Primary1
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =30
+                        Icon: =Icon.View
+                        OnSelect: |-
+                          =Select(Parent);
+                          Set(varPDF, true);
+                          Set(varID_Grupo, First(Filter(RegistrosFormacion, Num_Empleado = Value(Label_N_Empleado_1.Text), First(Filter(colCursos, ID_Curso = ThisItem.ID)).ID = ID_Curso)).ID_Grupo);
+                          Navigate(Formed_Screen,ScreenTransition.Cover)
+
+                          ;
+
+                          Set(varPDF, true);
+
+                          Set(
+                              varID_Grupo, 
+                              LookUp(
+                                  RegistrosFormacion, 
+                                  Num_Empleado = Value(Label_N_Empleado_1.Text) && 
+                                  ID_Curso = Value(ThisItem.ID) // 👈 Aquí usamos directamente el ID del curso de la celda actual
+                              ).ID_Grupo
+                          );
+
+                          // 4. Navegamos a la pantalla del formulario
+                          Navigate(Formed_Screen, ScreenTransition.Cover)
+                        Visible: |-
+                          =If(
+                              IsBlank(
+                                  First(
+                                      Filter(
+                                          colRegistros,
+                                          Num_Empleado = Value(Label_N_Empleado_1.Text),
+                                          LookUp(CursosFormativos, ID = ID_Curso).ID = ThisItem.ID
+                                      )
+                                  ).Num_Empleado
+                              ),
+                              false,
+                              true
+                          )
+                        Width: =30
+                        Y: =70
+            - Label4_6:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(255, 255, 255, 1)
+                  BorderThickness: =2
+                  Fill: "=\r\n\r\nIf(\r\n   \r\n    Label4_6.Text = \"Curso sin seleccionar\", \r\n    RGBA(227, 234, 243, 1),\r\n     Label5_2.Text = \"REALIZADO\", \r\n    Color.LightGreen,\r\n    \r\n    Color.IndianRed \r\n)"
+                  Font: =Font.'Open Sans'
+                  Height: =100
+                  OnSelect: =Select(Parent)
+                  Size: =10
+                  Text: |
+                    =If(
+                        ComboBox_Curso.Selected.Value = Blank(),
+                        "Curso sin seleccionar",
+                        ComboBox_Curso.Selected.Value
+                    )
+                  Width: =159
+                  X: =190
+            - Label5_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =If(Self.Text = "NO REALIZADO", Color.IndianRed, Color.LightGreen)
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Lighter
+                  Height: =50
+                  OnSelect: =Select(Parent)
+                  PaddingLeft: =10
+                  Size: =9
+                  Text: |-
+                    =If(
+                        IsBlank(
+                            LookUp(
+                                colRegistros,
+                                Num_Empleado = Value(Label_N_Empleado_1.Text) && 
+                                LookUp(CursosFormativos, ID = ID_Curso).Title = ComboBox_Curso.Selected.Value
+                                && Apto = true
+                            )
+                        ),
+                        "NO REALIZADO",
+                        "REALIZADO"
+                    )
+                  Visible: =false
+                  Width: =80
+                  X: =190
+                  Y: =100
+            - Label4_7:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(255, 255, 255, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =23
+                  OnSelect: =Select(Parent)
+                  Size: =9
+                  Text: "=/*With(\r\n    { \r\n        Registro: LookUp(\r\n            colRegistros; \r\n            Num_Empleado = Value(Label_N_Empleado_1.Text) &&\r\n            LookUp(CursosFormativos; ID = ID_Curso).Title = ComboBox_Curso.Selected.Value\r\n        );\r\n        \r\n        MesesValidezCurso: LookUp(colCursosFiltrados; Nombre = ComboBox_Curso.Selected.Value).\r\n    };\r\n    \r\n    If(\r\n        IsBlank(Registro.Created) || IsBlank(MesesValidezCurso); \r\n        \"-\"; \r\n        \"Válido hasta \" & Text(\r\n            DateAdd(DateTimeValue(Registro.Created); Value(MesesValidezCurso); TimeUnit.Months); \r\n            DateTimeFormat.ShortDate; \r\n            \"ca-ES\"\r\n        )\r\n    )\r\n)*/\r\nWith(\r\n    {\r\n        varIDMaestro: LookUp(\r\n            colCursosFiltrados, \r\n            Nombre = ComboBox_Curso.Selected.Value \r\n        ).ID_CURSO_UNICO\r\n    },\r\n    \r\n    With(\r\n        { \r\n            Registro: LookUp(\r\n                colRegistros, \r\n                Num_Empleado = Value(Label_N_Empleado_1.Text) &&\r\n                Value(ID_Curso) = Value(varIDMaestro)\r\n            ),\r\n            \r\n            MesesValidezCurso: LookUp(\r\n                CursosFormativos, \r\n                ID = Value(varIDMaestro)\r\n            ).MESES_VALIDEZ \r\n        },\r\n        \r\n        If(\r\n            IsBlank(Registro.Creado) || IsBlank(MesesValidezCurso), \r\n            \"-\", \r\n            \"Válido hasta \" & Text(\r\n                DateAdd(Registro.Creado, Value(MesesValidezCurso), TimeUnit.Months), \r\n                DateTimeFormat.ShortDate, \r\n                \"ca-ES\"\r\n            )\r\n        )\r\n    )\r\n)"
+                  Width: =159
+                  X: =190
+                  Y: =127
+            - Label7:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Colors.Primary1
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =75
+                  OnSelect: =Select(Parent)
+                  Size: =20
+                  Text: |
+                    =If(ThisItem.TotalCursosPlan = 0, "0%", Round((ThisItem.CursosCompletados / ThisItem.TotalCursosPlan) * 100, 0) & " %")
+                  Width: =135
+                  X: =50
+                  Y: =75
+            - Label_N_Empleado_2:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Colors.Primary1
+                  BorderThickness: =1
+                  Font: =Font.'Open Sans'
+                  FontWeight: =FontWeight.Semibold
+                  Height: =75
+                  OnSelect: =Select(Parent)
+                  Size: =9
+                  Text: ="% compl"
+                  Width: =50
+                  Y: =75
+            - Label4_8:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(255, 255, 255, 1)
+                  BorderThickness: =2
+                  Fill: =RGBA(241, 244, 249, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =25
+                  OnSelect: =Select(Parent)
+                  Size: =9
+                  Text: |-
+                    =If(
+                        Label5_2.Text = "REALIZADO",
+                        "Realizado: " & Text(
+                            LookUp(
+                                colRegistros,
+                                Num_Empleado = Value(Label_N_Empleado_1.Text) && 
+                                LookUp(CursosFormativos, ID = ID_Curso).Title = ComboBox_Curso.Selected.Value
+                            ).Creado, // 👈 Cambia .Created por .Fecha si tu columna se llama diferente
+                            DateTimeFormat.ShortDate,
+                            "ca-ES"
+                        ),
+                        "-" // Lo que mostrará si no está realizado (un guion; o puedes poner "")
+                    )
+                    /*
+                    With(
+                        {
+                            UltimoRegistro: First(
+                                Sort(
+                                    Filter(colRegistros; Num_Empleado = Value(Label_N_Empleado_1.Text) && TituloCursoRealizado = ThisItem.CursosCompletados);
+                                    Created;
+                                    SortOrder.Descending
+                                )
+                            )
+                        };
+                        If(
+                            IsBlank(UltimoRegistro.Created) || IsBlank(ThisItem.MesesValidez); 
+                            "-"; 
+                            "Válido hasta " & Text(
+                                DateAdd(DateTimeValue(UltimoRegistro.Created); Value(ThisItem.MesesValidez); TimeUnit.Months); 
+                                DateTimeFormat.ShortDate; 
+                                "es-ES"
+                            )
+                        )
+                    )*/
+                  Width: =159
+                  X: =190
+                  Y: =100
+      - ComboBox_Equipo:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =Colors.Primary1
+            ChevronBackground: =Colors.Primary1
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Default: |-
+              =//{Result: ThisItem.COD}
+            DefaultSelectedItems: |-
+              ={Result: ""}
+            DisplayFields: =
+            Font: =Font.'Open Sans'
+            Height: =35
+            HoverFill: =
+            InputTextPlaceholder: ="Filtrar equipo"
+            Items: |-
+              =Sort(
+                  PuestosTrabajo, 
+                  Title, 
+                  SortOrder.Ascending
+              )
+            OnChange: |-
+              =UpdateContext({valorDesde: Blank()});
+              UpdateContext({valorHasta: Blank()});
+              Reset(ComboBox_N_Empleado);
+              Reset(ComboBox_N_Empl_Desde)
+
+              /*If(
+                  Self.Selected.Value = Blank();
+                  UpdateContext({valorDesde: Blank()});;
+                  UpdateContext({valorHasta: Blank()});
+                  UpdateContext({valorDesde: First(Filter(Sort(Programacion_Personal;N_Empleado;SortOrder.Ascending); Equipo = Self.Selected.Value)).N_Empleado});;
+                  UpdateContext({valorHasta: Last(FirstN(Filter(Distinct(Filter(Sort(Programacion_Personal;N_Empleado;SortOrder.Ascending); Equipo= Self.Selected.Value; Semana = WeekNum(Today())); N_Empleado);ThisRecord.Value >= valorDesde);5)).Value}))*/
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["ComplianceAssetId"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =Colors.Primary1
+            Size: =12
+            Width: =183
+            X: =323
+            Y: =130
+      - Label6_8:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Text: ="Nº empleado"
+            X: =623
+            Y: =96
+      - Label6_9:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Text: ="Puesto:"
+            Width: =183
+            X: =323
+            Y: =93
+      - Label3_36:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(168, 0, 0, 1)
+            Font: =Font.'Open Sans'
+            Height: =26
+            Size: =12
+            Text: ="**Establecer Nº empleado para iniciar búsqueda (Uno de los campos con borde rojo es obligatorio)"
+            Visible: =false
+            Width: =892
+            X: =215
+            Y: =149
+      - Icon2_8:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Height: =50
+            Icon: =Icon.Reload
+            OnSelect: |-
+              =Refresh(RegistrosFormacion);
+
+              ClearCollect(
+                  colRegistros,
+                  RegistrosFormacion
+              );
+
+              ClearCollect(
+                  colTodosCursos,
+                  Sort(Filter(CursosFormativos, ID <> 18),ComboBox_Curso.Selected.Value,SortOrder.Ascending)
+              );
+
+              ClearCollect(
+                  colCursos,
+                  Sort(Filter(CursosFormativos_Plan, Title <> "Test Subida RPA", Plan_Form = Plan_Formativo.Selected.Value, Area_Form = ComboBox_Area.Selected.Value || ComboBox_Area.Selected.Value = Blank()),ComboBox_Curso.Selected.Value,SortOrder.Ascending)
+              )
+            Width: =50
+            X: =1615
+            Y: =10
+      - ComboBox_N_Empleado:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =
+            ChevronBackground: =Colors.Primary1
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            DefaultSelectedItems: |-
+              ={Result: ""}
+            DisplayFields: =["Numero_Empresa"]
+            DisplayMode: |-
+              =/*If(
+                  ComboBox_Equipo.Selected.Value = Blank();
+                  DisplayMode.Edit;
+                  DisplayMode.Disabled
+              )*/
+              DisplayMode.Edit
+            Font: =Font.'Open Sans'
+            Height: =35
+            HoverFill: =
+            InputTextPlaceholder: ="Nº operario"
+            IsSearchable: |
+              =true
+            Items: |-
+              =Filter(
+                  Personal,
+                  Tipo_Empleo = ComboBox_Equipo.Selected.Title
+              )
+            OnSelect: |
+              =Reset(ComboBox_N_Empl_Desde); 
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["ComplianceAssetId"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =Colors.Primary1
+            Width: =150
+            X: =623
+            Y: =130
+      - Label6_10:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            Text: ="Plan formativo:"
+            Width: =183
+            X: =1020
+            Y: =95
+      - Plan_Formativo:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            AllowEmptySelection: =true
+            BorderColor: =Colors.Primary1
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =Year(Today())
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            Height: =35
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: =Distinct(CursosFormativos_Plan, Plan_Form )
+            Items.Value: =Value
+            OnChange: =
+            OnSelect: =
+            PaddingRight: =13.34
+            PaddingTop: =13.34
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Width: =152
+            X: =1035
+            Y: =130
+      - ComboBox_Area:
+          Control: Classic/ComboBox@2.4.0
+          Properties:
+            BorderColor: =Colors.Primary1
+            ChevronBackground: =Colors.Primary1
+            ChevronFill: =RGBA(255, 255, 255, 1)
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =RGBA(255, 255, 255, 1)
+            Default: |-
+              =//{Result: ThisItem.COD}
+            DefaultSelectedItems: |-
+              ={Result: ""}
+            DisplayFields: =["Value"]
+            Font: =Font.'Open Sans'
+            Height: =35
+            HoverFill: =
+            InputTextPlaceholder: ="Filtrar por área"
+            Items: =Distinct(colTodosCursos, AREA_FORMATIVA)
+            OnChange: |-
+              =ClearCollect(
+                  colCursos,
+                  Sort(Filter(CursosFormativos_Plan, Plan_Form  = Plan_Formativo.Selected.Value, Area_Form = ComboBox_Area.Selected.Value || ComboBox_Area.Selected.Value = Blank()),ComboBox_Curso.Selected.Value,SortOrder.Ascending)
+              )
+            OnSelect: =
+            PressedBorderColor: =Self.Fill
+            PressedColor: =RGBA(255, 255, 255, 1)
+            PressedFill: =RGBA(0, 18, 107, 1)
+            SearchFields: =["Value"]
+            SelectMultiple: =false
+            SelectionColor: =RGBA(255, 255, 255, 1)
+            SelectionFill: =Colors.Primary1
+            Size: =12
+            Width: =160
+            X: =1270
+            Y: =130
+      - Label6_11:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Text: ="Área:"
+            Width: =160
+            X: =1270
+            Y: =95
+      - Button4:
+          Control: ModernButton@1.0.0
+          Properties:
+            BasePaletteColor: =Colors.Primary3
+            Color: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Segoe UI'
+            Height: =55
+            OnSelect: "=UpdateContext({ctxCargando: true});\r\n\r\nClearCollect(\r\n    colCursosFiltrados,\r\n    AddColumns(\r\n        Filter(\r\n            CursosFormativos_Plan,\r\n            (IsBlank(ComboBox_Area.Selected) || Area_Form = ComboBox_Area.Selected.Value),\r\n            (IsBlank(Plan_Formativo.Selected) || Plan_Form = Plan_Formativo.Selected.Value)\r\n        ),\r\n        MESES_VALIDEZ, LookUp(CursosFormativos, ID = ID_CURSO_UNICO).MESES_VALIDEZ\r\n    )\r\n);\r\n\r\nClearCollect(\r\n    colEmpleadosBase,\r\n    Distinct(\r\n        Filter(\r\n            Personal, \r\n            (IsBlank(ComboBox_Equipo.Selected.Title) || Tipo_Empleo = ComboBox_Equipo.Selected.Title),\r\n            (IsBlank(ComboBox_N_Empleado.Selected.Numero_Empresa) || Numero_Empresa = Value(ComboBox_N_Empleado.Selected.Numero_Empresa))\r\n        ),\r\n        Numero_Empresa\r\n    )\r\n);\r\n\r\nClear(colRegistrosTemp);\r\nForAll(\r\n    colEmpleadosBase As Emp,\r\n    Collect(\r\n        colRegistrosTemp,\r\n        Filter(\r\n            RegistrosFormacion,\r\n            Num_Empleado = Value(Emp.Value),\r\n            Formador = false \r\n        )\r\n    )\r\n);\r\n\r\nClearCollect(\r\n    colRegistros,\r\n    Filter(\r\n        colRegistrosTemp,\r\n        Value(ID_Curso) in colCursosFiltrados.ID_CURSO_UNICO && \r\n        \r\n        With(\r\n            {\r\n                MesesVigencia: LookUp(colCursosFiltrados, Value(ID_CURSO_UNICO) = Value(ID_Curso)).MESES_VALIDEZ\r\n            },\r\n            IsBlank(MesesVigencia) || DateAdd(Creado, Value(MesesVigencia), TimeUnit.Months) >= Today()\r\n        )\r\n    )\r\n);\r\n\r\nClearCollect(\r\n    colMatrizFormacion,\r\n    ForAll(\r\n        colEmpleadosBase As Emp,\r\n        {\r\n            N_Empleado: Value(Emp.Value), \r\n            NombreCompleto: LookUp(Personal, Numero_Empresa = Value(Emp.Value)).Nombre_Completo,\r\n            TotalCursosPlan: CountRows(colCursosFiltrados),\r\n            CursosCompletados: CountRows(Filter(colRegistros, Num_Empleado = Value(Emp.Value)))\r\n        }\r\n    )\r\n);\r\n\r\nUpdateContext({ctxCargando: false});\r\nNotify(\"Matriz organizada con éxito. Evaluando vigencias.\", NotificationType.Success)"
+            Text: ="BUSCAR"
+            Width: =101
+            X: =1793
+            Y: =107
+      - Label6_17:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Tipo de empleado"
+            Visible: =false
+            Width: =225
+            X: =703
+            Y: =89
+      - Rectangle5:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            DisabledFill: =Colors.Primary3
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(56, 96, 178, 1)
+            Height: =870
+            Width: =4
+            X: =350
+            Y: =210
+      - Label1_6:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =909
+            Size: =25
+            Text: ="CARGANDO, ESPERE PORFAVOR"
+            Visible: =ctxCargando
+            Width: =1920
+            Y: =171
+      - Label3_37:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            Color: =Colors.Primary1
+            Fill: =RGBA(227, 234, 243, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: ="Nº"
+            Width: =50
+            Y: =170
+      - Button5:
+          Control: ModernButton@1.0.0
+          Properties:
+            Appearance: =ButtonAppearance.Transparent
+            Height: =43
+            OnSelect: |-
+              =UpdateContext({
+                  varColumnaOrden: "N_Empleado",
+                  varOrdenAsc: If(varColumnaOrden = "N_Empleado", !varOrdenAsc, true)
+              })
+            Text: =
+            Width: =50
+            Y: =167
+      - Button5_1:
+          Control: ModernButton@1.0.0
+          Properties:
+            Appearance: =ButtonAppearance.Transparent
+            Height: =39
+            OnSelect: |-
+              =UpdateContext({
+                  varColumnaOrden: "NombreCompleto",
+                  varOrdenAsc: If(varColumnaOrden = "NombreCompleto", !varOrdenAsc, true)
+              })
+            Text: =
+            Width: =140
+            X: =50
+            Y: =171
+      - Label1_7:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =870
+            Size: =25
+            Text: ="NO SE HA INICIADO LA BÚSQUEDA"
+            Visible: |-
+              =/*If(
+                  CountRows(Gallery_Por_Curso.AllItems) = 0 && ctxCargando = false;
+                  true;
+                  false
+              )*/
+              If(
+                  IsEmpty(colMatrizFormacion) && !ctxCargando,
+                  true,
+                  false
+              )
+            Width: =1918
+            Y: =210

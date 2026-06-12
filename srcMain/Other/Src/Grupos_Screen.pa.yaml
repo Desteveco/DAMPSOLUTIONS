@@ -10,7 +10,7 @@ Screens:
   Grupos_Screen:
     Properties:
       LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
-      OnVisible: =Refresh(Grupos_Formacion);Refresh('Sesiones Formación');
+      OnVisible: =Refresh(GruposFormacion);
     Children:
       - TextInput2_2:
           Control: Classic/TextInput@2.3.2
@@ -53,14 +53,14 @@ Screens:
             BorderColor: =RGBA(0, 18, 107, 1)
             Default: ={}
             DelayItemLoading: =false
-            Height: =957
+            Height: =700
             Items: |-
               =If(
                   Checkbox1.Value,
                   Sort(
                       Filter(
-                          Grupos_Formacion,
-                          ID_Curso = varFormItemSelected.ID
+                          GruposFormacion,
+                          ID_Curso = varCursoActual.ID
 
                       ),
                       Title,
@@ -68,8 +68,8 @@ Screens:
                   ),
                   Sort(
                       Filter(
-                          Grupos_Formacion,
-                          ID_Curso = varFormItemSelected.ID
+                          GruposFormacion,
+                          ID_Curso = varCursoActual.ID
                       ),
                       Title,
                       SortOrder.Ascending
@@ -80,8 +80,8 @@ Screens:
               =Set(varGroupSelected, ThisItem);
               ViewForm(Form1_1)
             TemplatePadding: =10
-            TemplateSize: =380
-            Width: =1140
+            TemplateSize: =264
+            Width: =1138
             WrapCount: =4
             X: =228
             Y: =123
@@ -102,7 +102,7 @@ Screens:
                     )
                   DisplayMode: =DisplayMode.Disabled
                   Font: =Font.'Open Sans'
-                  Height: =380
+                  Height: =264
                   HoverBorderColor: =RGBA(0, 18, 107, 1)
                   HoverFill: =RGBA(186, 202, 226, 1)
                   OnSelect: =Select(Parent)
@@ -116,7 +116,7 @@ Screens:
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   Font: =Font.'Open Sans'
-                  Height: =314
+                  Height: =232
                   OnSelect: =Select(Parent)
                   Text: =
                   Width: =266
@@ -143,8 +143,9 @@ Screens:
                   Font: =Font.Arial
                   FontWeight: =FontWeight.Bold
                   OnSelect: =Select(Parent)
+                  Size: =15
                   Text: |-
-                    ="Curso: " & varFormItemSelected.Title
+                    ="Curso: " & varCursoActual.Title
                   Width: =237
                   X: =15
                   Y: =Label3_9.Y + Label3_9.Height
@@ -200,23 +201,10 @@ Screens:
                   FontWeight: =FontWeight.Bold
                   OnSelect: =Select(Parent)
                   Text: |-
-                    ="Nº Participantes: " & CountRows(Filter('Registros de Formación', ID_Grupo = ThisItem.ID, Formador = false))
+                    ="Nº Participantes: " & CountRows(Filter(RegistrosFormacion, ID_Grupo = ThisItem.ID, Formador = false))
                   Width: =237
                   X: =15
                   Y: =Label3_15.Height + Label3_15.Y
-            - Circle1:
-                Control: Circle@2.3.0
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Fill: |-
-                    =If(ThisItem.Subido_A_Milena,
-                    Color.DarkGreen,
-                    Color.DarkRed)
-                  Height: =28
-                  OnSelect: =Select(Parent)
-                  Width: =28
-                  X: =155
-                  Y: =Label3_34.Y
             - Label3_34:
                 Control: Label@2.5.1
                 Properties:
@@ -233,79 +221,14 @@ Screens:
                   Width: =124
                   X: =15
                   Y: =Label3_29.Y + Label3_29.Height
-            - Circle1_1:
-                Control: Circle@2.3.0
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Fill: |-
-                    =If(ThisItem.Subido_A_Milena,
-                    Color.DarkGreen,
-                    Color.DarkRed)
-                  Height: =40
-                  OnSelect: =Select(Parent)
-                  Visible: =false
-                  Width: =40
-                  X: =212
-                  Y: =241
-            - Label3_37:
-                Control: Label@2.5.1
-                Properties:
-                  Align: =Align.Center
-                  AutoHeight: =true
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Color: =Colors.Primary1
-                  Font: =Font.Arial
-                  FontWeight: =FontWeight.Bold
-                  OnSelect: =Select(Parent)
-                  Size: =11
-                  Text: |-
-                    ="Participantes Cargados: "
-                  Width: =180
-                  X: =15
-                  Y: =Label3_34.Y + Label3_34.Height + 5
-            - Circle1_3:
-                Control: Circle@2.3.0
-                Properties:
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Fill: |-
-                    =If(
-                        With(
-                        {
-                            wFilter: Filter('Registros de Formación', ID_Grupo = ThisItem.ID, Formador = false)
-                        },
-                        CountRows(wFilter) = CountRows(Filter(wFilter, Subido_Milena)) && CountRows(wFilter) <> 0
-                    ),
-                    Color.DarkGreen,
-                    Color.DarkRed
-                    )
-                  Height: =28
-                  OnSelect: =Select(Parent)
-                  Width: =28
-                  X: =195
-                  Y: =Label3_37.Y
-            - Label3_38:
-                Control: Label@2.5.1
-                Properties:
-                  AutoHeight: =true
-                  BorderColor: =RGBA(0, 18, 107, 1)
-                  Color: =Colors.Primary1
-                  Font: =Font.Arial
-                  FontWeight: =FontWeight.Semibold
-                  Height: =70
-                  OnSelect: =Select(Parent)
-                  Size: =12
-                  Text: |-
-                    ="Comentarios: " & ThisItem.Comentarios
-                  Width: =237
-                  X: =15
-                  Y: =Label3_37.Y + Label3_37.Height
       - Image2_2:
           Control: Image@2.2.3
           Properties:
             BorderColor: =RGBA(0, 18, 107, 1)
             Height: =48
-            Image: ='BorgWarner_Logo_Final_Rv.White'
+            Image: =LOGO2
             Width: =279
+            X: =72
       - dd_Curs_Plan_1:
           Control: Classic/DropDown@2.3.1
           Group: Group5
@@ -320,7 +243,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Plan_Form
+            Default: =varCursoActual.Plan_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -331,7 +254,7 @@ Screens:
             HoverColor: =Colors.White
             HoverFill: =Colors.Primary3
             Items: |-
-              =ForAll(Distinct('Cursos Formativos',Plan_Form), {Result: ThisRecord.Value})
+              =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
             Items.Value: =Result
             OnChange: =
             OnSelect: =
@@ -358,7 +281,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Denominacion_Plan
+            Default: =varCursoActual.Denominacion_Plan
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -371,7 +294,7 @@ Screens:
             Items: |-
               =ForAll(Distinct(
                   Filter(
-                      'Cursos Formativos',
+                      CursosFormativos_Plan,
                       Plan_Form = dd_Curs_Plan_1.Selected.Result
                   ),
                   Denominacion_Plan
@@ -402,7 +325,7 @@ Screens:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Area_Form
+            Default: =varCursoActual.Area_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -415,7 +338,7 @@ Screens:
             Items: |-
               =ForAll(Distinct(
                   Filter(
-                      'Cursos Formativos',
+                      CursosFormativos_Plan,
                       Denominacion_Plan = dd_Curs_Denom_1.Selected.Result
                   ),
                   Area_Form
@@ -509,7 +432,7 @@ Screens:
             Icon: =Icon.Save
             OnSelect: |-
               =SubmitForm(Form1_1);
-              Refresh(Grupos_Formacion)
+              Refresh(GruposFormacion)
             X: =1752
             Y: =152
       - Icon1_3:
@@ -547,7 +470,7 @@ Screens:
           Group: Group4
           Properties:
             BorderColor: =Colors.Primary1
-            DataSource: =Grupos_Formacion
+            DataSource: =GruposFormacion
             DefaultMode: =FormMode.New
             Height: =826
             Item: =gal_Grupos.Selected
@@ -564,8 +487,8 @@ Screens:
                   BorderColor: =Colors.Primary1
                   DataField: ="Title"
                   Default: =ThisItem.Title
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,Title)
-                  MaxLength: =DataSourceInfo([@Grupos_Formacion], DataSourceInfo.MaxLength, Title)
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Title)
+                  MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Title)
                   Required: =true
                   Update: =DataCardValue12.Text
                   Width: =532
@@ -591,7 +514,7 @@ Screens:
                       MetadataKey: FieldValue
                       Properties:
                         BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                        Default: "=//If(\r\n//    Form1_1.Mode = FormMode.New;\r\n//    \"G\" & \r\n//    If(\r\n//        (Last(\r\n//        Split(\r\n//            First(\r\n//                SortByColumns(\r\n//                    Filter(\r\n//                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID\r\n//                        );\r\n//                    \"Title\";SortOrder.Descending\r\n//                )\r\n//            ).Title;\r\n//            \"G\"\r\n//        )).Value + 1) < 10;\r\n//        \"0\" & Last(\r\n//        Split(\r\n//            First(\r\n//                SortByColumns(\r\n//                    Filter(\r\n//                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID\r\n//                        );\r\n//                    \"Title\";SortOrder.Descending\r\n//                )\r\n//            ).Title;\r\n//            \"G\"\r\n//        )).Value + 1;\r\n//        Last(\r\n//        Split(\r\n//            First(\r\n//                SortByColumns(\r\n//                    Filter(\r\n//                        Grupos_Formacion; ID_Curso = varFormItemSelected.ID\r\n//                        );\r\n//                    \"Title\";SortOrder.Descending\r\n//                )\r\n//            ).Title;\r\n//            \"G\"\r\n//        )).Value + 1\r\n//    );\r\n//    Parent.Default\r\n//)\r\n\r\nIf(\r\n    Form1_1.Mode = FormMode.New,\r\n    With(\r\n        {\r\n            // 1. Buscamos el último grupo en la BD UNA SOLA VEZ\r\n            ultimoRegistro: First(\r\n                SortByColumns(\r\n                    Filter(Grupos_Formacion, ID_Curso = varFormItemSelected.ID),\r\n                    \"Title\", \r\n                    SortOrder.Descending\r\n                )\r\n            )\r\n        },\r\n        With(\r\n            {\r\n                // 2. Extraemos el número y le sumamos 1. \r\n                // Si es el primer grupo de la historia (IsBlank), empezamos por 1.\r\n                siguienteNum: If(\r\n                    IsBlank(ultimoRegistro),\r\n                    1,\r\n                    Value(Last(Split(ultimoRegistro.Title, \"G\")).Value) + 1\r\n                )\r\n            },\r\n            \r\n            // 3. Montamos el texto final usando Text() para los ceros (Magia pura)\r\n            \"G\" & Text(siguienteNum, \"00\")\r\n        )\r\n    ),\r\n    \r\n    // Si no es un formulario nuevo, mantiene el que tenía\r\n    Parent.Default\r\n)"
+                        Default: "=\r\n\r\nIf(\r\n    Form1_1.Mode = FormMode.New,\r\n    With(\r\n        {\r\n            ultimoRegistro: First(\r\n                SortByColumns(\r\n                    Filter(GruposFormacion, ID_Curso = varCursoActual.ID),\r\n                    \"Title\", \r\n                    SortOrder.Descending\r\n                )\r\n            )\r\n        },\r\n        With(\r\n            {\r\n                siguienteNum: If(\r\n                    IsBlank(ultimoRegistro),\r\n                    1,\r\n                    Value(Last(Split(ultimoRegistro.Title, \"G\")).Value) + 1\r\n                )\r\n            },\r\n            \r\n            \"G\" & Text(siguienteNum, \"00\")\r\n        )\r\n    ),\r\n    \r\n    Parent.Default\r\n)"
                         DelayOutput: =true
                         DisplayMode: =Parent.DisplayMode
                         Font: =Font.'Open Sans'
@@ -649,7 +572,7 @@ Screens:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="F_ini_grupo"
                   Default: =ThisItem.F_Ini_grupo
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,F_Ini_grupo)
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Ini_grupo)
                   Required: =false
                   Update: =DataCardValue16.SelectedDate
                   Width: =532
@@ -728,12 +651,11 @@ Screens:
             - F_Fin_grupo_DataCard1:
                 Control: TypedDataCard@1.0.7
                 Variant: ClassicDateEdit
-                IsLocked: true
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="F_Fin_grupo"
                   Default: =ThisItem.F_Fin_grupo
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,F_Fin_grupo)
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Fin_grupo)
                   Required: =false
                   Update: =DataCardValue15.SelectedDate
                   Width: =532
@@ -815,10 +737,10 @@ Screens:
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="Nom_Curso"
-                  Default: =varFormItemSelected.Curso
+                  Default: =varCursoActual.Title
                   DisplayMode: =DisplayMode.View
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,Nom_Curso)
-                  MaxLength: =DataSourceInfo([@Grupos_Formacion], DataSourceInfo.MaxLength, Nom_Curso)
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Nom_Curso)
+                  MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Nom_Curso)
                   Required: =false
                   Update: =DataCardValue7.Text
                   Width: =532
@@ -901,9 +823,9 @@ Screens:
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
                   DataField: ="ID_Curso"
-                  Default: =varFormItemSelected.ID
+                  Default: =varCursoActual.ID
                   DisplayMode: =DisplayMode.View
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,ID_Curso)
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,ID_Curso)
                   Required: =false
                   Update: =Value(DataCardValue1.Text)
                   Width: =532
@@ -993,7 +915,7 @@ Screens:
                         Parent.DisplayMode,
                         DisplayMode.View
                     )
-                  DisplayName: =DataSourceInfo([@Grupos_Formacion],DataSourceInfo.DisplayName,'Datos adjuntos')
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,'Datos adjuntos')
                   Height: =300
                   Required: =false
                   Update: =DataCardValue19.Attachments
@@ -1086,7 +1008,7 @@ Screens:
             OnSelect: =
             Size: =18
             Text: |+
-              ="Grupos de: " & varFormItemSelected.Title & Char(10)
+              ="Grupos de: " & varCursoActual.Nombre & Char(10)
             Width: =957
             X: =338
             Y: =55
@@ -1097,9 +1019,9 @@ Screens:
             Color: =RGBA(255, 255, 255, 1)
             Height: =48
             Icon: =Icon.ArrowLeft
-            OnSelect: =Back()
+            OnSelect: =Navigate(Cursos_Screen)
             Width: =55
-            X: =279
+            X: =17
       - Icon3:
           Control: Classic/Icon@2.5.0
           Properties:
@@ -1130,38 +1052,6 @@ Screens:
               ="Gestión de Formaciones - GRUPOS"
             Width: =662
             X: =629
-      - Button2_1:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: =ColorFade(Self.Fill, -15%)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            Fill: =Colors.Primary1
-            Font: =Font.'Open Sans'
-            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-            HoverColor: =RGBA(255, 255, 255, 1)
-            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |-
-              =/*Copy("46" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1547" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1698" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-              "1867" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) )*/
-
-
-
-              Copy(
-                  Concat(
-                      Filter(gal_Grupos.AllItems, !Subido_A_Milena), 
-                      Last(Split(Title,"G")).Value & Char(9) & Title &  Char(9) & "R" & Char(9) & Text(F_Ini_grupo,"dd/mm/yyyy") & Char(9) & Text(F_Fin_grupo, "dd/mm/yyyy") & Char(9) & "" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(9) & "0" & Char(13)
-                  )
-              )
-            PressedBorderColor: =Self.Fill
-            PressedColor: =Self.Fill
-            PressedFill: =Self.Color
-            Text: ="Exportar grupos"
-            Width: =217
-            X: =1414
-            Y: =54
       - Checkbox1:
           Control: Classic/CheckBox@2.1.0
           Properties:
@@ -1175,34 +1065,3 @@ Screens:
             Width: =253
             X: =1179
             Y: =48
-      - Button2_3:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: =ColorFade(Self.Fill, -15%)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(166, 166, 166, 1)
-            Fill: =Colors.Primary1
-            Font: =Font.'Open Sans'
-            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-            HoverColor: =RGBA(255, 255, 255, 1)
-            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |-
-              =ForAll(
-                  Filter(gal_Grupos.AllItems, Subido_A_Milena = false),
-                  Patch(
-                      Grupos_Formacion,
-                      ThisRecord,
-                      {
-                          Subido_A_Milena: true
-                      }
-                  )
-              );
-
-              Refresh(Grupos_Formacion)
-            PressedBorderColor: =Self.Fill
-            PressedColor: =Self.Fill
-            PressedFill: =Self.Color
-            Text: ="Confirmar Guardado"
-            Width: =217
-            X: =1675
-            Y: =54

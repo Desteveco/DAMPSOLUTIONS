@@ -13,8 +13,8 @@ Registros_Screen As screen:
         Height: =926
         Items: |-
             =Filter(
-                'Registros de Formación',
-                ID_Curso = varFormItemSelected.ID,
+                RegistrosFormacion,
+                ID_Curso = varCursoActual.ID,
                 ID_Grupo = varGroupSelected.ID
             )
         Layout: =Layout.Vertical
@@ -64,7 +64,7 @@ Registros_Screen As screen:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
             Size: =15
-            Text: =ThisItem.Title
+            Text: =ThisItem.Título
             Width: =237
             X: =15
             Y: =40
@@ -103,33 +103,7 @@ Registros_Screen As screen:
             FontWeight: =FontWeight.Bold
             OnSelect: =Select(Parent)
             Text: |-
-                ="Porcentaje asist: " &
-                With(
-                    {
-                        MisRegistros: Filter(
-                            'Asistencia por sesion',
-                            ID_Grupo = Value(ThisItem.ID_Grupo) &&
-                            N_Empleado = Value(ThisItem.Num_Empleado)
-                        )
-                    },
-                
-                    With(
-                        {
-                            TotalSesiones: CountRows(MisRegistros),
-                            
-                            SesionesAsistidas: CountRows(
-                                Filter(MisRegistros, Asistencia = true) 
-                            )
-                        },
-                
-                    
-                        If(
-                            TotalSesiones = 0,
-                            "0 %",
-                            Round((SesionesAsistidas / TotalSesiones) * 100, 2) & " %"
-                        )
-                    )
-                )
+                ="Puesto: " & LookUp(Personal, ID = ThisItem.ID).Tipo_Empleo
             Visible: =false
             Width: =251
             X: =15
@@ -149,23 +123,11 @@ Registros_Screen As screen:
             Y: =Label3_21.Y + Label3_21.Height
             ZIndex: =7
 
-        Circle1_2 As circle:
-            Fill: |-
-                =If(ThisItem.Subido_Milena,
-                Color.DarkGreen,
-                Color.DarkRed)
-            Height: =40
-            OnSelect: =Select(Parent)
-            Visible: =false
-            Width: =40
-            X: =195
-            Y: =131
-            ZIndex: =8
-
     Image2_4 As image:
         Height: =48
-        Image: ='BorgWarner_Logo_Final_Rv.White'
+        Image: =LOGO2
         Width: =279
+        X: =102
         ZIndex: =4
 
     Label3_16 As label:
@@ -177,7 +139,7 @@ Registros_Screen As screen:
         OnSelect: =
         Size: =18
         Text: |-
-            ="Asistentes a Curso: " & varFormItemSelected.Title & " -- Grupo: "  & gal_Grupos.Selected.Nombre 
+            ="Asistentes a Curso: " & varCursoActual.Title & " -- Grupo: "  & gal_Grupos.Selected.Nombre 
         Width: =1023
         X: =399
         Y: =68
@@ -201,7 +163,7 @@ Registros_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Plan_Form
+            Default: =varCursoActual.Plan_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -212,7 +174,7 @@ Registros_Screen As screen:
             HoverColor: =Colors.White
             HoverFill: =Colors.Primary3
             Items: |-
-                =ForAll(Distinct('Cursos Formativos',Plan_Form), {Result: ThisRecord.Value})
+                =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
             OnChange: =
             OnSelect: =
             PaddingRight: =13.34
@@ -237,7 +199,7 @@ Registros_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Denominacion_Plan
+            Default: =varCursoActual.Denominacion_Plan
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -250,7 +212,7 @@ Registros_Screen As screen:
             Items: |-
                 =ForAll(Distinct(
                     Filter(
-                        'Cursos Formativos',
+                        CursosFormativos_Plan,
                         Plan_Form = dd_Curs_Plan_2.Selected.Result
                     ),
                     Denominacion_Plan
@@ -279,7 +241,7 @@ Registros_Screen As screen:
             ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
             ChevronHoverFill: =Colors.White
             Color: =Input.Color
-            Default: =varFormItemSelected.Area_Form
+            Default: =varCursoActual.Area_Form
             DisabledBorderColor: =Colors.Gray
             DisabledColor: =Colors.Gray
             DisabledFill: =Colors.LightGray
@@ -292,7 +254,7 @@ Registros_Screen As screen:
             Items: |-
                 =ForAll(Distinct(
                     Filter(
-                        'Cursos Formativos',
+                        CursosFormativos_Plan,
                         Denominacion_Plan = dd_Curs_Denom_2.Selected.Result
                     ),
                     Area_Form
@@ -420,14 +382,14 @@ Registros_Screen As screen:
                     DisplayMode.Disabled
                 )
             Icon: =Icon.Trash
-            OnSelect: =Remove('Registros de Formación',gal_Asistentes.Selected)
+            OnSelect: =Remove(RegistrosFormacion,gal_Asistentes.Selected)
             X: =1830
             Y: =182
             ZIndex: =14
 
         Form1_2 As form:
             BorderColor: =Colors.Primary1
-            DataSource: ='Registros de Formación'
+            DataSource: =RegistrosFormacion
             DefaultMode: =FormMode.View
             Height: =813
             Item: =gal_Asistentes.Selected
@@ -435,31 +397,6 @@ Registros_Screen As screen:
             OnSuccess: |-
                 =
                 UpdateContext({varUltimoAlumno: Form1_2.LastSubmit});
-                
-                ForAll(
-                    Filter('Sesiones Formación', ID_Curso = varFormItemSelected.ID) As SesionActual,
-                    
-                    Patch(
-                        'Asistencia por sesion',
-                        Defaults('Asistencia por sesion'),
-                        {
-                            Título: "Asist-" & varUltimoAlumno.Num_Empleado & "-S" & SesionActual.ID,
-                            
-                            ID_Curso: varFormItemSelected.ID,
-                            ID_Sesion: SesionActual.ID, 
-                            ID_Grupo: gal_Grupos.Selected.ID,
-                            N_Empleado: varUltimoAlumno.Num_Empleado,
-                            Nombre: varUltimoAlumno.Nom_Empleado,
-                            Asistencia: false 
-                        }
-                    )
-                );
-                
-                If(
-                    !IsEmpty(Errors('Asistencia por sesion')),
-                    Notify("Error en SharePoint. Comprueba si hay columnas obligatorias vacías.", NotificationType.Error),
-                    Notify("Alumno matriculado y listas de asistencia generadas correctamente", NotificationType.Success)
-                );
             Width: =532
             X: =1388
             Y: =264
@@ -470,11 +407,11 @@ Registros_Screen As screen:
                 DataField: ="Num_Empleado"
                 Default: =ThisItem.Num_Empleado
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Num_Empleado)
+                DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,Num_Empleado)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 MaxLength: =
-                Required: =false
+                Required: =true
                 Update: =DataCardValue11.Text
                 Width: =532
                 X: =0
@@ -538,11 +475,11 @@ Registros_Screen As screen:
                 DataField: ="Nom_Empleado"
                 Default: =ThisItem.Nom_Empleado
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Nom_Empleado)
+                DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,Nom_Empleado)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
-                MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, Nom_Empleado)
-                Required: =false
+                MaxLength: =DataSourceInfo([@RegistrosFormacion], DataSourceInfo.MaxLength, Nom_Empleado)
+                Required: =true
                 Update: =DataCardValue14.Text
                 Width: =532
                 X: =0
@@ -561,7 +498,7 @@ Registros_Screen As screen:
 
                 DataCardValue14 As text:
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                    Default: =LookUp(Personal, Title = DataCardValue11.Text).Nombre_Completo
+                    Default: =LookUp(Personal, Título = DataCardValue11.Text).Nombre_Completo
                     DelayOutput: =true
                     DisplayMode: =Parent.DisplayMode
                     MaxLength: =Parent.MaxLength
@@ -606,7 +543,7 @@ Registros_Screen As screen:
                 DataField: ="ID_Curso"
                 Default: =ThisItem.ID_Curso
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Curso)
+                DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,ID_Curso)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -673,7 +610,7 @@ Registros_Screen As screen:
                 DataField: ="ID_Grupo"
                 Default: =ThisItem.ID_Grupo
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Grupo)
+                DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,ID_Grupo)
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -740,7 +677,7 @@ Registros_Screen As screen:
                 DataField: ="{Attachments}"
                 Default: =ThisItem.'Datos adjuntos'
                 DisplayMode: =Parent.DisplayMode
-                DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,'Datos adjuntos')
+                DisplayName: =DataSourceInfo([@RegistrosFormacion],DataSourceInfo.DisplayName,'Datos adjuntos')
                 Fill: =RGBA(0, 0, 0, 0)
                 Height: =50
                 Required: =false
@@ -796,9 +733,9 @@ Registros_Screen As screen:
         Color: =RGBA(255, 255, 255, 1)
         Height: =48
         Icon: =Icon.ArrowLeft
-        OnSelect: =Back()
+        OnSelect: =Navigate(Grupos_Screen)
         Width: =55
-        X: =279
+        X: =30
         ZIndex: =20
 
     Label3_26 As label:
@@ -852,16 +789,11 @@ Registros_Screen As screen:
     Button2 As button:
         Fill: =Colors.Primary1
         OnSelect: |-
-            =/*Copy("46" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1547" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1698" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) & 
-            "1867" & Char(9) & "" & Char(9) & "A"	& Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "M" & Char(9) & "" & Char(9) & "07/06/2023" & Char(9) & "07/09/2023" & Char(10) )*/
-            
-            
+            =
             
             Copy(
                 Concat(
-                    Filter(gal_Asistentes.AllItems, !Formador, !Subido_Milena), 
+                    Filter(gal_Asistentes.AllItems, !Formador), 
                     Num_Empleado & Char(9) & Nom_Empleado &  Char(9) & "A" & Char(9) & "10" & Char(9) & "" & Char(9) & "F" & Char(9) & "" & Char(9) & "" & Char(9) & gal_Grupos.Selected.F_Ini_grupo & Char(9) & gal_Grupos.Selected.F_Fin_grupo & Char(13)
                 )
             );
@@ -870,285 +802,7 @@ Registros_Screen As screen:
         Size: =13
         Text: ="Exportar asistentes"
         Width: =190
-        X: =1451
+        X: =1654
         Y: =53
         ZIndex: =24
-
-    Button2_2 As button:
-        Fill: =Colors.Primary1
-        OnSelect: |-
-            =ForAll(
-                Filter(gal_Asistentes.AllItems, Formador = false),
-                Patch(
-                    'Registros de Formación',
-                    ThisRecord,
-                    {
-                        Subido_Milena: true
-                    }
-                )
-            )
-        Size: =13
-        Text: ="Confirmar Guardado"
-        Width: =190
-        X: =1666
-        Y: =53
-        ZIndex: =25
-
-    Button2_4 As button:
-        Fill: =Colors.Primary1
-        Height: =50
-        OnSelect: |-
-            =UpdateContext({varSowClipboardImport: true})
-        Size: =13
-        Text: ="Importar asistentes"
-        Width: =151
-        X: =251
-        Y: =76
-        ZIndex: =26
-
-    Label7_12 As label:
-        FontWeight: =FontWeight.Bold
-        OnSelect: =
-        Text: ="Tipo"
-        Visible: =varSowClipboardImport
-        X: =678
-        Y: =554
-        ZIndex: =42
-
-    Group8 As group:
-        Height: =5
-        Width: =5
-        X: =40
-        Y: =40
-        ZIndex: =42
-
-        Label2_1 As label:
-            Fill: =RGBA(149, 149, 149, 0.4)
-            Height: =1080
-            OnSelect: =
-            Text: =""
-            Visible: =varSowClipboardImport
-            Width: =1920
-            ZIndex: =27
-
-        TextInput1_1 As text:
-            BorderColor: =Colors.Primary1
-            Default: =""
-            DisplayMode: =DisplayMode.View
-            Height: =937
-            RadiusBottomLeft: =50
-            RadiusBottomRight: =50
-            RadiusTopLeft: =50
-            RadiusTopRight: =50
-            Visible: =varSowClipboardImport
-            Width: =1625
-            X: =148
-            Y: =86
-            ZIndex: =28
-
-        TextInput4 As text:
-            Default: =
-            Height: =363
-            Mode: =TextMode.MultiLine
-            OnChange: |-
-                =ClearCollect(
-                    col_Importados,
-                    ForAll(
-                        Split(TextInput4.Text, Char(10)),  
-                        {
-                            Num_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),1)).Value,
-                            Nom_Empleado: Last(FirstN(Split(ThisRecord.Value, Char(9)),2)).Value,
-                            A: Last(FirstN(Split(ThisRecord.Value, Char(9)),3)).Value,
-                            Diez: Last(FirstN(Split(ThisRecord.Value, Char(9)),4)).Value,
-                            F: Last(FirstN(Split(ThisRecord.Value, Char(9)),6)).Value,
-                            F_Ini_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),9)).Value,"dd/mm/yyyy"),
-                            F_Fin_grupo: Text(Last(FirstN(Split(ThisRecord.Value, Char(9)),10)).Value, "dd/mm/yyyy")
-                        }
-                    )
-                )
-            Visible: =varSowClipboardImport
-            Width: =1329
-            X: =283
-            Y: =177
-            ZIndex: =29
-
-        Gallery1 As gallery.galleryVertical:
-            DelayItemLoading: =true
-            Height: =349
-            Items: =col_Importados
-            Layout: =Layout.Vertical
-            LoadingSpinner: =LoadingSpinner.Data
-            TemplateSize: =49
-            Visible: =varSowClipboardImport
-            Width: =1329
-            X: =283
-            Y: =580
-            ZIndex: =34
-
-            Label7 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.F_Ini_grupo
-                X: =995
-                Y: =1
-                ZIndex: =1
-
-            Label7_1 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.F_Fin_grupo
-                X: =1145
-                Y: =1
-                ZIndex: =2
-
-            Label7_2 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.Num_Empleado
-                X: =28
-                Y: =1
-                ZIndex: =3
-
-            Label7_3 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.Nom_Empleado
-                Width: =343
-                X: =178
-                Y: =1
-                ZIndex: =4
-
-            Label7_4 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.A
-                X: =521
-                Y: =1
-                ZIndex: =5
-
-            Label7_5 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.Diez
-                X: =586
-                Y: =1
-                ZIndex: =6
-
-            Label7_6 As label:
-                OnSelect: =Select(Parent)
-                Text: =ThisItem.F
-                X: =671
-                Y: =1
-                ZIndex: =7
-
-        Label7_7 As label:
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Número"
-            Visible: =varSowClipboardImport
-            X: =304
-            Y: =554
-            ZIndex: =35
-
-        Label7_8 As label:
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="Nombre Completo"
-            Visible: =varSowClipboardImport
-            Width: =258
-            X: =469
-            Y: =556
-            ZIndex: =36
-
-        Label7_9 As label:
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="F. Inicio"
-            Visible: =varSowClipboardImport
-            Width: =141
-            X: =1284
-            Y: =554
-            ZIndex: =37
-
-        Label7_10 As label:
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Text: ="F. Fin"
-            Visible: =varSowClipboardImport
-            Width: =141
-            X: =1436
-            Y: =554
-            ZIndex: =38
-
-        Icon8 As icon.CancelBadge:
-            Color: =Colors.Primary1
-            Icon: =Icon.CancelBadge
-            OnSelect: |-
-                =UpdateContext({varSowClipboardImport: false})
-            Visible: =varSowClipboardImport
-            X: =1676
-            Y: =113
-            ZIndex: =39
-
-        Label7_11 As label:
-            Align: =Align.Center
-            FontWeight: =FontWeight.Bold
-            OnSelect: =
-            Size: =22
-            Text: ="VOLCADO DE PARTICIPANTES A POWERAPPS"
-            Visible: =varSowClipboardImport
-            Width: =726
-            X: =597
-            Y: =125
-            ZIndex: =40
-
-        Button2_5 As button:
-            Fill: =Colors.Primary1
-            Height: =50
-            OnSelect: |-
-                =ForAll(
-                    col_Importados,
-                    If(
-                        !IsBlank(ThisRecord.Num_Empleado),
-                        Patch(
-                            'Registros de Formación',
-                            Defaults('Registros de Formación'),
-                            {
-                                Num_Empleado: Value(ThisRecord.Num_Empleado),
-                                Nom_Empleado: ThisRecord.Nom_Empleado,
-                                ID_Curso: gal_Cursos.Selected.ID,
-                                ID_Grupo: gal_Grupos.Selected.ID
-                            }
-                        )
-                    )
-                );
-                
-                UpdateContext({varSowClipboardImport: false});
-                Refresh('Registros de Formación');
-                Reset(TextInput4); Clear(col_Importados)
-            RadiusBottomLeft: =16
-            RadiusBottomRight: =16
-            RadiusTopLeft: =16
-            RadiusTopRight: =16
-            Size: =16
-            Text: ="Guardar"
-            Visible: =varSowClipboardImport
-            Width: =151
-            X: =885
-            Y: =929
-            ZIndex: =41
-
-    Label7_13 As label:
-        FontWeight: =FontWeight.Bold
-        OnSelect: =
-        Text: ="Entidad"
-        Visible: =varSowClipboardImport
-        X: =788
-        Y: =556
-        ZIndex: =43
-
-    Label7_14 As label:
-        FontWeight: =FontWeight.Bold
-        OnSelect: =
-        Text: |-
-            ="Situación
-            "
-        Visible: =varSowClipboardImport
-        X: =958
-        Y: =554
-        ZIndex: =44
 
