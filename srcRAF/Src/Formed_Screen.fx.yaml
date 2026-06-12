@@ -1,0 +1,1137 @@
+Formed_Screen As screen:
+    OnVisible: |+
+        =Refresh(RegistrosFormacion);
+        
+        
+        
+
+    "Gallery1_Antigua As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        '#CopilotOverlayLabel': ="Filtrada"
+        BorderThickness: =2
+        Height: =660
+        Items: =Filter(RegistrosFormacion, Formador = false, ID_Grupo = gal_Grupos.Selected.ID)
+        Layout: =Layout.Vertical
+        OnSelect: =Set(varPersonSel, ThisItem)
+        TemplatePadding: =0
+        TemplateSize: =59
+        Width: =668
+        X: =50
+        Y: =253
+        ZIndex: =5
+
+        Image3_4 As image:
+            Height: =58
+            Image: =First(ThisItem.'Datos adjuntos').Value
+            ImagePosition: =ImagePosition.Fill
+            OnSelect: =Select(Parent)
+            Width: =141
+            X: =334
+            ZIndex: =1
+
+        Title1_4 As label:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 0, 0, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Num_Empleado
+            VerticalAlign: =VerticalAlign.Top
+            Width: =64
+            X: =17
+            Y: =16
+            ZIndex: =2
+
+        Subtitle1_9 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Height: =25
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Nom_Empleado
+            VerticalAlign: =VerticalAlign.Top
+            Width: =247
+            X: =104
+            Y: =16
+            ZIndex: =3
+
+        Separator1_4 As rectangle:
+            Fill: =Colors.Primary3
+            Height: =1
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - 1
+            ZIndex: =4
+
+        Icon1_2 As icon:
+            Height: =45
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =UpdateContext({varShowSign: true})
+            Visible: |-
+                =/*If(
+                    ThisItem.IsSelected && Icon3.Icon <> Icon.Check ;
+                    true;
+                    false
+                )*/
+                false
+            Width: =45
+            X: =623
+            Y: =6
+            ZIndex: =5
+
+        Subtitle1_10 As label:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =Text(ThisItem.Creado, "dd/mm/yyyy")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =125
+            X: =440
+            Y: =16
+            ZIndex: =6
+
+        Icon3_5 As icon:
+            Height: =35
+            Icon: |-
+                =
+                If(
+                    CountRows(ThisItem.'Datos adjuntos') > 0, 
+                    Icon.Check, 
+                    Icon.Cancel
+                )
+            OnSelect: |+
+                =Select(Parent);
+                
+                UpdateContext({
+                    varShowAddPerson: true, 
+                    varFindNumber: false,
+                    BlankImage: Formed_Sign.Image
+                });
+                
+                Set(varPersonSel, ThisItem);
+                
+                
+                
+                
+                EditForm(Form1); 
+                
+            Width: =35
+            X: =600
+            Y: =11
+            ZIndex: =7
+
+    Header_Title_4 As Header_Title:
+        ZIndex: =6
+
+    Button2_2 As button:
+        Align: =Align.Left
+        OnSelect: |
+            = UpdateContext({varShowAddPerson: true, varFindNumber: false});
+            Set(varPersonSel, Blank());
+            UpdateContext({BlankImage: Formed_Sign.Image})
+        PaddingLeft: =20
+        RadiusBottomLeft: =28
+        RadiusBottomRight: =28
+        RadiusTopLeft: =28
+        RadiusTopRight: =28
+        Text: ="AÑADIR"
+        Width: =154
+        X: =579
+        Y: =155
+        ZIndex: =7
+
+    Icon2 As icon.Add:
+        Color: =Color.White
+        Height: =40
+        Icon: =Icon.Add
+        OnSelect: |
+            = UpdateContext({varShowAddPerson: true});
+            Set(varPersonSelected, Blank());
+            
+            UpdateContext({BlankImage: Formed_Sign.Image})
+        Width: =40
+        X: =685
+        Y: =155
+        ZIndex: =8
+
+    Label5_4 As label:
+        Align: =Align.Center
+        Color: =Colors.Primary1
+        FontWeight: =FontWeight.Bold
+        Size: =16
+        Text: ="Grupo " & gal_Grupos.Selected.Title & " -- " & gal_Grupos.Selected.Nom_Curso
+        Width: =354
+        X: =207
+        Y: =145
+        ZIndex: =9
+
+    Form1 As form:
+        DataSource: =RegistrosFormacion
+        DefaultMode: |-
+            =
+                FormMode.Edit
+        Height: =83
+        Item: =varFirmaMaestro
+        NumberOfColumns: =1
+        OnSuccess: |-
+            =
+            UpdateContext({varShowAddPerson: false, varShowSign: false});
+            Refresh(RegistrosFormacion);
+            Reset(Formed_Sign); Reset(ti_Emp_Num)
+        Visible: =false
+        Width: =768
+        Y: =930
+        ZIndex: =10
+
+        Nom_Empleado_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Nom_Empleado"
+            Default: =ThisItem.Nombre
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Nom_Empleado)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, Nom_Empleado)
+            Required: =false
+            Update: =DataCardValue1.Text
+            Width: =768
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |-
+                    =If(
+                        varShowAddPerson,
+                        lab_Emp_Name.Text,
+                        Parent.Default
+                    )
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1.Y + DataCardValue1.Height
+                ZIndex: =3
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1.Y
+                ZIndex: =4
+
+        Num_Empleado_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Num_Empleado"
+            Default: =ThisItem.N_Empleado
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Num_Empleado)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =
+            Required: =false
+            Update: =DataCardValue2.Text
+            Width: =768
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |-
+                    =If(
+                        varShowAddPerson,
+                        ti_Emp_Num.Text,
+                        Parent.Default
+                    )
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue2.Y + DataCardValue2.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2.Y
+                ZIndex: =4
+
+        ID_Curso_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ID_Curso"
+            Default: =ThisItem.ID_Curso
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Curso)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue3.Text)
+            Width: =768
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey3 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |-
+                    =If(
+                        varShowAddPerson,
+                        varGroupSelected.ID_Curso,
+                        Parent.Default
+                    )
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3.Y + DataCardKey3.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3.Y + DataCardValue3.Height
+                ZIndex: =3
+
+            StarVisible3 As label:
+                Align: =Align.Center
+                Height: =DataCardKey3.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey3.Y
+                ZIndex: =4
+
+        ID_Grupo_DataCard1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ID_Grupo"
+            Default: =ThisItem.ID_Grupo
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Grupo)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue4.Text)
+            Width: =768
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey4 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |-
+                    =If(
+                        varShowAddPerson,
+                        varGroupSelected.ID,
+                        Parent.Default
+                    )
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey4.Y + DataCardKey4.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4.Y + DataCardValue4.Height
+                ZIndex: =3
+
+            StarVisible4 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4.Y
+                ZIndex: =4
+
+        Asiste_Horario_Lab_DataCard1 As typedDataCard.toggleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Asiste_Horario_Lab"
+            Default: =ThisItem.Asiste_Horario_Lab
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Asiste_Horario_Lab)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue5.Value
+            Width: =768
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey5 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue5 As toggleSwitch:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |-
+                    =If(
+                        varShowAddPerson,
+                        Toggle2.Value,
+                        Parent.Default
+                    )
+                DisplayMode: =Parent.DisplayMode
+                Tooltip: =Parent.DisplayName
+                X: =30
+                Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue5.Y + DataCardValue5.Height
+                ZIndex: =3
+
+            StarVisible5 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5.Y
+                ZIndex: =4
+
+        Attachments_DataCard1 As typedDataCard.attachmentsEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="{Attachments}"
+            Default: =ThisItem.'Datos adjuntos'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: |-
+                =//DataSourceInfo([@'Registros de Formación'];DataSourceInfo.DisplayName;Attachments)
+                DataSourceInfo(
+                    [@RegistrosFormacion], 
+                    DataSourceInfo.DisplayName, 
+                    'Datos adjuntos'
+                )
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue7.Attachments
+            Width: =768
+            X: =0
+            Y: =0
+            ZIndex: =28
+
+            DataCardKey7 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue7 As attachments:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: =Parent.DisplayMode
+                IsInDataCard: =true
+                Items: =Last(colAttachments).Att
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                ZIndex: =2
+
+            ErrorMessage7 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue7.Y + DataCardValue7.Height
+                ZIndex: =3
+
+            StarVisible7 As label:
+                Align: =Align.Center
+                Height: =DataCardKey7.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7.Y
+                ZIndex: =4
+
+    Button2_1 As button:
+        Height: |
+            =56
+        OnSelect: |-
+            =
+            Navigate(Screen1, ScreenTransition.UnCover);
+            Notify("Formación guardada correctamente", NotificationType.Success, 2000)
+        RadiusBottomLeft: =28
+        RadiusBottomRight: =28
+        RadiusTopLeft: =28
+        RadiusTopRight: =28
+        Text: ="FINALIZAR"
+        Visible: |-
+            =With(
+                {
+                    varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso
+                },
+                
+                With(
+                    {
+            
+                        varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO
+                    },
+                    
+            
+                    IsBlank(LookUp(CursosFormativos, ID = varIDMaestro).EVALUACIÓN)
+                )
+            )
+        Width: =265
+        X: =256
+        Y: =943
+        ZIndex: =11
+
+    group_Trained As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =11
+
+        Label4 As label:
+            Align: =Align.Center
+            BorderThickness: =2
+            Fill: =RGBA(60, 102, 140, 1)
+            Height: =39
+            Text: =
+            Width: =668
+            X: =50
+            Y: =214
+            ZIndex: =1
+
+        Label5 As label:
+            Align: =Align.Center
+            Color: =Color.White
+            Height: =39
+            Size: =12
+            Text: ="Código"
+            Width: =111
+            X: =50
+            Y: =215
+            ZIndex: =2
+
+        Label5_1 As label:
+            Align: =Align.Center
+            Color: =Color.White
+            Size: =12
+            Text: ="Nombre y Apellidos"
+            Width: =289
+            X: =131
+            Y: =215
+            ZIndex: =3
+
+        Label5_2 As label:
+            Align: =Align.Center
+            Color: =Color.White
+            Height: =39
+            Size: =12
+            Text: ="Asistencia"
+            Width: =100
+            X: =616
+            Y: =214
+            ZIndex: =4
+
+    Label5_3 As label:
+        Align: =Align.Center
+        Color: =Color.White
+        Size: =12
+        Text: ="Fecha"
+        Width: =100
+        X: =500
+        Y: =215
+        ZIndex: =12
+
+    Button2_14 As button:
+        Height: |
+            =56
+        OnSelect: |-
+            =Notify("Sincronizando expedientes de los asistentes...", NotificationType.Information);
+            
+            Refresh(RegistrosFormacion);
+            Navigate(Formed_Screen_2, ScreenTransition.UnCover);
+            Notify(" Todos los asistentes están registrados. Cargando evaluación...", NotificationType.Success)
+        RadiusBottomLeft: =28
+        RadiusBottomRight: =28
+        RadiusTopLeft: =28
+        RadiusTopRight: =28
+        Text: ="SIGUIENTE"
+        Visible: |-
+            =//First(Filter(CursosFormativos; ID = First(Filter(GruposFormacion;ID = gal_Grupos.Selected.ID)).ID_Curso)).EVALUACIÓN
+            
+            
+            With(
+                {
+                    varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso
+                },
+                
+                With(
+                    {
+                        varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO
+                    },
+                    
+                    LookUp(CursosFormativos, ID = varIDMaestro).EVALUACIÓN
+                )
+            )
+        Width: =265
+        X: =453
+        Y: =943
+        ZIndex: =13
+
+    Header_5 As Header_3:
+        pageNumber: ="2/2"
+        screenName: =Gallery_Trainings.Selected.Title 
+        Y: =69
+        ZIndex: =14
+
+    IconBack_1 As icon.ArrowLeft:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =50
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Navigate(Group_Screen, ScreenTransition.CoverRight)
+        Width: =50
+        X: =17
+        Y: =79
+        ZIndex: =15
+
+    Label5_14 As label:
+        Align: =Align.Center
+        Color: =Color.White
+        Size: =12
+        Text: ="Firma"
+        Width: =100
+        X: =400
+        Y: =215
+        ZIndex: =16
+
+    Dropdown1_1 As dropdown:
+        AllowEmptySelection: =true
+        Default: |-
+            =With(
+                {
+                    PuestoEncontrado: LookUp(Personal, Numero_Empresa = ti_Emp_Num.Text).Tipo_Empleo
+                },
+                
+                If(
+                    IsBlank(PuestoEncontrado),
+                    Blank(),
+                    PuestoEncontrado
+                )
+            )
+        HoverColor: =Colors.White
+        Items: =PuestosTrabajo
+        Visible: =varShowAddPerson || varShowSign
+        X: =80
+        Y: =384
+        ZIndex: =30
+
+    Label2_49 As label:
+        Color: =Colors.TextBlue
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Semibold
+        Size: =13
+        Text: |-
+            ="Puesto:"
+        Visible: =varShowAddPerson || varShowSign
+        Width: =135
+        X: =80
+        Y: =344
+        ZIndex: =31
+
+    Label10 As label:
+        Align: =Align.Center
+        Color: =RGBA(184, 0, 0, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =50
+        Text: |+
+            =If(
+                !IsBlank(ti_Emp_Num.Text) && IsBlank(lab_Emp_Name.Text) && !(ti_Emp_Num.Text = "0"),
+                "*Introducir nombre para poder incluír persona a formación",
+                If(
+                    ti_Emp_Num.Text = "0",
+                    "*Introducir un número válido"
+                )
+            )
+            
+        Visible: |-
+            =If(
+                !IsBlank(ti_Emp_Num.Text) && IsBlank(lab_Emp_Name.Text) || ti_Emp_Num.Text = "0",
+                true,
+                false
+            )
+        Width: =414
+        X: =304
+        Y: =342
+        ZIndex: =32
+
+    group_Add_Person As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =36
+
+        lbl_Confirm_Clickshield_1 As label:
+            Fill: =RGBA(149, 149, 149, 0.4)
+            Height: =955
+            OnSelect: |-
+                =UpdateContext({varShowAddPerson: false})
+            Text: =""
+            Visible: =varShowAddPerson || varShowSign
+            Width: =768
+            Y: =69
+            ZIndex: =17
+
+        Rectangle2_1 As rectangle:
+            Fill: =Colors.White
+            Height: =698
+            Visible: =varShowAddPerson || varShowSign
+            Width: =666
+            X: =50
+            Y: =215
+            ZIndex: =18
+
+        ti_Emp_Num As text:
+            BorderColor: |
+                =    Input.BorderColor
+            BorderThickness: =2
+            Default: =If( IsBlank( varPersonSel.Num_Empleado),varPersonSel.Num_Empleado,varPersonSel.Num_Empleado)
+            Format: =TextFormat.Number
+            HintText: ="Nº"
+            OnSelect: |-
+                =UpdateContext({varFindNumber: false})
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+            Visible: =varShowAddPerson || varShowSign
+            Width: =135
+            X: =80
+            Y: =302
+            ZIndex: =19
+
+        Label2_23 As label:
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: |-
+                ="Nº Empleado:"
+            Visible: =varShowAddPerson || varShowSign
+            Width: =135
+            X: =80
+            Y: =263
+            ZIndex: =20
+
+        lab_Emp_Name As text:
+            BorderColor: |
+                =    Input.BorderColor
+            BorderStyle: =BorderStyle.Dashed
+            BorderThickness: =2
+            Default: |-
+                =
+                LookUp(Personal, Numero_Empresa = ti_Emp_Num.Text).Nombre_Completo
+            HintText: =""
+            OnSelect: =
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+            Visible: =varShowAddPerson || varShowSign
+            Width: =414
+            X: =262
+            Y: =303
+            ZIndex: =21
+
+        bt_Accept_1 As button:
+            Color: =Colors.White
+            DisplayMode: |-
+                =If(
+                    !IsBlank(ti_Emp_Num.Text) && (BlankImage <> Formed_Sign.Image) && !IsBlank(lab_Emp_Name.Text) && ti_Emp_Num.Text <> "0" && 
+                    !IsBlank(Dropdown1_1.Selected),
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Fill: =Colors.Primary1
+            Height: =29.99
+            OnSelect: |-
+                =With(
+                    {
+                        EmpleadoMaestro: LookUp(
+                            Personal,
+                            Título = ti_Emp_Num.Text
+                        )
+                    },
+                    If(
+                        IsBlank(EmpleadoMaestro.Nombre_Completo),
+                        Patch(
+                            Personal,
+                            Defaults(Personal),
+                            {
+                                Título: ti_Emp_Num.Text,
+                                Numero_Empresa: Value(ti_Emp_Num.Text),
+                                Nombre_Completo: lab_Emp_Name.Text,
+                                Tipo_Empleo: Dropdown1_1.Selected.Nombre
+                            }
+                        ),
+                        IsBlank(EmpleadoMaestro.Tipo_Empleo),
+                        Patch(
+                            Personal,
+                            EmpleadoMaestro,
+                            {Tipo_Empleo: Dropdown1_1.Selected.Nombre}
+                        )
+                    )
+                );
+                ClearCollect(
+                    colFirma,
+                    {
+                        numEmpleado: ti_Emp_Num.Text,
+                        nombrEmpleado: lab_Emp_Name.Text,
+                        Firma: Formed_Sign.Image
+                    }
+                );
+                ClearCollect(
+                    colAttachments,
+                    {
+                        Att: Table(
+                            {
+                                DisplayName: Concatenate(
+                                    "Firma_",
+                                    Text(
+                                        Now(),
+                                        "[$-en-US]yyyy-mm-dd-hh-mm-ss"
+                                    ),
+                                    ".jpg"
+                                ),
+                                Value: First(colFirma).Firma,
+                                AbsoluteUri: "",
+                                Id: "00000000-0000-0000-0000-000000000000"
+                            }
+                        )
+                    }
+                );
+                With(
+                    {
+                        RegistroAntiguo: LookUp(
+                            RegistrosFormacion,
+                            ID_Grupo = Value(gal_Grupos.Selected.ID) && Num_Empleado = Value(ti_Emp_Num.Text)
+                        )
+                    },
+                    If(
+                        IsBlank(RegistroAntiguo),
+                        Set(
+                            varFirmaMaestro,
+                            Patch(
+                                RegistrosFormacion,
+                                Defaults(RegistrosFormacion),
+                                {
+                                    ID_Curso: Value(gal_Grupos.Selected.ID_Curso),
+                                    ID_Grupo: Value(gal_Grupos.Selected.ID),
+                                    Num_Empleado: Value(ti_Emp_Num.Text),
+                                    Nom_Empleado: lab_Emp_Name.Text,
+                                    Asiste_Horario_Lab: Toggle2.Value
+                                }
+                            )
+                        ),
+                        Set(
+                            varFirmaMaestro,
+                            Patch(
+                                RegistrosFormacion,
+                                RegistroAntiguo,
+                                {Asiste_Horario_Lab: Toggle2.Value}
+                            )
+                        )
+                    )
+                );
+                SubmitForm(Form1);
+                Refresh(RegistrosFormacion);
+                UpdateContext(
+                    {
+                        varShowAddPerson: false,
+                        varShowSign: false
+                    }
+                );
+                Set(
+                    varPersonSel,
+                    Blank()
+                );
+                Reset(Formed_Sign);
+                Reset(ti_Emp_Num)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Aceptar"
+            Visible: =varShowAddPerson || varShowSign
+            X: =500
+            Y: =819
+            ZIndex: =22
+
+        bt_Cancel_1 As button:
+            Color: =Colors.White
+            Fill: =Button.FillDanger
+            Height: =29.99
+            OnSelect: |-
+                =UpdateContext({varShowAddPerson: false, varShowSign: false});
+                Reset(Formed_Sign); Reset(ti_Emp_Num)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Cancelar"
+            Visible: =varShowAddPerson || varShowSign
+            X: =107
+            Y: =818
+            ZIndex: =23
+
+        Formed_Sign As inkControl:
+            Color: =Colors.Black
+            Height: =274
+            ShowControls: =false
+            Visible: =varShowAddPerson || varShowSign
+            Width: =618
+            X: =80
+            Y: =474
+            ZIndex: =24
+
+        Label2_25 As label:
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: |-
+                ="Firma:"
+            Visible: =varShowAddPerson || varShowSign
+            Width: =135
+            X: =80
+            Y: =434
+            ZIndex: =25
+
+        Label2_40 As label:
+            AutoHeight: =true
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: |-
+                ="Asiste en el turno de trabajo:"
+            Visible: =varShowAddPerson || varShowSign
+            Width: =211
+            X: =389
+            Y: =757
+            ZIndex: =26
+
+        Toggle2 As toggleSwitch:
+            Default: =true
+            FalseText: ="No"
+            TrueText: ="Sí"
+            Visible: =varShowAddPerson || varShowSign
+            X: =600
+            Y: =769
+            ZIndex: =27
+
+        Icon8 As icon.Search:
+            Height: =39
+            Icon: =If(!ComboBox1.Visible, Icon.Search, Icon.Cancel)
+            OnSelect: |-
+                =If(
+                    Self.Icon = Icon.Search,
+                    UpdateContext({varFindNumber: true}),
+                    UpdateContext({varFindNumber: false})
+                )
+            Visible: =varShowAddPerson || varShowSign
+            Width: =40
+            X: =636
+            Y: =303
+            ZIndex: =28
+
+        Label1_4 As label:
+            Align: =Align.Center
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =41
+            Size: =18
+            Text: ="Registrar Asistencia"
+            Visible: =varShowAddPerson || varShowSign
+            Width: =506
+            X: =131
+            Y: =249
+            ZIndex: =29
+
+        ComboBox1 As combobox:
+            DefaultSelectedItems: =
+            DisplayFields: =["ComplianceAssetId"]
+            Items: =Filter(Personal, StartsWith(Nombre_Completo, Self.SearchText))
+            OnSelect: =
+            PressedFill: =Colors.Primary1
+            Reset: =varFindNumber
+            SearchFields: =["ComplianceAssetId"]
+            SearchItems: =Search(Filter(Personal,StartsWith(Nombre_Completo,Self.SearchText)),ComboBox1.SearchText,ComplianceAssetId)
+            SelectionFill: =RGBA(199, 18, 18, 1)
+            SelectionTagFill: =
+            SelectMultiple: =false
+            Visible: =varFindNumber && (varShowAddPerson || varShowSign)
+            Width: =354
+            X: =262
+            Y: =302
+            ZIndex: =33
+

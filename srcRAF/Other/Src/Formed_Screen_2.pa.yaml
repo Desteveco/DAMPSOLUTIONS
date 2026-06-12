@@ -1,0 +1,1194 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Formed_Screen_2:
+    Properties:
+      Fill: =Colors.White
+      LoadingSpinnerColor: =Colors.Primary1
+      OnVisible: "=UpdateContext({varID_Grupo: gal_Grupos.Selected.ID});\r\nSet(\r\n    varMetodoEval,\r\n    With(\r\n        {\r\n          \r\n          \r\n            varIDMaestro: LookUp(\r\n                CursosFormativos_Plan, \r\n                ID = Value(gal_Grupos.Selected.ID_Curso)\r\n            ).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(\r\n            CursosFormativos, \r\n            Title = varIDMaestro\r\n        ).METODO_EVAL.Value\r\n    )\r\n);\r\nRefresh(RegistrosFormacion);\r\n"
+    Children:
+      - HtmlText1_5:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =157
+            HtmlText: "=\"<p style='text-indent: 110px; margin: 0;'>\" & With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).CONTENIDO\r\n    )\r\n)"
+            PaddingTop: =15
+            Size: =8
+            Width: =768
+            Y: =244
+      - HtmlText1_6:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =92
+            HtmlText: "=\"<p style='text-indent: 190px; margin: 0;'>\" & With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).MATERIAL_ENTREGADO\r\n    )\r\n)"
+            PaddingTop: =10
+            Size: =9
+            Width: =384
+            X: =384
+            Y: =152
+      - HtmlText1_4:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =92
+            HtmlText: "=\"<p style='text-indent: 90px; margin: 0;'>\" & With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).OBJETIVO\r\n    )\r\n)"
+            PaddingTop: =10
+            Size: =9
+            Width: =384
+            Y: =152
+      - Button2_13:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(116, 116, 116, 1)
+            DisabledColor: =RGBA(116, 116, 116, 1)
+            DisabledFill: =RGBA(237, 237, 237, 1)
+            DisplayMode: |-
+              =If(
+                  First(varAdjunto.'Datos adjuntos').AbsoluteUri = Blank(),
+                  DisplayMode.Disabled,
+                  DisplayMode.Edit
+              )
+            Fill: =Color.ForestGreen
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |-
+              =Set(varAdjunto, First(Filter(GruposFormacion, ID = varID_Grupo)));
+              UpdateContext({varVerPDF: true})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =10
+            Text: ="Descargar PDF exámenes"
+            Visible: =false
+            Width: =139
+            X: =206
+            Y: =984
+      - IO_Label2_380:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Input.BorderColor
+            Color: =Colors.White
+            DisabledColor: =Colors.Gray
+            Fill: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =34
+            Text: ="REGISTRO DE ASISTENCIA"
+            Width: =768
+      - Image2_6:
+          Control: Image@2.2.3
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =34
+            Image: ='BorgWarner_Logo_White (1)'
+            Width: =189
+            X: =58
+      - Label9:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Curso:"
+            Width: =192
+            Y: =34
+      - Label9_1:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Entidad formadora:"
+            Width: =192
+            Y: =54
+      - Label9_2:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Docente:"
+            Width: =99
+            Y: =74
+      - Label9_3:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="DNI:"
+            Width: =192
+            Y: =94
+      - Label9_4:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =58
+            Size: =11
+            Text: ="Firma:"
+            Width: =250
+            X: =192
+            Y: =94
+      - Label9_5:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =31
+            Size: =14
+            Text: ="Objetivo:"
+            Width: =99
+            Y: =146
+      - Label9_6:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =31
+            Size: =14
+            Text: ="Material entregado:"
+            Width: =200
+            X: =385
+            Y: =153
+      - Label9_7:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: "=With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).TITULO\r\n    )\r\n)"
+            Width: =576
+            X: =192
+            Y: =34
+      - Label9_8:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: ="Interna/Externa"
+            Width: =163
+            X: =442
+            Y: =54
+      - TextInput3_3:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Colors.Black
+            BorderThickness: =Input.BorderThickness
+            Color: =Colors.Primary1
+            Default: =First(Filter('RegistrosFormacion', ID_Grupo = varID_Grupo, Formador = true)).Nom_Empleado
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Height: =20
+            HoverBorderColor: =Input.BorderColor
+            HoverColor: =Input.Color
+            HoverFill: =Self.Fill
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Size: =11
+            Width: =343
+            X: =99
+            Y: =74
+      - Label9_9:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: ="Duración:"
+            Width: =163
+            X: =442
+            Y: =84
+      - Label9_11:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: =First(Filter(GruposFormacion,ID = varID_Grupo/*gal_Grupos.Selected.ID*/)).Nom_Curso
+            Width: =113
+            X: =78
+            Y: =34
+      - Label9_12:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =11
+            Text: =First(Filter(RegistrosFormacion,Formador = true,ID_Grupo = varID_Grupo)).DNI
+            Width: =139
+            X: =52
+            Y: =94
+      - Label9_13:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =31
+            Size: =14
+            Text: ="Contenido:"
+            Width: =200
+            Y: =242
+      - Gallery3:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            Height: =79
+            Items: =Filter(RegistrosFormacion, ID_Grupo = varID_Grupo, Formador = true)
+            TemplateSize: =64
+            Width: =187
+            X: =247
+            Y: =93
+          Children:
+            - Image5:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =Input.BorderColor
+                  DisabledBorderColor: =Colors.Gray
+                  DisabledFill: =Colors.LightGray
+                  Height: =59
+                  Image: =First(ThisItem.'Datos adjuntos').AbsoluteUri
+                  OnSelect: =Select(Parent)
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =187
+      - Label9_14:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =16
+            Size: =6
+            Text: ="*Los/as abajo firmantes manifiestan que han entendido los contenidos impartidos y detallados en este documento y se compromenten a su observación y cumplimiento."
+            Width: =768
+            Y: =401
+      - Label9_25:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Grupo:"
+            Width: =80
+            X: =573
+            Y: =381
+      - Label9_26:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Fecha Inicio:"
+            Width: =120
+            X: =367
+            Y: =361
+      - Label9_27:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =11
+            Text: ="Fecha Fin:"
+            Width: =120
+            X: =367
+            Y: =381
+      - Label9_28:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =10
+            Text: =Text(First(Filter(GruposFormacion,ID = varID_Grupo/*gal_Grupos.Selected.ID*/)).F_Ini_grupo,"dd/mm/yyyy")
+            Width: =86
+            X: =487
+            Y: =361
+      - Label9_29:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =10
+            Text: =Text(First(Filter(GruposFormacion,ID = varID_Grupo/*gal_Grupos.Selected.ID*/)).F_Fin_grupo,"dd/mm/yyyy")
+            Width: =86
+            X: =487
+            Y: =381
+      - Label9_31:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            Size: =10
+            Text: =First(Filter(GruposFormacion,ID = varID_Grupo/*gal_Grupos.Selected.ID*/)).Title
+            Width: =115
+            X: =653
+            Y: =381
+      - Button_Generar_PDF:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Button.Color
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            Fill: =RGBA(99, 139, 44, 1)
+            Font: =Font.'Open Sans'
+            Height: =25
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: |-
+              =//Set(varPDF;PDF(Gallery4;{ExpandContainers: true}))
+              ClearCollect(colPDF,Table({Name: "PDF.pdf", Attachments:PDF(Formed_Screen_2)}))
+              /*Office365Outlook.SendEmailV2("dfidalgo@borgwarner.com";"PDF Pruebas";"Pruebas";{Attachments: Table({Name: "PruebasPDF.pdf";ContentBytes:PDF(Formed_Screen_2;{ExpandContainers: true})})})*/
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =Button.Radius
+            RadiusBottomRight: =Button.Radius
+            RadiusTopLeft: =Button.Radius
+            RadiusTopRight: =Button.Radius
+            Text: ="Generar PDF"
+            Visible: =false
+            Width: =Button.Width
+            X: =598
+            Y: =4
+      - Gallery4:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            Height: =518
+            Items: =Sort(Filter('RegistrosFormacion', ID_Grupo = varID_Grupo, Formador = false),ThisRecord.Num_Empleado,SortOrder.Ascending)
+            TemplateSize: =35
+            Width: =768
+            Y: =459
+          Children:
+            - Image6:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =Colors.Primary1
+                  BorderThickness: =1
+                  DisabledBorderColor: =Colors.Gray
+                  DisabledFill: =Colors.LightGray
+                  Height: =35
+                  Image: |+
+                    =
+                        First(
+                            LookUp(
+                                RegistrosFormacion,
+                                ID_Grupo = Text(ThisItem.ID_Grupo) && 
+                                Num_Empleado = Value(ThisItem.Num_Empleado)
+                            ).'Datos adjuntos'
+                        ).Value
+                  OnSelect: =Select(Parent)
+                  Width: =118
+                  X: =385
+            - Label9_21:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Color.Black
+                  BorderThickness: =1
+                  Color: =Colors.TextMain
+                  DisabledColor: =Colors.Gray
+                  Font: =Font.'Open Sans'
+                  Height: =Gallery4.TemplateHeight
+                  Size: =11
+                  Text: =ThisItem.Num_Empleado
+                  Width: =50
+            - Label9_22:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Color.Black
+                  BorderThickness: =1
+                  Color: =Colors.TextMain
+                  DisabledColor: =Colors.Gray
+                  Font: =Font.'Open Sans'
+                  Height: =Gallery4.TemplateHeight
+                  Size: =11
+                  Text: =First(Filter(Personal,Numero_Empresa = ThisItem.Num_Empleado)).Nombre_Completo
+                  Width: =238
+                  X: =50
+            - Label9_23:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =Color.Black
+                  BorderThickness: =1
+                  Color: =Colors.TextMain
+                  DisabledColor: =Colors.Gray
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  Size: =12
+                  Text: =Text(ThisItem.Created,"dd/mm/yyyy")
+                  Width: =97
+                  X: =288
+            - Dropdown7_1:
+                Control: Classic/DropDown@2.3.1
+                Properties:
+                  BorderColor: =Input.BorderColor
+                  BorderThickness: =Input.BorderThickness
+                  ChevronBackground: =Colors.Primary1
+                  ChevronDisabledBackground: =Colors.Gray
+                  ChevronDisabledFill: =Colors.LightGray
+                  ChevronFill: =Colors.White
+                  ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+                  ChevronHoverFill: =Colors.White
+                  Color: =Input.Color
+                  Default: |-
+                    =If(
+                        ThisItem.Asiste_Horario_Lab = true,
+                        "SI",
+                        "NO"
+                    )
+                  DisabledBorderColor: =Colors.Gray
+                  DisabledColor: =Colors.Gray
+                  DisabledFill: =Colors.LightGray
+                  Fill: =Colors.White
+                  FocusedBorderThickness: =Input.FocusedBorderThickness
+                  Font: =Font.'Open Sans'
+                  Height: =Gallery4.TemplateHeight
+                  HoverColor: =Input.Color
+                  HoverFill: =Colors.Primary3
+                  Items: =["SI","NO"]
+                  Items.Value: =Value
+                  OnChange: |-
+                    =Patch(
+                        RegistrosFormacion,
+                        ThisItem,
+                        {
+                            Asiste_Horario_Lab: If( Self.Selected.Value = "SI", true, false)
+                        }
+                    )
+                  PressedColor: =Colors.White
+                  PressedFill: =Self.Fill
+                  Reset: =true
+                  SelectionColor: =Colors.White
+                  SelectionFill: =Colors.Primary1
+                  Size: =11
+                  Width: |-
+                    =
+                        95
+                  X: =503
+            - Checkbox1_1:
+                Control: Classic/CheckBox@2.1.0
+                Properties:
+                  BorderColor: =Colors.Black
+                  BorderThickness: =1
+                  CheckboxBackgroundFill: =CheckboxRadio.Fill
+                  CheckboxBorderColor: =CheckboxRadio.BorderColor
+                  CheckmarkFill: =Input.Color
+                  Color: =Colors.TextMain
+                  Default: =ThisItem.Apto
+                  DisplayMode: =
+                  Font: =Font.'Open Sans'
+                  Height: =35
+                  HoverColor: =Self.Color
+                  OnCheck: |-
+                    =Patch(
+                        RegistrosFormacion,
+                        ThisItem,
+                        {
+                            Apto: true
+                        }
+                    )
+                  OnUncheck: |-
+                    =Patch(
+                        RegistrosFormacion,
+                        ThisItem,
+                        {
+                            Apto: false
+                        }
+                    )
+                  Reset: =true
+                  Size: =14
+                  Text: ="Apto"
+                  Visible: =varMetodoEval = "Examen"
+                  Width: =100
+                  X: =668
+            - Dropdown7_2:
+                Control: Classic/DropDown@2.3.1
+                Properties:
+                  AllowEmptySelection: =true
+                  BorderColor: =Input.BorderColor
+                  BorderThickness: =Input.BorderThickness
+                  ChevronBackground: =Colors.Primary1
+                  ChevronDisabledBackground: =Colors.Gray
+                  ChevronDisabledFill: =Colors.LightGray
+                  ChevronFill: =Colors.White
+                  ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+                  ChevronHoverFill: =Colors.White
+                  Color: =Input.Color
+                  Default: |-
+                    =If(
+                        IsBlank(ThisItem.ILUO.Value),
+                        Blank(),
+                        ThisItem.ILUO.Value
+                    )
+                  DisabledBorderColor: =Colors.Gray
+                  DisabledColor: =Colors.Gray
+                  DisabledFill: =Colors.LightGray
+                  Fill: |-
+                    =Switch(
+                        Self.SelectedText.Value,
+                        "NO REALIZADO", Color.IndianRed,
+                        "I", Color.Gold,                
+                        "L", Color.MediumSeaGreen,      
+                        "U", Color.LightSkyBlue,        
+                        "O", Color.Blue,             
+
+                        Color.LightGray                 
+                    )
+                  FocusedBorderThickness: =Input.FocusedBorderThickness
+                  Font: =Font.'Open Sans'
+                  Height: =Gallery4.TemplateHeight
+                  HoverColor: =Input.Color
+                  HoverFill: =Colors.Primary3
+                  Items: = Choices(RegistrosFormacion.ILUO)
+                  Items.Value: =Value
+                  OnChange: |-
+                    =Patch(
+                        RegistrosFormacion,
+                        ThisItem,
+                        { ILUO: Self.Selected } 
+                    )
+                  PressedColor: =Colors.White
+                  PressedFill: =Self.Fill
+                  Reset: =true
+                  SelectionColor: =Colors.White
+                  SelectionFill: =Colors.Primary1
+                  Size: =11
+                  Visible: =varMetodoEval = "ILUO"
+                  Width: =170
+                  X: =598
+            - Icon1:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  BorderColor: =Input.BorderColor
+                  Color: =Icons.Color
+                  DisabledBorderColor: =Colors.Gray
+                  DisabledColor: =Colors.LightGray
+                  Height: =35
+                  Icon: |-
+                    =If(
+                        ThisItem.'Tiene datos adjuntos', 
+                        Icon.Check, 
+                        Icon.Cancel
+                    )
+                  OnSelect: =Select(Parent)
+                  Visible: =IsBlank(varMetodoEval)
+                  X: =651
+      - Label9_15:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =12
+            Text: ="Nº"
+            Width: =50
+            Y: =417
+      - Label9_16:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =12
+            Text: ="Nombre y apellidos"
+            Width: =237
+            X: =50
+            Y: =417
+      - Label9_17:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =12
+            Text: ="Fecha"
+            Width: =98
+            X: =287
+            Y: =417
+      - Label9_18:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =12
+            Text: ="Firma"
+            Width: =119
+            X: =384
+            Y: =417
+      - Label9_19:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =10
+            Text: ="Asistencia Horario Lab"
+            Width: |+
+              =
+                  97
+            X: =503
+            Y: =417
+      - Label9_20:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =42
+            Size: =12
+            Text: ="Res. Eval."
+            Width: =168
+            X: =600
+            Y: =417
+      - Button2_12:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |-
+              =Refresh(GruposFormacion);
+              UpdateContext({varAdjunto: First(Filter(GruposFormacion, ID = varID_Grupo))});
+              UpdateContext({varDatosAdjuntos: true})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =10
+            Text: ="Insertar PDF exámenes"
+            Visible: =false
+            Width: =139
+            Y: =984
+      - HtmlText1_7:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =20
+            HtmlText: "=With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).ENTIDAD_DOCENTE\r\n    )\r\n)"
+            PaddingBottom: =0
+            PaddingTop: =2
+            Size: =9
+            Width: =250
+            X: =192
+            Y: =54
+      - Button2_10:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Button.Color
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            Fill: =Button.Fill
+            Font: =Font.'Open Sans'
+            Height: =47
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: |-
+              =
+
+              Navigate(Screen1, ScreenTransition.UnCover);
+              Notify("Formación guardada correctamente", NotificationType.Success, 2000)
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =28
+            RadiusBottomRight: =28
+            RadiusTopLeft: =28
+            RadiusTopRight: =28
+            Text: ="FINALIZAR"
+            Width: =265
+            X: =503
+            Y: =977
+      - HtmlText1_10:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            Color: =Colors.Primary1
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =30
+            HtmlText: =First(Filter('CursosFormativos', ID = First(Filter(GruposFormacion,ID = varID_Grupo/*gal_Grupos.Selected.ID*/)).ID_Curso)).TIPO_ENTIDAD.Value
+            PaddingBottom: =0
+            PaddingTop: =2
+            Size: =11
+            Width: =163
+            X: =605
+            Y: =54
+      - Label9_10:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Color.Black
+            BorderThickness: =1
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: "=With(\r\n    {\r\n        varIDPlan: LookUp(GruposFormacion, ID = gal_Grupos.Selected.ID).ID_Curso\r\n    },\r\n    \r\n    With(\r\n        {\r\n            varIDMaestro: LookUp(CursosFormativos_Plan, ID = varIDPlan).ID_CURSO_UNICO\r\n        },\r\n        \r\n        LookUp(CursosFormativos, Title = varIDMaestro).HORAS\r\n    )\r\n)"
+            Width: =163
+            X: =605
+            Y: =84
+      - Icon7:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Color.White
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.LightGray
+            Height: =34
+            Icon: =Icon.ArrowLeft
+            OnSelect: |+
+              =Navigate(Formed_Screen,ScreenTransition.CoverRight)
+            Width: =50
+      - Rectangle4_25:
+          Control: Rectangle@2.3.0
+          Group: Group_PDF
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.35)
+            Height: =1024
+            Visible: =varVerPDF
+            Width: =768
+      - Form_Adjuntos_3:
+          Control: Form@2.4.4
+          Variant: Classic
+          Layout: Vertical
+          Group: Group_PDF
+          Properties:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderThickness: =4
+            DataSource: =Grupos_Formacion
+            Fill: =Colors.Primary1
+            Height: =383
+            Item: =varAdjunto
+            Visible: =varVerPDF
+            Width: =635
+            X: =64
+            Y: =327
+          Children:
+            - Datos adjuntos_DataCard2_3:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicAttachmentsEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="{Attachments}"
+                  Default: =ThisItem.'Datos adjuntos'
+                  DisplayMode: =DisplayMode.View
+                  Height: =243
+                  Required: =false
+                  Update: =DataCardValue2_5.Attachments
+                  Width: =630
+                  X: =0
+                  Y: =0
+                Children:
+                  - DataCardValue2_5:
+                      Control: Attachments@2.3.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Height: =141
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        ItemColor: =RGBA(255, 255, 255, 1)
+                        ItemFill: =RGBA(56, 96, 178, 1)
+                        ItemHoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Parent.Default
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =324
+                        X: =153
+                        Y: =75
+                  - ErrorMessage2_5:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue2_5.Y + DataCardValue2_5.Height
+                  - StarVisible2_5:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =
+      - Icon3_8:
+          Control: Classic/Icon@2.5.0
+          Group: Group_PDF
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(118, 0, 0, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =53
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+              =ResetForm(Form_Adjuntos_3);
+              UpdateContext({varVerPDF: false})
+            Visible: =varVerPDF
+            Width: =50
+            X: =361
+            Y: =600
+      - Label4_4:
+          Control: Label@2.5.1
+          Group: Group_PDF
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =76
+            Size: =15
+            Text: ="Pulsar sobre el documento que se desee descargar"
+            Visible: =varVerPDF
+            Width: =635
+            X: =66
+            Y: =328
+      - Rectangle4_22:
+          Control: Rectangle@2.3.0
+          Group: Group_Adjuntos
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.35)
+            Height: =1024
+            Visible: =varDatosAdjuntos
+            Width: =768
+      - Form_Adjuntos:
+          Control: Form@2.4.4
+          Variant: Classic
+          Layout: Vertical
+          Group: Group_Adjuntos
+          Properties:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderThickness: =4
+            DataSource: =Grupos_Formacion
+            Fill: =Colors.Primary1
+            Height: =383
+            Item: =varAdjunto
+            Visible: =varDatosAdjuntos
+            Width: =635
+            X: =63
+            Y: =289
+          Children:
+            - Datos adjuntos_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicAttachmentsEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="{Attachments}"
+                  Default: =ThisItem.'Datos adjuntos'
+                  Height: =243
+                  Required: =false
+                  Update: =DataCardValue2_2.Attachments
+                  Width: =630
+                  X: =0
+                  Y: =0
+                Children:
+                  - DataCardKey2_2:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =Color.White
+                        Font: =Font.'Open Sans'
+                        Height: =45
+                        Text: =Parent.DisplayName
+                        Width: =324
+                        Wrap: =false
+                        X: =153
+                        Y: =30
+                  - DataCardValue2_2:
+                      Control: Attachments@2.3.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Height: =141
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        ItemColor: =RGBA(255, 255, 255, 1)
+                        ItemFill: =RGBA(56, 96, 178, 1)
+                        ItemHoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Parent.Default
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =324
+                        X: =153
+                        Y: =75
+                  - ErrorMessage2_2:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue2_2.Y + DataCardValue2_2.Height
+                  - StarVisible2_2:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey2_2.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey2_2.Y
+      - Icon3_4:
+          Control: Classic/Icon@2.5.0
+          Group: Group_Adjuntos
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(99, 139, 44, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =53
+            Icon: =Icon.CheckBadge
+            OnSelect: |-
+              =SubmitForm(Form_Adjuntos);
+              ResetForm(Form_Adjuntos);
+              UpdateContext({varDatosAdjuntos: false});
+              Refresh(Grupos_Formacion);
+              UpdateContext({varAdjunto: First(Filter(Grupos_Formacion, ID = varID_Grupo))})
+            Visible: =varDatosAdjuntos
+            Width: =50
+            X: =286
+            Y: =560
+      - Icon3_3:
+          Control: Classic/Icon@2.5.0
+          Group: Group_Adjuntos
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(118, 0, 0, 1)
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =53
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+              =ResetForm(Form_Adjuntos);
+              UpdateContext({varDatosAdjuntos: false})
+            Visible: =varDatosAdjuntos
+            Width: =50
+            X: =424
+            Y: =560

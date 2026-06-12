@@ -1,0 +1,1060 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Group_Screen:
+    Properties:
+      Fill: =Colors.White
+      LoadingSpinnerColor: =Colors.Primary1
+      OnVisible: =Reset(DatePicker3)
+    Children:
+      - DatePicker3:
+          Control: Classic/DatePicker@2.6.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            IconBackground: =Colors.Primary1
+            IconFill: =Colors.White
+            Reset: =true
+            StartOfWeek: =StartOfWeek.Monday
+            Visible: |-
+              =If(
+                  User().Email = "JGomez@borgwarner.com" || User().Email = "dfidalgo@borgwarner.com" || User().Email = "adefrutos@borgwarner.com"|| User().Email = "dEstevez@borgwarner.com",
+                  true,
+                  false
+              )
+            Width: =180
+            X: =71
+            Y: =147
+      - Header_Title_8:
+          Control: CanvasComponent
+          ComponentName: Header_Title
+          Properties:
+            Height: |+
+              =70
+            Width: =Max(App.Width, App.MinScreenWidth)
+            pageNumber: ="Texto"
+            screenName: ="Texto"
+      - dd_Entity_1:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: =Choices([@CursosFormativos_Plan].Tipo_Entidad)
+            Items.Value: =Value
+            OnChange: =
+            PressedColor: =Colors.Black
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Visible: =false
+            Width: =122
+            X: =404
+            Y: =187
+      - dd_Entity_Name_1:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =Text(Now(),"yyyy")
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+              =ForAll(Distinct(CursosFormativos_Plan, Entidad_Doc), {Result: ThisRecord.Value})
+            Items.Value: =Result
+            OnChange: =
+            PressedColor: =Colors.Black
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Visible: =false
+            Width: =169
+            X: =570
+            Y: =187
+      - Label2_39:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Text: ="Entidad Formativa:"
+            Visible: =false
+            Width: =171
+            X: =570
+            Y: =147
+      - dd_Area_Form_1:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =Text(Now(),"yyyy")
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+              =ForAll(Distinct(CursosFormativos_Plan, Area_Form), {Result: ThisRecord.Value})
+            Items.Value: =Result
+            OnChange: =
+            PressedColor: =Colors.Black
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Visible: =false
+            Width: =128
+            X: =222
+            Y: =187
+      - Button2_5:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Button.Color
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            DisplayMode: |-
+              =If(
+                  !IsBlank(gal_Grupos.Selected),
+                  DisplayMode.Edit,
+                  DisplayMode.Disabled
+              )
+            Fill: =Button.Fill
+            Font: =Font.'Open Sans'
+            Height: |+
+              =56
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: |-
+              =If(
+                  !IsBlank(
+                      LookUp(
+                          RegistrosFormacion,
+                          gal_Grupos.Selected.ID = ID_Grupo &&
+                          Formador = true
+                      )
+                  ),
+                  Navigate(Formed_Screen, ScreenTransition.UnCover),
+                  Navigate(Former_Screen, ScreenTransition.UnCover);
+                  Clear(colAttachments);
+                  Set(varSignature, Blank()); Set(varResetAllFields, true);
+                  Reset(IO_ti_Formed_Num_2); Reset(IO_ti_Formed_Num_3); Reset(IO_ti_Formed_Num_4); Reset(Canvas1);
+              )
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =28
+            RadiusBottomRight: =28
+            RadiusTopLeft: =28
+            RadiusTopRight: =28
+            Text: ="CONTINUAR"
+            Width: =265
+            X: =251
+            Y: =915
+      - dd_Curs_Plan_1:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            AllowEmptySelection: =true
+            BorderColor: =Input.BorderColor
+            BorderThickness: =1
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            Default: =
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.Arial
+            HoverColor: =Colors.White
+            HoverFill: =Colors.Primary3
+            Items: |-
+              =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
+            Items.Value: =Result
+            OnChange: =
+            OnSelect: =
+            PaddingRight: =13.34
+            PaddingTop: =13.34
+            PressedColor: =Colors.Black
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Visible: =false
+            Width: =150
+            X: =28
+            Y: =187
+      - Label3_2:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =
+            Text: |+
+              ="Plan Formativo"
+            Visible: =false
+            X: =28
+            Y: =147
+      - gal_Grupos:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Default: ={}
+            DelayItemLoading: =false
+            Height: =663
+            Items: "=\r\n    Filter(\r\n        GruposFormacion,\r\n        ID_Curso = Gallery_Trainings.Selected.ID\r\n        \r\n    )"
+            LoadingSpinner: =LoadingSpinner.None
+            OnSelect: =Set(varGroupSelected, ThisItem)
+            TemplatePadding: =10
+            TemplateSize: =380
+            Width: =676
+            WrapCount: =3
+            X: =46
+            Y: =241
+          Children:
+            - TextInput2_3:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderThickness: =3
+                  Default: =""
+                  DisabledBorderColor: =Colors.Primary1
+                  DisabledColor: =RGBA(0,0,0,0)
+                  DisabledFill: |-
+                    =If(
+                        ThisItem.IsSelected,
+                        ColorFade(Colors.Primary1, 80%),
+                        RGBA(0,0,0,0)
+                    )
+                  DisplayMode: =DisplayMode.Disabled
+                  Font: =Font.'Open Sans'
+                  Height: =380
+                  HoverBorderColor: =RGBA(0, 18, 107, 1)
+                  HoverFill: =RGBA(186, 202, 226, 1)
+                  OnSelect: =Select(Parent)
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Width: =210
+            - Label4_1:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =314
+                  OnSelect: =Select(Parent)
+                  Text: =
+                  Width: =210
+            - Label3_9:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  OnSelect: =Select(Parent)
+                  Size: =15
+                  Text: =ThisItem.Title
+                  Width: =210
+                  Y: =Label3_8.Height + Label3_8.Y
+            - Label3_10:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Bold
+                  OnSelect: =Select(Parent)
+                  Size: =14
+                  Text: |-
+                    ="Curso: " & Gallery_Trainings.Selected.Title
+                  Width: =210
+                  Y: =Label3_9.Y + Label3_9.Height
+            - Label3_8:
+                Control: Label@2.5.1
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Bold
+                  OnSelect: =Select(Parent)
+                  Text: |+
+                    ="Grupo: " & ThisItem.Title
+                  Width: =208
+                  X: =2
+                  Y: =8
+            - Label3_11:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  OnSelect: =Select(Parent)
+                  Text: |-
+                    ="Fecha Inicio: " & ThisItem.F_Ini_grupo
+                  Width: =210
+                  Y: =Label3_10.Y + Label3_10.Height
+            - Label3_15:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  OnSelect: =Select(Parent)
+                  Text: |-
+                    ="Fecha Fin: " & ThisItem.F_Fin_grupo
+                  Width: =210
+                  Y: =Label3_11.Height + Label3_11.Y
+            - Label3_16:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: =true
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Color: =Colors.Primary1
+                  Font: =Font.Arial
+                  OnSelect: =Select(Parent)
+                  Text: |-
+                    ="Duración: " & ThisItem.Duracion & " horas"
+                  Width: =210
+                  X: =2
+                  Y: =Label3_15.Height + Label3_15.Y
+      - Label1_6:
+          Control: Label@2.5.1
+          Properties:
+            Align: =Align.Center
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =47
+            Size: =20
+            Text: '="Selección de grupo de formación:" '
+            Width: =713
+            X: =28
+            Y: =183
+      - Button2_6:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Align: =Align.Left
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Button.Color
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            Fill: =Button.Fill
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: |+
+              =UpdateContext({varAddGroup: true});
+            PaddingLeft: =10
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =28
+            RadiusBottomRight: =28
+            RadiusTopLeft: =28
+            RadiusTopRight: =28
+            Text: ="Nuevo Grupo"
+            Width: =198
+            X: =525
+            Y: =147
+      - Icon2_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Color.White
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.LightGray
+            Height: =40
+            Icon: =Icon.Add
+            OnSelect: |-
+              =UpdateContext({varAddGroup: true});
+            Width: =40
+            X: =673
+            Y: =147
+      - Header_4:
+          Control: CanvasComponent
+          ComponentName: Header_3
+          Properties:
+            Height: |+
+              =70
+            Width: =Max(App.Width, App.MinScreenWidth)
+            Y: =69
+            pageNumber: =""
+            screenName: =Gallery_Trainings.Selected.Title
+            varTipoAudit: ="Texto"
+      - IconBack_2:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =50
+            Icon: =Icon.ArrowLeft
+            OnSelect: "=\r\n\r\nNavigate( Training_Screen, ScreenTransition.CoverRight)\r\n    \r\n    \r\n    \r\n"
+            Width: =50
+            X: =28
+            Y: =79
+      - lbl_Confirm_Clickshield_2:
+          Control: Label@2.5.1
+          Group: grupo_Add_Group
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextMain
+            DisabledColor: =Colors.Gray
+            Fill: =RGBA(149, 149, 149, 0.4)
+            Font: =Font.'Open Sans'
+            Height: =955
+            Size: =14
+            Text: =""
+            Visible: =varAddGroup
+            Width: =768
+            Y: =69
+      - Form1_1:
+          Control: Form@2.4.4
+          Variant: Classic
+          Layout: Vertical
+          Group: grupo_Add_Group
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            DataSource: =GruposFormacion
+            DefaultMode: =FormMode.New
+            Fill: =Colors.White
+            Height: |+
+              =650
+            NumberOfColumns: =1
+            Visible: =varAddGroup
+            Width: =453
+            X: =157
+            Y: =169
+          Children:
+            - Title_DataCard3:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =Colors.Primary1
+                  DataField: ="Title"
+                  Default: =ThisItem.Title
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Title)
+                  MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Title)
+                  Required: =true
+                  Update: =DataCardValue12.Text
+                  Width: =451
+                  X: =0
+                  Y: =0
+                Children:
+                  - DataCardKey12:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Ident de Gurpo"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue12:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: |-
+                          =If(
+                              Form1_1.Mode = FormMode.New,
+                              "G" & 
+                              If(
+                                  (Last(
+                                  Split(
+                                      First(
+                                          SortByColumns(
+                                              Filter(
+                                                  GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                  ),
+                                              "Title",SortOrder.Descending
+                                          )
+                                      ).Title,
+                                      "G"
+                                  )).Value + 1) < 10,
+                                  "0" & Last(
+                                  Split(
+                                      First(
+                                          SortByColumns(
+                                              Filter(
+                                                  GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                  ),
+                                              "Title",SortOrder.Descending
+                                          )
+                                      ).Title,
+                                      "G"
+                                  )).Value + 1,
+                                  Last(
+                                  Split(
+                                      First(
+                                          SortByColumns(
+                                              Filter(
+                                                  GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                  ),
+                                              "Title",SortOrder.Descending
+                                          )
+                                      ).Title,
+                                      "G"
+                                  )).Value + 1
+                              ),
+                              Parent.Default
+                          )
+                        DelayOutput: =true
+                        DisplayMode: =DisplayMode.View
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey12.Y + DataCardKey12.Height + 5
+                  - ErrorMessage12:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue12.Y + DataCardValue12.Height
+                  - StarVisible12:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey12.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey12.Y
+            - F_Ini_grupo_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="F_ini_grupo"
+                  Default: =ThisItem.F_Ini_grupo
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Ini_grupo)
+                  Required: =false
+                  Update: =DataCardValue16.SelectedDate
+                  Width: =451
+                  X: =0
+                  Y: =1
+                Children:
+                  - DataCardKey16:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Fecha de Inicio"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue16:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartOfWeek: =StartOfWeek.Monday
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey16.Y + DataCardKey16.Height + 5
+                  - ErrorMessage16:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue16.Y + DataCardValue16.Height
+                  - StarVisible16:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey16.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey16.Y
+            - F_Fin_grupo_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="F_Fin_grupo"
+                  Default: =ThisItem.F_Fin_grupo
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Fin_grupo)
+                  Required: =false
+                  Update: =DataCardValue15.SelectedDate
+                  Width: =451
+                  X: =0
+                  Y: =2
+                Children:
+                  - DataCardKey15:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Fecha Fin"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue15:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartOfWeek: =StartOfWeek.Monday
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey15.Y + DataCardKey15.Height + 5
+                  - ErrorMessage15:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue15.Y + DataCardValue15.Height
+                  - StarVisible15:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey15.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey15.Y
+            - Nom_Curso_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =Input.BorderColor
+                  DataField: ="Nom_Curso"
+                  Default: =ThisItem.Nom_Curso
+                  DisplayMode: =DisplayMode.View
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Nom_Curso)
+                  MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Nom_Curso)
+                  Required: =false
+                  Update: =DataCardValue11.Text
+                  Width: =453
+                  X: =0
+                  Y: =3
+                Children:
+                  - DataCardKey17:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =Colors.TextMain
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Size: =14
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue11:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        BorderThickness: =Input.BorderThickness
+                        Color: =Input.Color
+                        Default: =Gallery_Trainings.Selected.Curso
+                        DelayOutput: =true
+                        DisabledBorderColor: =Colors.Gray
+                        DisabledColor: =Colors.Gray
+                        DisabledFill: =Colors.LightGray
+                        DisplayMode: =Parent.DisplayMode
+                        Fill: =Colors.White
+                        FocusedBorderThickness: =Input.FocusedBorderThickness
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =Input.BorderColor
+                        HoverColor: =Input.Color
+                        HoverFill: =Self.Fill
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =14
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey17.Y + DataCardKey17.Height + 5
+                  - ErrorMessage17:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue11.Y + DataCardValue11.Height
+                  - StarVisible17:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =Colors.TextMain
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey17.Height
+                        Size: =14
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey17.Y
+            - ID_Curso_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicNumberEdit
+                Properties:
+                  BorderColor: =Input.BorderColor
+                  DataField: ="ID_Curso"
+                  Default: =ThisItem.ID_Curso
+                  DisplayMode: =DisplayMode.View
+                  DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,ID_Curso)
+                  Required: =false
+                  Update: =Value(DataCardValue13.Text)
+                  Visible: =false
+                  Width: =453
+                  X: =0
+                  Y: =4
+                Children:
+                  - DataCardKey13:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =Colors.TextMain
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Size: =14
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue13:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        BorderThickness: =Input.BorderThickness
+                        Color: =Input.Color
+                        Default: =Gallery_Trainings.Selected.ID
+                        DelayOutput: =true
+                        DisabledBorderColor: =Colors.Gray
+                        DisabledColor: =Colors.Gray
+                        DisabledFill: =Colors.LightGray
+                        DisplayMode: =Parent.DisplayMode
+                        Fill: =Colors.White
+                        FocusedBorderThickness: =Input.FocusedBorderThickness
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =Input.BorderColor
+                        HoverColor: =Input.Color
+                        HoverFill: =Self.Fill
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Size: =14
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey13.Y + DataCardKey13.Height + 5
+                  - ErrorMessage13:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue13.Y + DataCardValue13.Height
+                  - StarVisible13:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =Colors.TextMain
+                        DisabledColor: =Colors.Gray
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey13.Height
+                        Size: =14
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey13.Y
+      - bt_Accept_2:
+          Control: Classic/Button@2.2.0
+          Group: grupo_Add_Group
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Colors.White
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            Fill: =Colors.Primary1
+            Font: =Font.'Open Sans'
+            Height: =29.99
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: |-
+              =SubmitForm(Form1_1);
+              UpdateContext({varAddGroup:false});
+              NewForm(Form1_1);
+              Refresh(GruposFormacion)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =Button.Radius
+            RadiusBottomRight: =Button.Radius
+            RadiusTopLeft: =Button.Radius
+            RadiusTopRight: =Button.Radius
+            Size: =11.24
+            Text: ="Aceptar"
+            Visible: =varAddGroup
+            Width: =Button.Width
+            X: =420
+            Y: =831
+      - bt_Cancel_2:
+          Control: Classic/Button@2.2.0
+          Group: grupo_Add_Group
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Colors.White
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            Fill: =Button.FillDanger
+            Font: =Font.'Open Sans'
+            Height: =29.99
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: =UpdateContext({varAddGroup:false});
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =Button.Radius
+            RadiusBottomRight: =Button.Radius
+            RadiusTopLeft: =Button.Radius
+            RadiusTopRight: =Button.Radius
+            Size: =11.24
+            Text: ="Cancelar"
+            Visible: =varAddGroup
+            Width: =Button.Width
+            X: =178
+            Y: =831

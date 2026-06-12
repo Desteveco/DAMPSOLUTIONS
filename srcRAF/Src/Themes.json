@@ -5,29 +5,117 @@
       "name": "defaultTheme",
       "palette": [
         {
-          "name": "ScreenBkgColor",
-          "type": "c",
-          "value": "%Color.RESERVED%.White"
-        },
-        {
-          "name": "InvertedBkgColor",
-          "type": "c",
-          "value": "RGBA(56, 96, 178, 1)"
-        },
-        {
           "name": "PrimaryColor1",
-          "type": "c",
-          "value": "RGBA(56, 96, 178, 1)"
+          "value": "Colors.Primary1"
+        },
+        {
+          "name": "HoverButtonBkgColor",
+          "value": "ColorFade(Colors.Primary1, -20%)"
         },
         {
           "name": "PrimaryColor2",
-          "type": "c",
-          "value": "RGBA(0, 18, 107, 1)"
+          "value": "Colors.Primary2"
         },
         {
           "name": "PrimaryColor3",
+          "value": "Colors.Primary3"
+        },
+        {
+          "name": "HoverInputBkgColor",
+          "value": "Colors.Primary3"
+        },
+        {
+          "name": "PrimaryColor3Fade",
+          "value": "ColorFade(Colors.Primary3, 70%)"
+        },
+        {
+          "name": "TextMainColor",
+          "value": "Colors.TextMain"
+        },
+        {
+          "name": "TextLinkColor",
+          "value": "Colors.TextLink"
+        },
+        {
+          "name": "DisabledBorderColor",
+          "value": "Colors.Gray"
+        },
+        {
+          "name": "DisabledTextMainColor",
+          "value": "Colors.Gray"
+        },
+        {
+          "name": "DisabledInputBkgColor",
+          "value": "Colors.LightGray"
+        },
+        {
+          "name": "DisabledButtonBkgColor",
+          "value": "Colors.LightGray"
+        },
+        {
+          "name": "TextMainColorInverted",
+          "value": "Colors.White"
+        },
+        {
+          "name": "InputBkgColor",
+          "value": "Colors.White"
+        },
+        {
+          "name": "ScreenBkgColor",
+          "value": "Colors.White"
+        },
+        {
+          "name": "HandleBkgColor",
+          "value": "Colors.White"
+        },
+        {
+          "name": "ReservedWhiteColor",
+          "value": "Colors.White"
+        },
+        {
+          "name": "IconFillColorInverted",
+          "value": "Colors.White"
+        },
+        {
+          "name": "InputBorderColor",
+          "value": "Input.BorderColor"
+        },
+        {
+          "name": "InputBorderThickness",
+          "value": "Input.BorderThickness"
+        },
+        {
+          "name": "InputFocusedBorderThickness",
+          "value": "Input.FocusedBorderThickness"
+        },
+        {
+          "name": "InputTextColor",
+          "value": "Input.Color"
+        },
+        {
+          "name": "DatePickerHeaderColor",
           "type": "c",
-          "value": "RGBA(186, 202, 226, 1)"
+          "value": "RGBA(68, 97, 165, 1)"
+        },
+        {
+          "name": "DatePickerSelectedColor",
+          "type": "c",
+          "value": "RGBA(37, 70, 148, 1)"
+        },
+        {
+          "name": "HoverCancelButtonBkgColor",
+          "type": "c",
+          "value": "ColorFade(RGBA(62, 96, 170, 1), 20%)"
+        },
+        {
+          "name": "IconPressedFillColorInverted",
+          "type": "c",
+          "value": "RGBA(255, 255, 255, 0.3)"
+        },
+        {
+          "name": "OverlayBkgColor",
+          "type": "c",
+          "value": "RGBA(0, 0, 0, 0.4)"
         },
         {
           "name": "PrimaryColor1Light",
@@ -45,99 +133,34 @@
           "value": "RGBA(186, 202, 226, .2)"
         },
         {
-          "name": "PrimaryColor3Fade",
-          "type": "c",
-          "value": "ColorFade(RGBA(186, 202, 226, 1), 70%)"
-        },
-        {
-          "name": "TextMainColor",
-          "type": "c",
-          "value": "RGBA(0, 0, 0, 1)"
-        },
-        {
-          "name": "TextMainColorInverted",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
-        },
-        {
-          "name": "TextLinkColor",
-          "type": "c",
-          "value": "RGBA(0, 134, 208, 1)"
-        },
-        {
-          "name": "TextFooterFontColor",
-          "type": "c",
-          "value": "RGBA(117, 117, 117, 1)"
-        },
-        {
-          "name": "InputBkgColor",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
-        },
-        {
-          "name": "InputTextColor",
-          "type": "c",
-          "value": "RGBA(0, 0, 0, 1)"
-        },
-        {
-          "name": "InputBorderColor",
-          "type": "c",
-          "value": "RGBA(0, 18, 107, 1)"
-        },
-        {
           "name": "RailBkgColor",
           "type": "c",
           "value": "RGBA(128, 130, 133, 1)"
         },
         {
-          "name": "HandleBkgColor",
+          "name": "ReservedBlackColor",
           "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
+          "value": "RGBA(47, 41, 43, 1)"
         },
         {
-          "name": "InnerCircleBkgColor",
+          "name": "ReservedCriticalErrorColor",
           "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
+          "value": "RGBA(168, 0, 0, 1)"
         },
         {
-          "name": "DisabledBorderColor",
+          "name": "ReservedDisabledStatusColor",
           "type": "c",
-          "value": "RGBA(166, 166, 166, 1)"
+          "value": "RGBA(193, 193, 193, 1)"
         },
         {
-          "name": "DisabledTextMainColor",
+          "name": "ReservedErrorColor",
           "type": "c",
-          "value": "RGBA(166, 166, 166, 1)"
+          "value": "RGBA(246, 88, 16, 1)"
         },
         {
-          "name": "DisabledInputBkgColor",
+          "name": "ReservedGrayColor",
           "type": "c",
-          "value": "RGBA(244, 244, 244, 1)"
-        },
-        {
-          "name": "DisabledButtonBkgColor",
-          "type": "c",
-          "value": "RGBA(244, 244, 244, 1)"
-        },
-        {
-          "name": "HoverButtonBkgColor",
-          "type": "c",
-          "value": "ColorFade(RGBA(56, 96, 178, 1), -20%)"
-        },
-        {
-          "name": "HoverCancelButtonBkgColor",
-          "type": "c",
-          "value": "ColorFade(RGBA(62, 96, 170, 1), 20%)"
-        },
-        {
-          "name": "HoverInputBkgColor",
-          "type": "c",
-          "value": "RGBA(186, 202, 226, 1)"
-        },
-        {
-          "name": "OverlayBkgColor",
-          "type": "c",
-          "value": "RGBA(0, 0, 0, 0.4)"
+          "value": "RGBA(240, 240, 240, 1)"
         },
         {
           "name": "ReservedInfoColor",
@@ -155,34 +178,9 @@
           "value": "RGBA(252, 219, 2, 1)"
         },
         {
-          "name": "ReservedErrorColor",
+          "name": "TextFooterFontColor",
           "type": "c",
-          "value": "RGBA(246, 88, 16, 1)"
-        },
-        {
-          "name": "ReservedCriticalErrorColor",
-          "type": "c",
-          "value": "RGBA(168, 0, 0, 1)"
-        },
-        {
-          "name": "ReservedDisabledStatusColor",
-          "type": "c",
-          "value": "RGBA(193, 193, 193, 1)"
-        },
-        {
-          "name": "ReservedWhiteColor",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
-        },
-        {
-          "name": "ReservedGrayColor",
-          "type": "c",
-          "value": "RGBA(240, 240, 240, 1)"
-        },
-        {
-          "name": "ReservedBlackColor",
-          "type": "c",
-          "value": "RGBA(47, 41, 43, 1)"
+          "value": "RGBA(117, 117, 117, 1)"
         },
         {
           "name": "ReservedChartColorSet",
@@ -203,16 +201,6 @@
           "name": "TextBodyFontFace",
           "type": "e",
           "value": "%Font.RESERVED%.'Open Sans'"
-        },
-        {
-          "name": "InputBorderThickness",
-          "type": "n",
-          "value": "2"
-        },
-        {
-          "name": "InputFocusedBorderThickness",
-          "type": "n",
-          "value": "4"
         },
         {
           "name": "TextHeaderFontSize",
@@ -236,11 +224,6 @@
           "value": "16"
         },
         {
-          "name": "TextHeaderFontSize2020",
-          "type": "n",
-          "value": "16"
-        },
-        {
           "name": "TextEmphasisFontSize",
           "phoneValue": "24",
           "type": "n",
@@ -250,7 +233,7 @@
           "name": "TextBodyFontSize",
           "phoneValue": "21",
           "type": "n",
-          "value": "13"
+          "value": "14"
         },
         {
           "name": "TextFooterFontSize",
@@ -263,26 +246,6 @@
           "phoneValue": "15",
           "type": "n",
           "value": "9"
-        },
-        {
-          "name": "IconFillColorInverted",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 1)"
-        },
-        {
-          "name": "IconPressedFillColorInverted",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 0.3)"
-        },
-        {
-          "name": "DatePickerSelectedColor",
-          "type": "c",
-          "value": "RGBA(37, 70, 148, 1)"
-        },
-        {
-          "name": "DatePickerHeaderColor",
-          "type": "c",
-          "value": "RGBA(68, 97, 165, 1)"
         },
         {
           "name": "NoAttachmentPaddingLeft",
@@ -300,26 +263,6 @@
           "name": "DefaultSize2",
           "type": "n",
           "value": "13"
-        },
-        {
-          "name": "DropTargetBorderColor",
-          "type": "c",
-          "value": "RGBA(0, 0, 0, 1)"
-        },
-        {
-          "name": "DropTargetBackgroundColor",
-          "type": "c",
-          "value": "RGBA(255, 255, 255, 0.8)"
-        },
-        {
-          "name": "DropTargetTextColor",
-          "type": "c",
-          "value": "RGBA(0, 0, 0, 1)"
-        },
-        {
-          "name": "DropTargetBorderThickness",
-          "type": "n",
-          "value": "2"
         }
       ],
       "styles": [
@@ -595,7 +538,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.TextMainColor%"
             },
             {
               "property": "DisabledColor",
@@ -751,7 +694,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.TextMainColor%"
             },
             {
               "property": "DisabledColor",
@@ -871,7 +814,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.TextMainColor%"
             },
             {
               "property": "DisabledColor",
@@ -923,7 +866,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.TextMainColor%"
             },
             {
               "property": "DisabledColor",
@@ -1043,7 +986,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.TextMainColor%"
             },
             {
               "property": "DisabledColor",
@@ -1307,7 +1250,7 @@
             },
             {
               "property": "FalseFill",
-              "value": "%Palette.RailBkgColor%"
+              "value": "Toggle.Fill"
             },
             {
               "property": "Size",
@@ -1395,11 +1338,11 @@
             },
             {
               "property": "CheckboxBackgroundFill",
-              "value": "%Palette.InnerCircleBkgColor%"
+              "value": "CheckboxRadio.Fill"
             },
             {
               "property": "CheckboxBorderColor",
-              "value": "%Palette.InputBorderColor%"
+              "value": "CheckboxRadio.BorderColor"
             },
             {
               "property": "CheckmarkFill",
@@ -1407,7 +1350,7 @@
             },
             {
               "property": "HoverColor",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "Self.Color"
             },
             {
               "property": "Font",
@@ -1521,7 +1464,7 @@
             },
             {
               "property": "HoverColor",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "Self.Color"
             },
             {
               "property": "BorderColor",
@@ -1529,11 +1472,11 @@
             },
             {
               "property": "RadioBackgroundFill",
-              "value": "%Palette.InnerCircleBkgColor%"
+              "value": "CheckboxRadio.Fill"
             },
             {
               "property": "RadioBorderColor",
-              "value": "%Palette.InputBorderColor%"
+              "value": "CheckboxRadio.BorderColor"
             },
             {
               "property": "RadioSelectionFill",
@@ -1679,7 +1622,7 @@
             },
             {
               "property": "PressedFill",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "Self.Fill"
             },
             {
               "property": "SelectionColor",
@@ -1817,7 +1760,7 @@
             },
             {
               "property": "PressedFill",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "Self.Fill"
             },
             {
               "property": "SelectionColor",
@@ -2074,26 +2017,6 @@
             {
               "property": "NoAttachmentsPaddingLeft",
               "value": "%Palette.NoAttachmentPaddingLeft%"
-            },
-            {
-              "property": "DropTargetBorderThickness",
-              "value": "%Palette.DropTargetBorderThickness%"
-            },
-            {
-              "property": "DropTargetBorderStyle",
-              "value": "%BorderStyle.RESERVED%.Dotted"
-            },
-            {
-              "property": "DropTargetBorderColor",
-              "value": "%Palette.DropTargetBorderColor%"
-            },
-            {
-              "property": "DropTargetBackgroundColor",
-              "value": "%Palette.DropTargetBackgroundColor%"
-            },
-            {
-              "property": "DropTargetTextColor",
-              "value": "%Palette.DropTargetTextColor%"
             }
           ]
         },
@@ -2367,7 +2290,7 @@
             },
             {
               "property": "HoverFill",
-              "value": "%Palette.HoverInputBkgColor%"
+              "value": "Self.Fill"
             },
             {
               "property": "Fill",
@@ -2399,19 +2322,19 @@
             },
             {
               "property": "RadiusTopLeft",
-              "value": "5"
+              "value": "0"
             },
             {
               "property": "RadiusBottomRight",
-              "value": "5"
+              "value": "0"
             },
             {
               "property": "RadiusTopRight",
-              "value": "5"
+              "value": "0"
             },
             {
               "property": "RadiusBottomLeft",
-              "value": "5"
+              "value": "0"
             },
             {
               "property": "PressedBorderColor",
@@ -2577,11 +2500,11 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.TextMainColorInverted%"
+              "value": "Button.Color"
             },
             {
               "property": "Fill",
-              "value": "%Palette.PrimaryColor1%"
+              "value": "Button.Fill"
             },
             {
               "property": "Font",
@@ -2593,15 +2516,15 @@
             },
             {
               "property": "DisabledBorderColor",
-              "value": "%Palette.DisabledBorderColor%"
+              "value": "ColorFade(Self.BorderColor, Button.DisabledPercent%)"
             },
             {
               "property": "DisabledColor",
-              "value": "%Palette.DisabledTextMainColor%"
+              "value": "ColorFade(Self.Color, Button.DisabledPercent%)"
             },
             {
               "property": "DisabledFill",
-              "value": "%Palette.DisabledInputBkgColor%"
+              "value": "ColorFade(Self.Fill, Button.DisabledPercent%)"
             },
             {
               "property": "Size",
@@ -2609,39 +2532,39 @@
             },
             {
               "property": "HoverColor",
-              "value": "%Palette.TextMainColorInverted%"
+              "value": "Self.Color"
             },
             {
               "property": "HoverFill",
-              "value": "%Palette.HoverButtonBkgColor%"
+              "value": "ColorFade(Self.Fill, Button.HoverPercent%)"
             },
             {
               "property": "BorderColor",
-              "value": "ColorFade(Self.Fill, -15%)"
+              "value": "ColorFade(Self.Fill, Button.BorderDarkness%)"
             },
             {
               "property": "RadiusTopLeft",
-              "value": "10"
+              "value": "Button.Radius"
             },
             {
               "property": "RadiusBottomRight",
-              "value": "10"
+              "value": "Button.Radius"
             },
             {
               "property": "RadiusTopRight",
-              "value": "10"
+              "value": "Button.Radius"
             },
             {
               "property": "RadiusBottomLeft",
-              "value": "10"
+              "value": "Button.Radius"
             },
             {
               "property": "PressedBorderColor",
-              "value": "Self.Fill"
+              "value": "ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)"
             },
             {
               "property": "HoverBorderColor",
-              "value": "ColorFade(Self.BorderColor, 20%)"
+              "value": "ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)"
             },
             {
               "property": "BorderStyle",
@@ -2657,11 +2580,11 @@
             },
             {
               "property": "PressedColor",
-              "value": "Self.Fill"
+              "value": "Self.Color"
             },
             {
               "property": "PressedFill",
-              "value": "Self.Color"
+              "value": "ColorFade(Self.Fill, Button.PressedPercent%)"
             },
             {
               "property": "Italic",
@@ -2682,6 +2605,10 @@
             {
               "property": "VerticalAlign",
               "value": "%VerticalAlign.RESERVED%.Middle"
+            },
+            {
+              "property": "Width",
+              "value": "Button.Width"
             }
           ]
         },
@@ -2825,7 +2752,7 @@
             },
             {
               "property": "Font",
-              "value": "%Font.RESERVED%.'Open Sans'"
+              "value": "%Font.RESERVED%.'Open Sans"
             },
             {
               "property": "Size",
@@ -3487,7 +3414,7 @@
           "propertyValuesMap": [
             {
               "property": "Color",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "Icons.Color"
             },
             {
               "property": "DisabledColor",
@@ -4317,7 +4244,7 @@
           "propertyValuesMap": [
             {
               "property": "Fill",
-              "value": "%Palette.PrimaryColor2%"
+              "value": "%Palette.PrimaryColor3%"
             },
             {
               "property": "BorderColor",
@@ -4373,7 +4300,7 @@
           "propertyValuesMap": [
             {
               "property": "Fill",
-              "value": "%Palette.InvertedBkgColor%"
+              "value": "Colors.Primary1"
             },
             {
               "property": "BorderColor",
@@ -4493,7 +4420,7 @@
             },
             {
               "property": "SelectedFill",
-              "value": "%Palette.PrimaryColor1Light%"
+              "value": "%Palette.ReservedDisabledStatusColor%"
             },
             {
               "property": "SelectedColor",
@@ -4501,7 +4428,7 @@
             },
             {
               "property": "HoverFill",
-              "value": "%Palette.PrimaryColor3Light%"
+              "value": "%Palette.ReservedGrayColor%"
             },
             {
               "property": "HoverColor",
@@ -4673,7 +4600,7 @@
             },
             {
               "property": "SelectedFill",
-              "value": "%Palette.PrimaryColor1Light%"
+              "value": "RGBA(227, 227, 227, 1)"
             },
             {
               "property": "SelectedColor",
@@ -4681,7 +4608,7 @@
             },
             {
               "property": "HoverFill",
-              "value": "%Palette.PrimaryColor3Light%"
+              "value": "Colors.LightGray"
             },
             {
               "property": "HoverColor",
@@ -4689,7 +4616,11 @@
             },
             {
               "property": "BorderColor",
-              "value": "%Palette.InputBorderColor%"
+              "value": "%Palette.PrimaryColor3%"
+            },
+            {
+              "property": "BorderThickness",
+              "value": "0"
             },
             {
               "property": "InputFill",
@@ -4713,7 +4644,7 @@
             },
             {
               "property": "HeadingFontWeight",
-              "value": "%Palette.TextBodyFontWeight%"
+              "value": "If(DataTable.HeadingBold, Bold, Normal)"
             },
             {
               "property": "HeadingSize",
@@ -4721,11 +4652,11 @@
             },
             {
               "property": "HeadingColor",
-              "value": "%Palette.TextMainColorInverted%"
+              "value": "If(DataTable.HeadingColorsInverted, Colors.Primary1, %Palette.TextMainColorInverted%)"
             },
             {
               "property": "HeadingFill",
-              "value": "%Palette.PrimaryColor1%"
+              "value": "If(DataTable.HeadingColorsInverted, Colors.White, Colors.Primary1)"
             }
           ]
         }

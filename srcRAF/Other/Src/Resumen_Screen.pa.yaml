@@ -1,0 +1,447 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  Resumen_Screen:
+    Properties:
+      Fill: =Colors.White
+      LoadingSpinnerColor: =Colors.Primary1
+    Children:
+      - Header_7:
+          Control: CanvasComponent
+          ComponentName: Header
+          Properties:
+            Height: |+
+              =70
+            Width: =Max(App.Width, App.MinScreenWidth)
+            Y: =69
+            pageNumber: ="2/3"
+            screenName: ="Resumen Formación"
+      - Header_Title_7:
+          Control: CanvasComponent
+          ComponentName: Header_Title
+          Properties:
+            Height: |+
+              =70
+            Width: =Max(App.Width, App.MinScreenWidth)
+            pageNumber: ="Texto"
+            screenName: ="Texto"
+      - ti_Defect_Description:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            Default: =Gallery_Trainings.Selected.Mat_Entregado
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            DisplayMode: =DisplayMode.View
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Height: =209
+            HintText: ="Entrada de texto"
+            HoverBorderColor: =Input.BorderColor
+            HoverColor: =Input.Color
+            HoverFill: =Self.Fill
+            Mode: =TextMode.MultiLine
+            Size: =12
+            Width: =705
+            X: =31
+            Y: =255
+      - Label2_28:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Material Entregado:"
+            Width: =234
+            X: =33
+            Y: =228
+      - Button2_4:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, Button.BorderDarkness%)
+            Color: =Button.Color
+            DisabledBorderColor: =ColorFade(Self.BorderColor, Button.DisabledPercent%)
+            DisabledColor: =ColorFade(Self.Color, Button.DisabledPercent%)
+            DisabledFill: =ColorFade(Self.Fill, Button.DisabledPercent%)
+            DisplayMode: |-
+              =If(
+                  !IsBlank(Gallery_Trainings.Selected),
+                  DisplayMode.Edit,
+                  DisplayMode.Disabled
+              )
+            Fill: =Button.Fill
+            Font: =Font.'Open Sans'
+            Height: |+
+              =56
+            HoverBorderColor: =ColorFade(Self.BorderColor, (Button.HoverPercent * 1.3)%)
+            HoverColor: =Self.Color
+            HoverFill: =ColorFade(Self.Fill, Button.HoverPercent%)
+            OnSelect: =Navigate(Formed_Screen, ScreenTransition.UnCover);
+            PressedBorderColor: =ColorFade(Self.BorderColor, (Button.PressedPercent * 1.3)%)
+            PressedFill: =ColorFade(Self.Fill, Button.PressedPercent%)
+            RadiusBottomLeft: =28
+            RadiusBottomRight: =28
+            RadiusTopLeft: =28
+            RadiusTopRight: =28
+            Text: ="CONTINUAR"
+            Width: =265
+            X: =252
+            Y: =915
+      - DatePicker2:
+          Control: Classic/DatePicker@2.6.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Format: ="dd/mm/yyyy"
+            IconBackground: =Colors.Primary1
+            IconFill: =Colors.White
+            Width: =170
+            X: =33
+            Y: =179
+      - Label2_29:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Fecha Inicio:"
+            Width: =170
+            X: =33
+            Y: =147
+      - Label2_30:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Fecha Fin:"
+            Width: =170
+            X: =408
+            Y: =147
+      - DatePicker2_1:
+          Control: Classic/DatePicker@2.6.0
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Format: ="dd/mm/yyyy"
+            IconBackground: =Colors.Primary1
+            IconFill: =Colors.White
+            Width: =170
+            X: =408
+            Y: =179
+      - Label2_31:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Hora Inicio:"
+            Width: =140
+            X: =220
+            Y: =147
+      - ti_Defect_Description_1:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            Default: =Text(Now(), "hh")
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Format: =TextFormat.Number
+            HintText: =
+            HoverBorderColor: =Input.BorderColor
+            HoverColor: =Input.Color
+            HoverFill: =Self.Fill
+            PaddingBottom: =0
+            PaddingLeft: =8
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Width: =43
+            X: =220
+            Y: =179
+      - Label2_32:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: =":"
+            Width: =16
+            X: =263
+            Y: =183
+      - Dropdown2:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Color.White
+            HoverFill: =Colors.Primary3
+            Items: =["00","15","30","45"]
+            Items.Value: =Value
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Width: =81
+            X: =279
+            Y: =179
+      - Label2_33:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Hora Fin:"
+            Width: =140
+            X: =598
+            Y: =147
+      - ti_Defect_Description_2:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            Default: =Value(Text(Now(), "hh")) + Gallery_Trainings.Selected.Horas_Teoricas
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Format: =TextFormat.Number
+            HintText: =
+            HoverBorderColor: =Input.BorderColor
+            HoverColor: =Input.Color
+            HoverFill: =Self.Fill
+            PaddingBottom: =0
+            PaddingLeft: =8
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =14
+            Width: =43
+            X: =598
+            Y: =179
+      - Label2_34:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: =":"
+            Width: =16
+            X: =641
+            Y: =183
+      - Dropdown2_1:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Color.White
+            HoverFill: =Colors.Primary3
+            Items: =["00","15","30","45"]
+            Items.Value: =Value
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            Width: =81
+            X: =657
+            Y: =179
+      - ti_Defect_Description_3:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =Input.BorderThickness
+            Color: =Input.Color
+            Default: =Gallery_Trainings.Selected.Objetivo
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            DisplayMode: =DisplayMode.View
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            Height: =132
+            HintText: ="Entrada de texto"
+            HoverBorderColor: =Input.BorderColor
+            HoverColor: =Input.Color
+            HoverFill: =Self.Fill
+            Mode: =TextMode.MultiLine
+            Size: =12
+            Width: =705
+            X: =31
+            Y: =501
+      - Label2_35:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Objetivo:"
+            Width: =234
+            X: =31
+            Y: =469
+      - Label2_36:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            Color: =Colors.TextBlue
+            DisabledColor: =Colors.Gray
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Text: ="Contenidos:"
+            Width: =234
+            X: =31
+            Y: =633
+      - Dropdown3:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Input.Color
+            HoverFill: =Colors.Primary3
+            Items: =Choices('Cursos Formativos'.Tipo_Entidad)
+            Items.Value: =Value
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            X: =189
+            Y: =656
+      - Dropdown4:
+          Control: Classic/DropDown@2.3.1
+          Properties:
+            BorderColor: =Input.BorderColor
+            BorderThickness: =Input.BorderThickness
+            ChevronBackground: =Colors.Primary1
+            ChevronDisabledBackground: =Colors.Gray
+            ChevronDisabledFill: =Colors.LightGray
+            ChevronFill: =Colors.White
+            ChevronHoverBackground: =ColorFade(Colors.Primary1, -20%)
+            ChevronHoverFill: =Colors.White
+            Color: =Input.Color
+            DisabledBorderColor: =Colors.Gray
+            DisabledColor: =Colors.Gray
+            DisabledFill: =Colors.LightGray
+            Fill: =Colors.White
+            FocusedBorderThickness: =Input.FocusedBorderThickness
+            Font: =Font.'Open Sans'
+            HoverColor: =Input.Color
+            HoverFill: =Colors.Primary3
+            Items: =Filter('Cursos Formativos', Tipo_Entidad.Value = Dropdown3.Selected.Value)
+            Items.Value: =Area_Form
+            PressedColor: =Colors.White
+            PressedFill: =Self.Fill
+            SelectionColor: =Colors.White
+            SelectionFill: =Colors.Primary1
+            Size: =14
+            X: =288
+            Y: =438
+      - HtmlText1:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+            Font: =Font.'Open Sans'
+            Height: =200
+            HtmlText: =Gallery_Trainings.Selected.Contenidos
+            Size: =14
+            Width: =703
+            X: =33
+            Y: =696

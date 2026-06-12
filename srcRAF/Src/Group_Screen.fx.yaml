@@ -1,0 +1,846 @@
+Group_Screen As screen:
+    OnVisible: =Reset(DatePicker3)
+
+    DatePicker3 As datepicker:
+        Reset: =true
+        StartOfWeek: =StartOfWeek.Monday
+        Visible: |-
+            =If(
+                User().Email = "JGomez@borgwarner.com" || User().Email = "dfidalgo@borgwarner.com" || User().Email = "adefrutos@borgwarner.com"|| User().Email = "dEstevez@borgwarner.com",
+                true,
+                false
+            )
+        Width: =180
+        X: =71
+        Y: =147
+        ZIndex: =1
+
+    Header_Title_8 As Header_Title:
+        ZIndex: =2
+
+    dd_Entity_1 As dropdown:
+        AllowEmptySelection: =true
+        BorderThickness: =1
+        Default: =
+        HoverColor: =Colors.White
+        Items: =Choices([@CursosFormativos_Plan].Tipo_Entidad)
+        OnChange: =
+        PressedColor: =Colors.Black
+        Visible: =false
+        Width: =122
+        X: =404
+        Y: =187
+        ZIndex: =3
+
+    dd_Entity_Name_1 As dropdown:
+        AllowEmptySelection: =true
+        BorderThickness: =1
+        Default: =Text(Now(),"yyyy")
+        HoverColor: =Colors.White
+        Items: |-
+            =ForAll(Distinct(CursosFormativos_Plan, Entidad_Doc), {Result: ThisRecord.Value})
+        OnChange: =
+        PressedColor: =Colors.Black
+        Visible: =false
+        Width: =169
+        X: =570
+        Y: =187
+        ZIndex: =4
+
+    Label2_39 As label:
+        Color: =Colors.TextBlue
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Semibold
+        Size: =13
+        Text: |-
+            ="Entidad Formativa:"
+        Visible: =false
+        Width: =171
+        X: =570
+        Y: =147
+        ZIndex: =5
+
+    dd_Area_Form_1 As dropdown:
+        AllowEmptySelection: =true
+        BorderThickness: =1
+        Default: =Text(Now(),"yyyy")
+        HoverColor: =Colors.White
+        Items: |-
+            =ForAll(Distinct(CursosFormativos_Plan, Area_Form), {Result: ThisRecord.Value})
+        OnChange: =
+        PressedColor: =Colors.Black
+        Visible: =false
+        Width: =128
+        X: =222
+        Y: =187
+        ZIndex: =6
+
+    Button2_5 As button:
+        DisplayMode: |-
+            =If(
+                !IsBlank(gal_Grupos.Selected),
+                DisplayMode.Edit,
+                DisplayMode.Disabled
+            )
+        Height: |
+            =56
+        OnSelect: |-
+            =If(
+                !IsBlank(
+                    LookUp(
+                        RegistrosFormacion,
+                        gal_Grupos.Selected.ID = ID_Grupo &&
+                        Formador = true
+                    )
+                ),
+                Navigate(Formed_Screen, ScreenTransition.UnCover),
+                Navigate(Former_Screen, ScreenTransition.UnCover);
+                Clear(colAttachments);
+                Set(varSignature, Blank()); Set(varResetAllFields, true);
+                Reset(IO_ti_Formed_Num_2); Reset(IO_ti_Formed_Num_3); Reset(IO_ti_Formed_Num_4); Reset(Canvas1);
+            )
+        RadiusBottomLeft: =28
+        RadiusBottomRight: =28
+        RadiusTopLeft: =28
+        RadiusTopRight: =28
+        Text: ="CONTINUAR"
+        Width: =265
+        X: =251
+        Y: =915
+        ZIndex: =7
+
+    dd_Curs_Plan_1 As dropdown:
+        AllowEmptySelection: =true
+        BorderThickness: =1
+        Default: =
+        Font: =Font.Arial
+        HoverColor: =Colors.White
+        Items: |-
+            =ForAll(Distinct(CursosFormativos_Plan,Plan_Form), {Result: ThisRecord.Value})
+        OnChange: =
+        OnSelect: =
+        PaddingRight: =13.34
+        PaddingTop: =13.34
+        PressedColor: =Colors.Black
+        Visible: =false
+        Width: =150
+        X: =28
+        Y: =187
+        ZIndex: =8
+
+    Label3_2 As label:
+        Align: =Align.Center
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =Colors.Primary1
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Bold
+        OnSelect: =
+        Size: =13
+        Text: |
+            ="Plan Formativo"
+        Visible: =false
+        X: =28
+        Y: =147
+        ZIndex: =9
+
+    "gal_Grupos As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+        '#CopilotOverlayLabel': ="Filtrada"
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Default: ={}
+        Height: =663
+        Items: |-
+            =
+                Filter(
+                    GruposFormacion,
+                    ID_Curso = Gallery_Trainings.Selected.ID
+                    
+                )
+        Layout: =Layout.Vertical
+        OnSelect: =Set(varGroupSelected, ThisItem)
+        TemplatePadding: =10
+        TemplateSize: =380
+        Width: =676
+        WrapCount: =3
+        X: =46
+        Y: =241
+        ZIndex: =10
+
+        TextInput2_3 As text:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =3
+            Color: =RGBA(0, 0, 0, 1)
+            Default: =""
+            DisabledBorderColor: =Colors.Primary1
+            DisabledColor: =RGBA(0,0,0,0)
+            DisabledFill: |-
+                =If(
+                    ThisItem.IsSelected,
+                    ColorFade(Colors.Primary1, 80%),
+                    RGBA(0,0,0,0)
+                )
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderThickness: =4
+            Height: =380
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverColor: =RGBA(0, 0, 0, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            OnSelect: =Select(Parent)
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Size: =13
+            Width: =210
+            ZIndex: =1
+
+        Label4_1 As label:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =314
+            OnSelect: =Select(Parent)
+            Size: =13
+            Text: =
+            Width: =210
+            ZIndex: =2
+
+        Label3_9 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            OnSelect: =Select(Parent)
+            Size: =15
+            Text: =ThisItem.Title
+            Width: =210
+            Y: =Label3_8.Height + Label3_8.Y
+            ZIndex: =3
+
+        Label3_10 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =Select(Parent)
+            Text: |-
+                ="Curso: " & Gallery_Trainings.Selected.Title
+            Width: =210
+            Y: =Label3_9.Y + Label3_9.Height
+            ZIndex: =4
+
+        Label3_8 As label:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Bold
+            OnSelect: =Select(Parent)
+            Size: =13
+            Text: |
+                ="Grupo: " & ThisItem.Title
+            Width: =208
+            X: =2
+            Y: =8
+            ZIndex: =5
+
+        Label3_11 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            OnSelect: =Select(Parent)
+            Size: =13
+            Text: |-
+                ="Fecha Inicio: " & ThisItem.F_Ini_grupo
+            Width: =210
+            Y: =Label3_10.Y + Label3_10.Height
+            ZIndex: =6
+
+        Label3_15 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            OnSelect: =Select(Parent)
+            Size: =13
+            Text: |-
+                ="Fecha Fin: " & ThisItem.F_Fin_grupo
+            Width: =210
+            Y: =Label3_11.Height + Label3_11.Y
+            ZIndex: =7
+
+        Label3_16 As label:
+            AutoHeight: =true
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Colors.Primary1
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Font: =Font.Arial
+            OnSelect: =Select(Parent)
+            Size: =13
+            Text: |-
+                ="Duración: " & ThisItem.Duracion & " horas"
+            Width: =210
+            X: =2
+            Y: =Label3_15.Height + Label3_15.Y
+            ZIndex: =8
+
+    Label1_6 As label:
+        Align: =Align.Center
+        Color: =Colors.TextBlue
+        Font: =Font.Arial
+        FontWeight: =FontWeight.Semibold
+        Height: =47
+        Size: =20
+        Text: |-
+            ="Selección de grupo de formación:" 
+        Width: =713
+        X: =28
+        Y: =183
+        ZIndex: =11
+
+    Button2_6 As button:
+        Align: =Align.Left
+        OnSelect: |
+            =UpdateContext({varAddGroup: true});
+        PaddingLeft: =10
+        RadiusBottomLeft: =28
+        RadiusBottomRight: =28
+        RadiusTopLeft: =28
+        RadiusTopRight: =28
+        Text: ="Nuevo Grupo"
+        Width: =198
+        X: =525
+        Y: =147
+        ZIndex: =12
+
+    Icon2_1 As icon.Add:
+        Color: =Color.White
+        Height: =40
+        Icon: =Icon.Add
+        OnSelect: |-
+            =UpdateContext({varAddGroup: true});
+        Width: =40
+        X: =673
+        Y: =147
+        ZIndex: =13
+
+    Header_4 As Header_3:
+        pageNumber: =""
+        screenName: =Gallery_Trainings.Selected.Title
+        Y: =69
+        ZIndex: =15
+
+    IconBack_2 As icon.ArrowLeft:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =50
+        Icon: =Icon.ArrowLeft
+        OnSelect: |
+            =
+            
+            Navigate( Training_Screen, ScreenTransition.CoverRight)
+                
+                
+                
+        Width: =50
+        X: =28
+        Y: =79
+        ZIndex: =16
+
+    grupo_Add_Group As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =20
+
+        lbl_Confirm_Clickshield_2 As label:
+            Fill: =RGBA(149, 149, 149, 0.4)
+            Height: =955
+            Text: =""
+            Visible: =varAddGroup
+            Width: =768
+            Y: =69
+            ZIndex: =17
+
+        Form1_1 As form:
+            BorderColor: =Colors.Primary1
+            BorderThickness: =2
+            DataSource: =GruposFormacion
+            DefaultMode: =FormMode.New
+            Fill: =Colors.White
+            Height: |
+                =650
+            NumberOfColumns: =1
+            Visible: =varAddGroup
+            Width: =453
+            X: =157
+            Y: =169
+            ZIndex: =18
+
+            F_Ini_grupo_DataCard1 As typedDataCard.dateEditCard:
+                BorderColor: =RGBA(0, 18, 107, 1)
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="F_ini_grupo"
+                Default: =ThisItem.F_Ini_grupo
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Ini_grupo)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =DataCardValue16.SelectedDate
+                Width: =451
+                X: =0
+                Y: =1
+                ZIndex: =1
+
+                DataCardKey16 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =34
+                    Size: =13
+                    Text: ="Fecha de Inicio"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue16 As datepicker:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderThickness: =2
+                    CalendarHeaderFill: =RGBA(56, 96, 178, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    DisplayMode: =Parent.DisplayMode
+                    EndYear: =Year(Today())+100
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FocusedBorderThickness: =4
+                    HoverDateFill: =RGBA(186, 202, 226, 1)
+                    IconBackground: =RGBA(56, 96, 178, 1)
+                    IconFill: =RGBA(255, 255, 255, 1)
+                    IsEditable: =true
+                    PaddingBottom: =0
+                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                    SelectedDateFill: =RGBA(56, 96, 178, 1)
+                    StartOfWeek: =StartOfWeek.Monday
+                    StartYear: =1899
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey16.Y + DataCardKey16.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage16 As label:
+                    AutoHeight: =true
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue16.Y + DataCardValue16.Height
+                    ZIndex: =3
+
+                StarVisible16 As label:
+                    Align: =Align.Center
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =DataCardKey16.Height
+                    Size: =13
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey16.Y
+                    ZIndex: =4
+
+            F_Fin_grupo_DataCard1 As typedDataCard.dateEditCard:
+                BorderColor: =RGBA(0, 18, 107, 1)
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="F_Fin_grupo"
+                Default: =ThisItem.F_Fin_grupo
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,F_Fin_grupo)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =DataCardValue15.SelectedDate
+                Width: =451
+                X: =0
+                Y: =2
+                ZIndex: =1
+
+                DataCardKey15 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =34
+                    Size: =13
+                    Text: ="Fecha Fin"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue15 As datepicker:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderThickness: =2
+                    CalendarHeaderFill: =RGBA(56, 96, 178, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    DisplayMode: =Parent.DisplayMode
+                    EndYear: =Year(Today())+100
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FocusedBorderThickness: =4
+                    HoverDateFill: =RGBA(186, 202, 226, 1)
+                    IconBackground: =RGBA(56, 96, 178, 1)
+                    IconFill: =RGBA(255, 255, 255, 1)
+                    IsEditable: =true
+                    PaddingBottom: =0
+                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                    SelectedDateFill: =RGBA(56, 96, 178, 1)
+                    StartOfWeek: =StartOfWeek.Monday
+                    StartYear: =1899
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey15.Y + DataCardKey15.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage15 As label:
+                    AutoHeight: =true
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue15.Y + DataCardValue15.Height
+                    ZIndex: =3
+
+                StarVisible15 As label:
+                    Align: =Align.Center
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =DataCardKey15.Height
+                    Size: =13
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey15.Y
+                    ZIndex: =4
+
+            Nom_Curso_DataCard1 As typedDataCard.textualEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Nom_Curso"
+                Default: =ThisItem.Nom_Curso
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Nom_Curso)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Nom_Curso)
+                Required: =false
+                Update: =DataCardValue11.Text
+                Width: =453
+                X: =0
+                Y: =3
+                ZIndex: =1
+
+                DataCardKey17 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue11 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Gallery_Trainings.Selected.Curso
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey17.Y + DataCardKey17.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage17 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue11.Y + DataCardValue11.Height
+                    ZIndex: =3
+
+                StarVisible17 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey17.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey17.Y
+                    ZIndex: =4
+
+            ID_Curso_DataCard2 As typedDataCard.numberEditCard:
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="ID_Curso"
+                Default: =ThisItem.ID_Curso
+                DisplayMode: =DisplayMode.View
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,ID_Curso)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                Required: =false
+                Update: =Value(DataCardValue13.Text)
+                Visible: =false
+                Width: =453
+                X: =0
+                Y: =4
+                ZIndex: =1
+
+                DataCardKey13 As label:
+                    AutoHeight: =true
+                    Height: =34
+                    Text: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue13 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    Default: =Gallery_Trainings.Selected.ID
+                    DelayOutput: =true
+                    DisplayMode: =Parent.DisplayMode
+                    Format: =TextFormat.Number
+                    PaddingLeft: =5
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey13.Y + DataCardKey13.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage13 As label:
+                    AutoHeight: =true
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue13.Y + DataCardValue13.Height
+                    ZIndex: =3
+
+                StarVisible13 As label:
+                    Align: =Align.Center
+                    Height: =DataCardKey13.Height
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey13.Y
+                    ZIndex: =4
+
+            Title_DataCard3 As typedDataCard.textualEditCard:
+                BorderColor: =Colors.Primary1
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Title"
+                Default: =ThisItem.Title
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@GruposFormacion],DataSourceInfo.DisplayName,Title)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =50
+                MaxLength: =DataSourceInfo([@GruposFormacion], DataSourceInfo.MaxLength, Title)
+                Required: =true
+                Update: =DataCardValue12.Text
+                Width: =451
+                X: =0
+                Y: =0
+                ZIndex: =18
+
+                DataCardKey12 As label:
+                    AutoHeight: =true
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =34
+                    Size: =13
+                    Text: ="Ident de Gurpo"
+                    Width: =Parent.Width - 60
+                    Wrap: =false
+                    X: =30
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue12 As text:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderThickness: =2
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: |-
+                        =If(
+                            Form1_1.Mode = FormMode.New,
+                            "G" & 
+                            If(
+                                (Last(
+                                Split(
+                                    First(
+                                        SortByColumns(
+                                            Filter(
+                                                GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                ),
+                                            "Title",SortOrder.Descending
+                                        )
+                                    ).Title,
+                                    "G"
+                                )).Value + 1) < 10,
+                                "0" & Last(
+                                Split(
+                                    First(
+                                        SortByColumns(
+                                            Filter(
+                                                GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                ),
+                                            "Title",SortOrder.Descending
+                                        )
+                                    ).Title,
+                                    "G"
+                                )).Value + 1,
+                                Last(
+                                Split(
+                                    First(
+                                        SortByColumns(
+                                            Filter(
+                                                GruposFormacion, ID_Curso = Gallery_Trainings.Selected.ID
+                                                ),
+                                            "Title",SortOrder.Descending
+                                        )
+                                    ).Title,
+                                    "G"
+                                )).Value + 1
+                            ),
+                            Parent.Default
+                        )
+                    DelayOutput: =true
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    DisplayMode: =DisplayMode.View
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FocusedBorderThickness: =4
+                    HoverBorderColor: =RGBA(0, 18, 107, 1)
+                    HoverColor: =RGBA(0, 0, 0, 1)
+                    HoverFill: =RGBA(186, 202, 226, 1)
+                    MaxLength: =Parent.MaxLength
+                    PaddingLeft: =5
+                    Size: =13
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardKey12.Y + DataCardKey12.Height + 5
+                    ZIndex: =2
+
+                ErrorMessage12 As label:
+                    AutoHeight: =true
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =10
+                    Live: =Live.Assertive
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Text: =Parent.Error
+                    Visible: =Parent.DisplayMode=DisplayMode.Edit
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =DataCardValue12.Y + DataCardValue12.Height
+                    ZIndex: =3
+
+                StarVisible12 As label:
+                    Align: =Align.Center
+                    Color: =RGBA(0, 18, 107, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    Height: =DataCardKey12.Height
+                    Size: =13
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    Wrap: =false
+                    Y: =DataCardKey12.Y
+                    ZIndex: =4
+
+        bt_Accept_2 As button:
+            Color: =Colors.White
+            Fill: =Colors.Primary1
+            Height: =29.99
+            OnSelect: |-
+                =SubmitForm(Form1_1);
+                UpdateContext({varAddGroup:false});
+                NewForm(Form1_1);
+                Refresh(GruposFormacion)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Aceptar"
+            Visible: =varAddGroup
+            X: =420
+            Y: =831
+            ZIndex: =19
+
+        bt_Cancel_2 As button:
+            Color: =Colors.White
+            Fill: =Button.FillDanger
+            Height: =29.99
+            OnSelect: |-
+                =UpdateContext({varAddGroup:false});
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Cancelar"
+            Visible: =varAddGroup
+            X: =178
+            Y: =831
+            ZIndex: =20
+

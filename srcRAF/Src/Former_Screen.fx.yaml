@@ -1,0 +1,1511 @@
+"Former_Screen As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    OnVisible: |-
+        =Set(varResetAllFields, false);
+        Set(varDoc, Blank())
+
+    RectQuickActionBar1 As rectangle:
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    Canvas1 As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Height: =885
+        Width: =Parent.Width
+        Y: =139
+        ZIndex: =3
+
+        DataCard1 As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =379
+            Width: =Parent.Width
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            ImageFormedSign_1 As image:
+                BorderColor: =RGBA(0, 18, 107, 1)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                Height: =96
+                Image: =varSignature
+                Width: =293
+                X: =442
+                Y: =251
+                ZIndex: =1
+
+            IO_Label2_118 As label:
+                Align: =Align.Center
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =82
+                Size: =15
+                Text: =Gallery_Trainings.Selected.Title
+                Width: =513
+                X: =59
+                ZIndex: =2
+
+            Label2_42 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Hora Inicio:"
+                Width: =140
+                X: =59
+                Y: =226
+                ZIndex: =3
+
+            ti_Defect_Description_6 As text:
+                BorderColor: =Colors.Primary1
+                Default: =Text(Now(), "hh")
+                Format: =TextFormat.Number
+                PaddingBottom: =0
+                PaddingLeft: =8
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
+                Reset: =varResetAllFields
+                VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+                Width: =43
+                X: =59
+                Y: =258
+                ZIndex: =4
+
+            Label2_43 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    =":"
+                Width: =16
+                X: =102
+                Y: =262
+                ZIndex: =5
+
+            Dropdown2_2 As dropdown:
+                HoverColor: =Color.White
+                Items: =["00","15","30","45"]
+                Reset: =varResetAllFields
+                Width: =81
+                X: =118
+                Y: =258
+                ZIndex: =6
+
+            Label2_44 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Hora Fin:"
+                Width: =140
+                X: =261
+                Y: =226
+                ZIndex: =7
+
+            ti_Defect_Description_7 As text:
+                BorderColor: =Colors.Primary1
+                Default: =Text(Now(), "hh")
+                Format: =TextFormat.Number
+                PaddingBottom: =0
+                PaddingLeft: =8
+                PaddingRight: =0
+                PaddingTop: =0
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
+                Reset: =varResetAllFields
+                VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+                Width: =43
+                X: =261
+                Y: =258
+                ZIndex: =8
+
+            Label2_45 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    =":"
+                Width: =16
+                X: =304
+                Y: =262
+                ZIndex: =9
+
+            Dropdown2_3 As dropdown:
+                HoverColor: =Color.White
+                Items: =["00","15","30","45"]
+                Reset: =varResetAllFields
+                Width: =81
+                X: =320
+                Y: =258
+                ZIndex: =10
+
+            IO_ti_Formed_Num_2 As text:
+                BorderColor: =Colors.Primary1
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(0, 18, 107, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(186, 202, 226, 1)
+                OnChange: =Set(varDoc, LookUp(Personal, Numero_Empresa = IO_ti_Formed_Num_2.Text))
+                OnSelect: =Set(varIOEditDatosPers, {})
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
+                Reset: =varResetAllFields
+                Size: =13
+                VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+                Width: =64
+                X: =59
+                Y: =155
+                ZIndex: =11
+
+            IO_Label2_115 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Size: =13
+                Text: ="Código"
+                Width: =83
+                X: =59
+                Y: =115
+                ZIndex: =12
+
+            IO_ti_Formed_Num_3 As text:
+                BorderColor: =Colors.Primary1
+                BorderStyle: |-
+                    =If(
+                        Self.DisplayMode = DisplayMode.Edit,
+                        BorderStyle.Solid,
+                        BorderStyle.Dotted
+                    )
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =varDoc.Nombre_Completo
+                DisabledBorderColor: =Colors.Primary1
+                DisabledColor: =Colors.Primary1
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                DisplayMode: |-
+                    =/*If(
+                        Gallery_Trainings.Selected.Tipo_Entidad.Value = "Interna";
+                        DisplayMode.Disabled;
+                        DisplayMode.Edit
+                    )*/
+                    DisplayMode.Edit
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderThickness: =4
+                HintText: ="Apellidos, Nombre"
+                HoverBorderColor: =RGBA(0, 18, 107, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(186, 202, 226, 1)
+                OnChange: =
+                OnSelect: =
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
+                Reset: =true
+                Size: =13
+                VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+                Width: =360
+                X: =166
+                Y: =155
+                ZIndex: =13
+
+            IO_Label2_116 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Size: =13
+                Text: ="Nombre completo"
+                Visible: |-
+                    =If(
+                        Gallery_Trainings.Selected.Tipo_Entidad.Value = "Interna",
+                        false,
+                        true
+                    )
+                Width: =249
+                X: =166
+                Y: =115
+                ZIndex: =14
+
+            IO_Label2_117 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Size: =13
+                Text: ="DNI"
+                Width: =83
+                X: =561
+                Y: =115
+                ZIndex: =15
+
+            IO_ti_Formed_Num_4 As text:
+                BorderColor: =Colors.Primary1
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =
+                DisabledBorderColor: =Colors.Primary1
+                DisabledColor: =Colors.Primary1
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                DisplayMode: |
+                    =DisplayMode.Edit
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(0, 18, 107, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(186, 202, 226, 1)
+                OnChange: =
+                OnSelect: =
+                RadiusBottomLeft: =5
+                RadiusBottomRight: =5
+                RadiusTopLeft: =5
+                RadiusTopRight: =5
+                Reset: =varResetAllFields
+                Size: =13
+                VirtualKeyboardMode: =VirtualKeyboardMode.Numeric
+                Width: =148
+                X: =561
+                Y: =155
+                ZIndex: =16
+
+            IO_Label2_119 As label:
+                Align: =Align.Center
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Size: =15
+                Text: ="Información del Docente"
+                Width: =534
+                X: =117
+                Y: =75
+                ZIndex: =17
+
+            Label2_46 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Firma:"
+                Width: =140
+                X: =469
+                Y: =226
+                ZIndex: =18
+
+            Button2_7 As button:
+                BorderColor: =
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Colors.Primary1
+                Height: =83
+                HoverBorderColor: =
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =
+                OnSelect: |-
+                    =UpdateContext({varShowSign: true, varShowAddPerson: true});
+                    
+                    //Reset(Formed_Sign_1);;
+                    
+                    UpdateContext({BlankImage: Formed_Sign_1.Image})
+                PressedBorderColor: =Colors.Primary1
+                PressedColor: =Colors.Primary1
+                PressedFill: =
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Text: =""
+                Width: =240
+                X: =469
+                Y: =258
+                ZIndex: =19
+
+            Button2_9 As button:
+                Height: =31
+                OnSelect: =Navigate(Formed_Screen, ScreenTransition.UnCover);
+                RadiusBottomLeft: =28
+                RadiusBottomRight: =28
+                RadiusTopLeft: =28
+                RadiusTopRight: =28
+                Text: ="Omitir"
+                Width: =163
+                X: =572
+                Y: =19
+                ZIndex: =20
+
+        DataCard2 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =768
+            X: =0
+            Y: =2
+            ZIndex: =2
+
+            Label2_37 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Material Entregado:"
+                Width: =234
+                X: =42
+                ZIndex: =2
+
+            Label2_38 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Objetivo:"
+                Width: =234
+                X: =42
+                Y: =HtmlText1_2.Y + HtmlText1_2.Height + 10
+                ZIndex: =4
+
+            Label2_41 As label:
+                Color: =Colors.TextBlue
+                Font: =Font.Arial
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =13
+                Text: |-
+                    ="Contenidos:"
+                Width: =234
+                X: =42
+                Y: =HtmlText1_3.Y +HtmlText1_3.Height + 10
+                ZIndex: =5
+
+            HtmlText1_1 As htmlViewer:
+                AutoHeight: =true
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                Height: =200
+                HtmlText: =Gallery_Trainings.Selected.Contenidos
+                Width: =703
+                X: =42
+                Y: =Label2_41.Y + Label2_41.Height
+                ZIndex: =6
+
+            HtmlText1_2 As htmlViewer:
+                AutoHeight: =true
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                Height: =200
+                HtmlText: =Gallery_Trainings.Selected.Mat_Entregado
+                Width: =703
+                X: =42
+                Y: =32
+                ZIndex: =7
+
+            HtmlText1_3 As htmlViewer:
+                AutoHeight: =true
+                DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                Height: =200
+                HtmlText: =Gallery_Trainings.Selected.Objetivo
+                Width: =703
+                X: =42
+                Y: =Label2_38.Y + Label2_38.Height
+                ZIndex: =8
+
+        DataCard3 As dataCard.blankCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =172
+            Width: =768
+            X: =0
+            Y: =3
+            ZIndex: =3
+
+            Button2_8 As button:
+                DisplayMode: |-
+                    =If(
+                        IsBlank(gal_Grupos.Selected) || IsBlank(IO_ti_Formed_Num_3.Text) || IsBlank(varSignature) || IsBlank(IO_ti_Formed_Num_4.Text),
+                        DisplayMode.Disabled,
+                        DisplayMode.Edit   
+                    )
+                Height: |
+                    =56
+                OnSelect: |-
+                    =SubmitForm(Form1_2);
+                    ResetForm(Form1_2);
+                    Refresh(RegistrosFormacion);
+                    Reset(Formed_Sign_1); Reset(ti_Emp_Num);
+                    
+                    Navigate(Formed_Screen, ScreenTransition.UnCover);
+                RadiusBottomLeft: =28
+                RadiusBottomRight: =28
+                RadiusTopLeft: =28
+                RadiusTopRight: =28
+                Text: ="CONTINUAR"
+                Width: =265
+                X: =252
+                Y: =45
+                ZIndex: =1
+
+    Header_Title_10 As Header_Title:
+        ZIndex: =6
+
+    Form1_2 As form:
+        DataSource: =RegistrosFormacion
+        DefaultMode: |-
+            =
+                FormMode.New
+        Height: =185
+        NumberOfColumns: =1
+        Visible: =false
+        Width: =768
+        Y: =839
+        ZIndex: =18
+
+        Nom_Empleado_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Nom_Empleado"
+            Default: =ThisItem.Nom_Empleado
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Nom_Empleado)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, Nom_Empleado)
+            Required: =false
+            Update: =DataCardValue1_2.Text
+            Width: =768
+            X: =0
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey1_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1_2 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |
+                    =
+                        IO_ti_Formed_Num_3.Text
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey1_1.Y + DataCardKey1_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1_2.Y + DataCardValue1_2.Height
+                ZIndex: =3
+
+            StarVisible1_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1_1.Y
+                ZIndex: =4
+
+        Num_Empleado_DataCard1_1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Num_Empleado"
+            Default: =ThisItem.Num_Empleado
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Num_Empleado)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =
+            Required: =false
+            Update: =DataCardValue2_1.Text
+            Width: =768
+            X: =0
+            Y: =2
+            ZIndex: =1
+
+            DataCardKey2_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue2_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |
+                    =IO_ti_Formed_Num_2.Text
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey2_1.Y + DataCardKey2_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage2_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue2_1.Y + DataCardValue2_1.Height
+                ZIndex: =3
+
+            StarVisible2_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2_1.Y
+                ZIndex: =4
+
+        ID_Curso_DataCard1_2 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ID_Curso"
+            Default: =ThisItem.ID_Curso
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Curso)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue3_1.Text)
+            Width: =768
+            X: =0
+            Y: =3
+            ZIndex: =1
+
+            DataCardKey3_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue3_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =varGroupSelected.ID_Curso
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey3_1.Y + DataCardKey3_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage3_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue3_1.Y + DataCardValue3_1.Height
+                ZIndex: =3
+
+            StarVisible3_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey3_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey3_1.Y
+                ZIndex: =4
+
+        ID_Grupo_DataCard1_1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ID_Grupo"
+            Default: =ThisItem.ID_Grupo
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Grupo)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue4_1.Text)
+            Width: =768
+            X: =0
+            Y: =4
+            ZIndex: =1
+
+            DataCardKey4_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue4_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: |
+                    =varGroupSelected.ID
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey4_1.Y + DataCardKey4_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage4_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue4_1.Y + DataCardValue4_1.Height
+                ZIndex: =3
+
+            StarVisible4_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey4_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey4_1.Y
+                ZIndex: =4
+
+        Asiste_Horario_Lab_DataCard1_1 As typedDataCard.toggleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Asiste_Horario_Lab"
+            Default: =ThisItem.Asiste_Horario_Lab
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Asiste_Horario_Lab)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue5_1.Value
+            Width: =768
+            X: =0
+            Y: =5
+            ZIndex: =1
+
+            DataCardKey5_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue5_1 As toggleSwitch:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =true
+                DisplayMode: =Parent.DisplayMode
+                Tooltip: =Parent.DisplayName
+                X: =30
+                Y: =DataCardKey5_1.Y + DataCardKey5_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage5_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue5_1.Y + DataCardValue5_1.Height
+                ZIndex: =3
+
+            StarVisible5_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey5_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey5_1.Y
+                ZIndex: =4
+
+        Horas_DataCard1_1 As typedDataCard.numberEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Horas"
+            Default: =ThisItem.Horas
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Horas)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Value(DataCardValue6_1.Text)
+            Width: =768
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            DataCardKey6_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue6_1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Format: =TextFormat.Number
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey6_1.Y + DataCardKey6_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage6_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue6_1.Y + DataCardValue6_1.Height
+                ZIndex: =3
+
+            StarVisible6_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey6_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey6_1.Y
+                ZIndex: =4
+
+        DNI_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DNI"
+            Default: =ThisItem.DNI
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,DNI)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, DNI)
+            Required: =false
+            Update: =DataCardValue9.Text
+            Width: =768
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey9 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue9 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =IO_ti_Formed_Num_4.Text
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey9.Y + DataCardKey9.Height + 5
+                ZIndex: =2
+
+            ErrorMessage9 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue9.Y + DataCardValue9.Height
+                ZIndex: =3
+
+            StarVisible9 As label:
+                Align: =Align.Center
+                Height: =DataCardKey9.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey9.Y
+                ZIndex: =4
+
+        Hora_Fin_DataCard1 As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Hora_Fin"
+            Default: =DateTime(Year(Today()),Month(Today()),Day(Today()), ti_Defect_Description_7.Text, Dropdown2_3.Selected.Value,0,0)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Hora_Fin)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =114
+            Required: =false
+            Update: =DateValue1.SelectedDate + Time(Value(HourValue1.Selected.Value), Value(MinuteValue1.Selected.Value), 0)
+            Width: =768
+            X: =0
+            Y: =8
+            ZIndex: =1
+
+            DataCardKey10 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue1 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey10.Y + DataCardKey10.Height + 5
+                ZIndex: =2
+
+            HourValue1 As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue1.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue1.Width / 2 - 10
+                X: =DateValue1.X + DateValue1.Width + 10
+                Y: =DateValue1.Y
+                ZIndex: =3
+
+            Separator3 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue1.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue1.X + HourValue1.Width
+                Y: =HourValue1.Y
+                ZIndex: =4
+
+            MinuteValue1 As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue1.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue1.Width
+                X: =HourValue1.X + HourValue1.Width + Separator3.Width
+                Y: =HourValue1.Y
+                ZIndex: =5
+
+            ErrorMessage10 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue1.Y + HourValue1.Height
+                ZIndex: =6
+
+            StarVisible10 As label:
+                Align: =Align.Center
+                Height: =DataCardKey10.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey10.Y
+                ZIndex: =7
+
+        Hora_Inicio_DataCard1 As typedDataCard.dateTimeEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Hora_Inicio"
+            Default: =DateTime(Year(Today()),Month(Today()),Day(Today()), ti_Defect_Description_6.Text, Dropdown2_2.Selected.Value,0,0)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Hora_Inicio)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DateValue2.SelectedDate + Time(Value(HourValue2.Selected.Value), Value(MinuteValue2.Selected.Value), 0)
+            Width: =768
+            X: =0
+            Y: =9
+            ZIndex: =1
+
+            DataCardKey11 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateValue2 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =(Parent.Width - 60) / 2
+                X: =30
+                Y: =DataCardKey11.Y + DataCardKey11.Height + 5
+                ZIndex: =2
+
+            HourValue2 As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Hour(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =DateValue2.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =DateValue2.Width / 2 - 10
+                X: =DateValue2.X + DateValue2.Width + 10
+                Y: =DateValue2.Y
+                ZIndex: =3
+
+            Separator4 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Bold
+                Height: =HourValue2.Height
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: |-
+                    =":"
+                Width: =10
+                Wrap: =false
+                X: =HourValue2.X + HourValue2.Width
+                Y: =HourValue2.Y
+                ZIndex: =4
+
+            MinuteValue2 As dropdown:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Text(Minute(Parent.Default),"00")
+                DisplayMode: =Parent.DisplayMode
+                Height: =HourValue2.Height
+                Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =HourValue2.Width
+                X: =HourValue2.X + HourValue2.Width + Separator4.Width
+                Y: =HourValue2.Y
+                ZIndex: =5
+
+            ErrorMessage11 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =HourValue2.Y + HourValue2.Height
+                ZIndex: =6
+
+            StarVisible11 As label:
+                Align: =Align.Center
+                Height: =DataCardKey11.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey11.Y
+                ZIndex: =7
+
+        Formador_DataCard1 As typedDataCard.toggleEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Formador"
+            Default: =ThisItem.Formador
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,Formador)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue10.Value
+            Width: =768
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+            DataCardKey14 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue10 As toggleSwitch:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =true
+                DisplayMode: =Parent.DisplayMode
+                Tooltip: =Parent.DisplayName
+                X: =30
+                Y: =DataCardKey14.Y + DataCardKey14.Height + 5
+                ZIndex: =2
+
+            ErrorMessage14 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue10.Y + DataCardValue10.Height
+                ZIndex: =3
+
+            StarVisible14 As label:
+                Align: =Align.Center
+                Height: =DataCardKey14.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey14.Y
+                ZIndex: =4
+
+        ID_Sesion_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ID_Sesion"
+            Default: =ThisItem.ID_Sesion
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'Registros de Formación'],DataSourceInfo.DisplayName,ID_Sesion)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'Registros de Formación'], DataSourceInfo.MaxLength, ID_Sesion)
+            Required: =false
+            Update: =DataCardValue18.Text
+            Width: =768
+            X: =0
+            Y: =11
+            ZIndex: =1
+
+            DataCardKey20 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue18 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =gal_Session.Selected.ID
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey20.Y + DataCardKey20.Height + 5
+                ZIndex: =2
+
+            ErrorMessage20 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue18.Y + DataCardValue18.Height
+                ZIndex: =3
+
+            StarVisible20 As label:
+                Align: =Align.Center
+                Height: =DataCardKey20.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey20.Y
+                ZIndex: =4
+
+        Attachments_DataCard1_1 As typedDataCard.attachmentsEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="{Attachments}"
+            Default: =Last(colAttachments).Att
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'RegistrosFormacion'],DataSourceInfo.DisplayName,'Datos adjuntos')
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =129
+            Required: =false
+            Update: =DataCardValue7_1.Attachments
+            Width: =768
+            X: =0
+            Y: =0
+            ZIndex: =28
+
+            DataCardKey7_1 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue7_1 As attachments:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: =Parent.DisplayMode
+                IsInDataCard: =true
+                Items: =Last(colAttachments).Att
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey7_1.Y + DataCardKey7_1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage7_1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue7_1.Y + DataCardValue7_1.Height
+                ZIndex: =3
+
+            StarVisible7_1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey7_1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey7_1.Y
+                ZIndex: =4
+
+    Header_6 As Header_3:
+        pageNumber: =""
+        screenName: ="Información Docente"
+        Y: =69
+        ZIndex: =19
+
+    IconBack_4 As icon.ArrowLeft:
+        BorderColor: =RGBA(0, 18, 107, 1)
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Height: =50
+        Icon: =Icon.ArrowLeft
+        OnSelect: =Navigate(Group_Screen, ScreenTransition.UnCover)
+        Width: =50
+        X: =17
+        Y: =79
+        ZIndex: =20
+
+    group_Add_Person_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =20
+
+        lbl_Confirm_Clickshield_3 As label:
+            Fill: =RGBA(149, 149, 149, 0.4)
+            Height: =955
+            OnSelect: |-
+                =UpdateContext({varShowAddPerson: false})
+            Text: =""
+            Visible: =varShowSign
+            Width: =768
+            Y: =69
+            ZIndex: =8
+
+        Rectangle2_2 As rectangle:
+            Fill: =Colors.White
+            Height: =581
+            Visible: =varShowSign
+            Width: =682
+            X: =43
+            Y: =214
+            ZIndex: =9
+
+        Label1_7 As label:
+            Align: =Align.Center
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Height: =41
+            Size: =18
+            Text: ="Registrar Docente"
+            Visible: =varShowSign
+            Width: =506
+            X: =131
+            Y: =241
+            ZIndex: =10
+
+        bt_Accept_3 As button:
+            Color: =Colors.White
+            DisplayMode: |-
+                =If(
+                    !IsBlank(IO_ti_Formed_Num_3.Text) && (BlankImage <> Formed_Sign_1.Image),
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
+                )
+            Fill: =Colors.Primary1
+            Height: =29.99
+            OnSelect: |
+                =ClearCollect(
+                    colFirma,
+                    {
+                        numEmpleado: IO_ti_Formed_Num_2.Text,
+                        nombrEmpleado: IO_ti_Formed_Num_3.Text,
+                        Firma: Formed_Sign_1.Image
+                    }
+                );
+                
+                Collect(
+                        colAttachments,
+                        {
+                            Att: Table({
+                            DisplayName: Concatenate(
+                            "image",
+                            Text(
+                                Now(),
+                                "[$-en-US]yyyy-mm-dd-hh-mm-ss"
+                            ),
+                            ".jpg"
+                                ),
+                            Value: First(colFirma).Firma,
+                            AbsoluteUri: "",
+                            Id: "00000000-0000-0000-0000-000000000000"
+                    })
+                    }
+                );
+                
+                /*Patch(
+                    'Registros de Formación';
+                    varPersonSelected;
+                    {
+                        Num_Empleado: Value(ti_Emp_Num.Text);
+                        Nom_Empleado: varPersonSelected.Nom_Empleado
+                    }
+                );;*/
+                
+                UpdateContext({varShowAddPerson: false, varShowSign: false});
+                Set(varSignature, Formed_Sign_1.Image)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Aceptar"
+            Visible: =varShowSign
+            X: =500
+            Y: =729
+            ZIndex: =14
+
+        bt_Cancel_3 As button:
+            Color: =Colors.White
+            Fill: =Button.FillDanger
+            Height: =29.99
+            OnSelect: |-
+                =UpdateContext({varShowSign: false});
+                Reset(Formed_Sign_1)
+            PaddingBottom: =3.75
+            PaddingLeft: =3.75
+            Size: =11.24
+            Text: ="Cancelar"
+            Visible: =varShowSign
+            X: =107
+            Y: =728
+            ZIndex: =15
+
+        Formed_Sign_1 As inkControl:
+            Color: =Colors.Black
+            Height: =317
+            ShowControls: =false
+            Visible: =varShowSign
+            Width: =618
+            X: =80
+            Y: =350
+            ZIndex: =16
+
+        Label2_48 As label:
+            Color: =Colors.TextBlue
+            Font: =Font.Arial
+            FontWeight: =FontWeight.Semibold
+            Size: =13
+            Text: |-
+                ="Firma: " & IO_ti_Formed_Num_3.Text
+            Visible: =varShowSign
+            Width: =618
+            X: =80
+            Y: =310
+            ZIndex: =17
+

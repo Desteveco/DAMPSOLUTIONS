@@ -1,22 +1,23 @@
 App As appinfo:
     BackEnabled: =false
+    ConfirmExit: =true
     OnStart: |-
-        =
+        =Set(IsDebugMode, false);
+        Set(varSetupCalendar, true);
+        
         Set(Colors, {
-            Primary1: RGBA(4, 57, 107, 1), // default (56, 96, 178, 1)
+            Primary1: RGBA(4, 57, 107, 1),   // default (56, 96, 178, 1)
             Primary2: RGBA(4, 57, 107, 1),    // d (0, 18, 107, 1)
             Primary3: RGBA(4, 57, 107, 1),  // d (186, 202, 226, 1)
             TextMain: RGBA(4, 57, 107, 1),     // d (0, 0, 0, 1)
             TextBlack: RGBA(0, 0 , 0 , 1),
-            TextBlue: RGBA(4, 57, 107, 1),
+            TextBlue: RGBA(39, 67, 125, 1),
             TextLink: RGBA(0, 134, 208, 1),    // d (0, 134, 208, 1)
             Black: RGBA(0, 0, 0, 1),           // d (0, 0, 0, 1)
             Gray: RGBA(166, 166, 166, 1),      // d (166, 166, 166, 1)
             LightGray: RGBA(245, 245, 245, 1), // d (244, 244, 244, 1)
             White: RGBA(255, 255, 255, 1),      // d (255, 255, 255, 1)
             Red: RGBA(255, 0, 0, 1),
-            Orange: RGBA(255, 125, 0, 1),
-            Yellow: RGBA(255,255, 0, 1),
             Green: RGBA(54, 176, 75, 1)
         });
         
@@ -68,6 +69,7 @@ App As appinfo:
                 Fill: RGBA(128, 130, 133, 1) // d (128, 130, 133, 1)
             })
         );
+    StartScreen: =Screen1
     Theme: =PowerAppsTheme
 
     Host As hostControl.DefaultHostControlVariant:
